@@ -2,8 +2,7 @@
 
 ---
 
-If you are afraid of losing money, spend it today. Live without fear.
-Selling platform of future for customers and business owners.
+Live without fear. Selling platform of future for customers and business owners.
 
 Website: [spentoday.com](https://www.spentoday.com)
 
