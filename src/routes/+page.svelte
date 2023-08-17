@@ -20,7 +20,7 @@
 </header>
 
 <main class="min-h-[70vh] max-w-screen-xl m-auto pt-20 px-6">
-  <h1 class="text-4xl md:text-6xl text-center mt-10 font-extrabold">
+  <h1 class="text-4xl md:text-6xl text-center mt-10 font-bold">
     ІДЕАЛЬНИЙ <span class="text-primary-500">СТАРТ</span> ОНЛАЙН-БІЗНЕСУ
   </h1>
 
