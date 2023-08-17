@@ -1,4 +1,5 @@
 const colors = require("tailwindcss/colors")
+const defaultTheme = require("tailwindcss/defaultTheme")
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -8,6 +9,9 @@ export default {
       colors: {
         primary: colors.green,
         secondary: colors.gray
+      },
+      fontFamily: {
+        sans: ["Play", ...defaultTheme.fontFamily.sans]
       }
     }
   },
