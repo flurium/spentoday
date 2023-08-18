@@ -8,7 +8,13 @@ export default {
     extend: {
       colors: {
         primary: colors.green,
-        secondary: colors.gray
+        secondary: colors.zinc,
+        brand: {
+          pink: "#D18EF0",
+          green: "#84D99B",
+          violet: "#8576E1",
+          dark: colors.zinc[800]
+        }
       },
       fontFamily: {
         sans: ["Play", ...defaultTheme.fontFamily.sans]
