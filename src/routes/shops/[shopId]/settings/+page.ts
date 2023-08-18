@@ -18,13 +18,14 @@ export type Shopsettings = {
   links: Link[]
   name: string
   logo: string
+  topBanner: string
 }
 
 export const load = (async ({ fetch, params }) => {
   const shopId = params.shopId
 
   const response = await call(fetch, "load", {
-    route: `/v1/site/shopsettings/${shopId}/getshop`,
+    route: `/v1/site/shopsettings/shop/${shopId}`,
     method: "GET"
   })
 
@@ -38,6 +39,7 @@ export const load = (async ({ fetch, params }) => {
   return {
     shopId,
     logo: shop.logo,
+    top: shop.topBanner,
     name: shop.name,
     banners: shop.banners,
     links: shop.links

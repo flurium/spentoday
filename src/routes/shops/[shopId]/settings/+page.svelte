@@ -4,6 +4,7 @@
   import { PUBLIC_API_URL } from "$env/static/public"
   import type { Link, Banner } from "./+page"
   import { call, callJson } from "$lib/fetch"
+    import { imageSize } from "$lib"
 
   export let data: PageData
 
@@ -11,11 +12,12 @@
   $: banners = data.banners ?? []
   $: shopName = data.name
   let logo = data.logo
-
+  let top = data.top
   let name: string = ""
   let link: string = ""
   let bannerFiles: FileList
   let logoFiles: FileList
+  let topFiles: FileList
   let shopNameInput: string = ""
 
   $: isInvalidLink = name.trim() == "" || link.trim() == ""
@@ -23,7 +25,7 @@
 
   async function addLink() {
     const response = await call(fetch, "client", {
-      route: `/v1/site/shopsettings/${data.shopId}/addlink`,
+      route: `/v1/site/shopsettings/${data.shopId}/link`,
       method: "POST",
       body: {
         name: name,
@@ -50,7 +52,7 @@
 
   async function deleteLink(linkId: string) {
     const response = await call(fetch, "client", {
-      route: `/v1/site/shopsettings/${linkId}/deletelink`,
+      route: `/v1/site/shopsettings/link/${linkId}`,
       method: "DELETE"
     })
 
@@ -68,10 +70,12 @@
 
   async function addBanner() {
     const formdata = new FormData()
+    const { width, height } = await imageSize(bannerFiles[0])
+    if(width!=964 || height !=400) return alert("Banner must be 964x400")
     formdata.append("file", bannerFiles[0])
     console.log(bannerFiles[0])
     const response = await call(fetch, "client", {
-      route: `/v1/site/shopsettings/${data.shopId}/addbanner`,
+      route: `/v1/site/shopsettings/${data.shopId}/banner`,
       method: "POST",
       body: formdata
     })
@@ -95,7 +99,7 @@
 
   async function deleteBanner(bannerId: string) {
     const response = await call(fetch, "client", {
-      route: `/v1/site/shopsettings/${bannerId}/deletebanner`,
+      route: `/v1/site/shopsettings/banner/${bannerId}`,
       method: "DELETE"
     })
 
@@ -126,7 +130,8 @@
 
     if (response.ok) {
       shopName = shopNameInput
-      return
+      data.name = shopNameInput
+      return  
     }
   }
 
@@ -146,6 +151,31 @@
       const json = await callJson<string>(response)
       if (!json) return alert("aaa")
       logo = json
+      return
+    }
+
+    if (response.status == 403 || response.status == 401) goto("/login")
+
+    goto("/")
+  }
+
+  async function setTopBanner() {
+    const formdata = new FormData()
+    const { width, height } = await imageSize(topFiles[0])
+    if(width!=1299 || height !=759) return alert("top Banner must be 1299x759")
+    formdata.append("file", topFiles[0])
+    const response = await call(fetch, "client", {
+      route: `/v1/site/shopsettings/${data.shopId}/top`,
+      method: "POST",
+      body: formdata
+    })
+    console.log(response)
+    if (!response) return alert("we can`t add it now, try later")
+
+    if (response.ok) {
+      const json = await callJson<string>(response)
+      if (!json) return alert("aaa")
+      top = json
       return
     }
 
@@ -259,5 +289,17 @@
     type="submit"
   >
     set logo
+  </button>
+</form>
+
+<img class="rounded-lg" src={top} alt="{top} image" />
+<form on:submit|preventDefault={setTopBanner} class="max-w-lg m-auto flex flex-col gap-4 mt-2">
+  <input bind:files={topFiles} type="file" />
+  <button
+    class="bg-primary-500 disabled:bg-gray-100 font-semibold px-6 py-3 text-white
+       hover:bg-primary-400 disabled:text-gray-400 rounded-md"
+    type="submit"
+  >
+    set TopBanner
   </button>
 </form>
