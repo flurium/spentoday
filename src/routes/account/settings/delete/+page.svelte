@@ -1,7 +1,6 @@
 <script lang="ts">
   import { goto } from "$app/navigation"
   import { z } from "zod"
-  import { PUBLIC_API_URL } from "$env/static/public"
   import { api } from "$lib"
 
   const emailSchema = z.string().email()

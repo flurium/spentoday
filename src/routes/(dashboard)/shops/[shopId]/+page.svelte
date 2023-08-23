@@ -3,7 +3,6 @@
   import type { PageData } from "./$types"
   import { routes } from "$lib"
   import { call, callJson } from "$lib/fetch"
-  import { PUBLIC_API_URL } from "$env/static/public"
   import ScrollLoad from "$features/ScrollLoad.svelte"
   import { shopProducts, type Product } from "$lib/api"
 
@@ -61,7 +60,7 @@
   }
 </script>
 
-<form on:submit|preventDefault={add} class="flex gap-2 mt-8">
+<form on:submit|preventDefault={add} class="flex gap-2">
   <input
     class="flex-1 bg-gray-100 focus:bg-gray-50 px-6 py-3 rounded-l-full
      border border-gray-200"

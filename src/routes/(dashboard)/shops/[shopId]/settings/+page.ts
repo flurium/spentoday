@@ -29,7 +29,6 @@ export const load = (async ({ fetch, params }) => {
   })
 
   if (!response) throw error(500)
-  if (response.status == 403 || response.status == 401) throw redirect(302, "/login")
   if (!response.ok) throw redirect(302, "/")
 
   const shop = await callJson<Shopsettings>(response)

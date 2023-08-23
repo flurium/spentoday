@@ -1,7 +1,6 @@
 <script lang="ts">
   import type { PageData } from "./$types"
   import { goto } from "$app/navigation"
-  import { PUBLIC_API_URL } from "$env/static/public"
   import type { Link, Banner } from "./+page"
   import { call, callJson } from "$lib/fetch"
 

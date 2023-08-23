@@ -1,6 +1,5 @@
 import type { PageLoad } from "./$types"
-import { PUBLIC_API_URL } from "$env/static/public"
-import { error, redirect } from "@sveltejs/kit"
+import { error } from "@sveltejs/kit"
 import { call, callJson } from "$lib/fetch"
 
 export type UserOutput = {
