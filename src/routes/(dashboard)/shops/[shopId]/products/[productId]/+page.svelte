@@ -2,6 +2,7 @@
   import slugify from "@sindresorhus/slugify"
   import type { PageData } from "./$types"
   import { api, imageSize } from "$lib"
+  import { toast } from "$features/toast"
 
   export let data: PageData
   $: images = data.product.images
@@ -65,19 +66,31 @@
     if (!file) return
 
     const { width, height } = await imageSize(file)
-    if (width != height) return alert("Only 1:1 images are supported")
+    if (width != height) {
+      return toast.push({
+        title: "Лише квадратні зображення",
+        description:
+          "Для збереження стильного дизайну вашого магазину ми використовуємо квадратні зображення."
+      })
+    }
 
     const result = await api.uploadProductImage(fetch, "client", {
       productId: data.productId,
       file: file
     })
-    if (result.status) {
-      return alert("aaaa")
+    if (result.status == "ok") {
+      images = [result.data, ...images]
+      return
     }
 
-    images.unshift(result.data)
-    images = images
-    return
+    if (result.status == "count-limit-reached") {
+      return toast.push({
+        title: "Досягнуто ліміту",
+        description: "Ви вже досягли максимальної кількості зображень для цього продукту."
+      })
+    }
+
+    return toast.serverError()
   }
 
   async function deleteImage(imageId: string) {

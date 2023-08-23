@@ -1,6 +1,6 @@
-import { error } from "@sveltejs/kit"
 import type { PageLoad } from "./$types"
 import { call, callJson } from "$lib/fetch"
+import { errors } from "$lib"
 
 export type ShopCategory = {
   id: string
@@ -15,12 +15,10 @@ export const load = (async ({ fetch, params }) => {
     route: `/v1/site/categories/${shopId}`,
     method: "GET"
   })
-  if (!response) throw error(500, { message: "Сталася помилка, вибачайте!" })
-
-  if (!response.ok) throw error(500, { message: "Щось пішло не так, вибачайте!" })
+  if (!response || !response.ok) throw errors.serverError()
 
   const data = await callJson<ShopCategory[]>(response)
-  if (!data) throw error(500, { message: "Хмм, проблема!" })
+  if (!data) throw errors.jsonError()
 
   return {
     categories: data,

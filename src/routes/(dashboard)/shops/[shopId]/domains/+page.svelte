@@ -2,6 +2,7 @@
   import type { PageData } from "./$types"
   import { goto } from "$app/navigation"
   import { api, routes } from "$lib"
+  import { toast } from "$features/toast"
 
   export let data: PageData
   let domains = data.domains
@@ -11,29 +12,32 @@
 
   async function addDomain() {
     if (hasFreeDomain && domainInput.endsWith(".spentoday.com")) {
-      return alert("You can only have 1 free .spentoday.com domain")
+      return toast.push({
+        title: "Безкоштовний домен вже використано",
+        description: "Доступно лише одержання одного безкоштовного домену .spentoday.com."
+      })
     }
-
     const res = await api.addDomain(fetch, "client", {
       shopId: data.shopId,
       domain: domainInput
     })
     if (res.status == "ok") {
-      domains.push(res.data)
-      domains = domains
+      domains = [...domains, res.data]
       return
     }
     if (res.status == "has-free-domain") {
-      return alert("Тільки 1 бескоштовний .spentoday.com домен можливо додати.")
+      return toast.push({
+        title: "Безкоштовний домен вже використано",
+        description: "Доступно лише одержання одного безкоштовного домену .spentoday.com."
+      })
     }
-    if (res.status == "domain-taken") return alert("Домен вже занят.")
-
-    if (res.status == "bad-domain") return alert("Домен не є коректним.")
+    if (res.status == "domain-taken") return toast.push({ title: "Цей домен вже зайнятий" })
+    if (res.status == "bad-domain") return toast.push({ title: "Домен не є коректним" })
     if (res.status == "no-permission") {
       goto(routes.shop(data.shopId))
       return
     }
-    alert("Can't add the domain at the current moment.")
+    toast.push({ title: "Не можемо додати домен" })
   }
 
   async function removeDomain(domain: string) {
@@ -42,29 +46,26 @@
       domains = domains.filter((x) => x.domain != domain)
       return
     }
-    if (res == "not-found") return alert("Не можемо знайти домен")
-    if (res == "bad-domain") return alert("Домен не є корректним")
-    return alert("щось пішло не так")
+    if (res == "not-found") return toast.push({ title: "Ми не можемо знайти цей домен" })
+    if (res == "bad-domain") return toast.push({ title: "Вказаний домен є некоректним" })
+    return toast.serverError()
   }
 
   async function verifyDomain(domain: string) {
-    const res = await api.verifyDomain(fetch, "client", {
-      domain: domain,
-      shopId: data.shopId
-    })
+    const res = await api.verifyDomain(fetch, "client", { domain, shopId: data.shopId })
 
     if (res.status == "ok") {
       const domainElement = domains.find((x) => x.domain == domain)
-      if (domainElement) {
-        domainElement.status = "verified"
-        domainElement.verifications = undefined
-        domains = domains
-      }
+      if (!domainElement) return
+
+      domainElement.status = "verified"
+      domainElement.verifications = undefined
+      domains = domains
       return
     }
 
     if (res.status == "not-verified") {
-      alert("Домен не підтверджено.")
+      toast.push({ title: "Домен не підтверджено" })
 
       const domainElement = domains.find((x) => x.domain == domain)
       if (!domainElement) return
@@ -74,10 +75,9 @@
       domains = domains
       return
     }
-
-    if (res.status == "bad-domain") return alert("Домен не мажо буди порожнім.")
-    if (res.status == "domain-taken") return alert("Домен вже занято іншим магазином.")
-    alert("Щось пішло не так. Зараз полагодимо.")
+    if (res.status == "bad-domain") return alert("Домен не може бути порожнім")
+    if (res.status == "domain-taken") return alert("Цей домен вже зайнятий іншим магазином")
+    return toast.serverError()
   }
 </script>
 

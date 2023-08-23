@@ -1,6 +1,6 @@
+import { errors } from "$lib"
 import { call, callJson } from "$lib/fetch"
 import type { PageLoad } from "./$types"
-import { error } from "@sveltejs/kit"
 
 type PageResponse = {
   slug: string
@@ -19,10 +19,10 @@ export const load = (async ({ fetch, params }) => {
     route: `/v1/site/dashboard/${params.shopId}/pages`,
     method: "GET"
   })
-  if (!response) throw error(500, { message: "response 500" })
+  if (!response) throw errors.serverError()
 
   const json = await callJson<PageResponse[]>(response)
-  if (!json) throw error(500, { message: "response 500" })
+  if (!json) throw errors.jsonError()
 
   const pages: Page[] = json.map((x) => ({
     slug: x.slug,

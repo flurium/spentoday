@@ -3,32 +3,27 @@
   import type { DashboardShop } from "./+page"
   import { routes } from "$lib"
   import { call, callJson } from "$lib/fetch"
+  import { toast } from "$features/toast"
 
   export let data: PageData
-  $: shops = data.shops ?? []
+  let shops = data.shops
 
   let shopName: string = ""
-
   $: isInvalid = shopName.trim() == ""
 
   async function addShop() {
     const response = await call(fetch, "client", {
       route: "/v1/dashboard/addshop",
       method: "POST",
-      body: {
-        shopName: shopName
-      }
+      body: { shopName: shopName }
     })
-    if (!response) return alert("no server response")
+    if (!response || !response.ok) return toast.serverError()
 
-    if (response.ok) {
-      const shop = await callJson<DashboardShop>(response)
-      if (!shop) return alert("error of adding")
+    const shop = await callJson<DashboardShop>(response)
+    if (!shop) return toast.jsonError()
 
-      shops.push(shop)
-      shops = shops
-      return
-    }
+    shops = [...shops, shop]
+    return
   }
 
   async function deleteShop(shopId: string) {
@@ -36,12 +31,8 @@
       route: `/v1/dashboard/delete/${shopId}`,
       method: "DELETE"
     })
-    if (!response) return alert("no server response")
-
-    if (response.ok) {
-      shops = shops.filter((x) => x.id != shopId)
-      return
-    }
+    if (!response || !response.ok) return toast.serverError()
+    shops = shops.filter((x) => x.id != shopId)
   }
 </script>
 

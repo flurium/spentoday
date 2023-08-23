@@ -1,26 +1,24 @@
 import type { PageLoad } from "./$types"
-import { error } from "@sveltejs/kit"
 import { call, callJson } from "$lib/fetch"
+import { errors } from "$lib"
 
 export type UserOutput = {
   name: string
   imageUrl: string
 }
 
-export const load = (async ({ fetch }) => {
+export const load: PageLoad = async ({ fetch }) => {
   var response = await call(fetch, "load", {
     route: "/v1/site/account/user",
     method: "GET"
   })
-  if (!response || !response.ok) {
-    throw error(500, { message: "Сервер не працює" })
-  }
+  if (!response || !response.ok) throw errors.serverError()
 
   var user = await callJson<UserOutput>(response)
-  if (user == null) throw error(500, { message: "Щось не так" })
+  if (user == null) throw errors.jsonError()
 
   return {
     name: user.name,
     imageUrl: user.imageUrl
   }
-}) satisfies PageLoad
+}

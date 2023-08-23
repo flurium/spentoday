@@ -128,7 +128,7 @@ export async function uploadProductImage(
 ): Promise<
   | {
       data: ImageOutput
-      status?: undefined
+      status: "ok"
     }
   | {
       status: "not-image" | "not-found" | "count-limit-reached" | "problem"
@@ -146,7 +146,7 @@ export async function uploadProductImage(
   if (response.ok) {
     const json = await callJson<ImageOutput>(response)
     if (!json) return { status: "problem" }
-    return { data: json }
+    return { status: "ok", data: json }
   }
   if (response.status == 409) return { status: "count-limit-reached" }
   if (response.status == 400) return { status: "not-image" }

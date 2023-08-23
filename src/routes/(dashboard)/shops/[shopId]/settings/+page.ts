@@ -1,7 +1,7 @@
 import type { PageLoad } from "./$types"
-import { PUBLIC_API_URL } from "$env/static/public"
-import { error, redirect } from "@sveltejs/kit"
+import { redirect } from "@sveltejs/kit"
 import { call, callJson } from "$lib/fetch"
+import { errors, routes } from "$lib"
 
 export type Banner = {
   id: string
@@ -20,19 +20,18 @@ export type Shopsettings = {
   logo: string
 }
 
-export const load = (async ({ fetch, params }) => {
+export const load: PageLoad = async ({ fetch, params }) => {
   const shopId = params.shopId
 
   const response = await call(fetch, "load", {
-    route: `/v1/site/shopsettings/${shopId}/getshop`,
+    route: `/v1/site/shopsettings/shop/${shopId}`,
     method: "GET"
   })
-
-  if (!response) throw error(500)
-  if (!response.ok) throw redirect(302, "/")
+  if (!response) throw errors.serverError()
+  if (!response.ok) throw redirect(302, routes.shop(shopId))
 
   const shop = await callJson<Shopsettings>(response)
-  if (shop == null) throw error(500)
+  if (shop == null) throw errors.jsonError()
 
   return {
     shopId,
@@ -41,4 +40,4 @@ export const load = (async ({ fetch, params }) => {
     banners: shop.banners,
     links: shop.links
   }
-}) satisfies PageLoad
+}

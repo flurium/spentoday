@@ -1,9 +1,9 @@
 <script lang="ts">
   import { isValidSlug, routes } from "$lib"
   import type { PageData } from "./$types"
-  import { goto } from "$app/navigation"
   import slugify from "@sindresorhus/slugify"
   import { call, callJson } from "$lib/fetch"
+  import { toast } from "$features/toast"
 
   type Page = {
     slug: string
@@ -18,7 +18,7 @@
   let slugValid: boolean = true
   let shopId: string = data.shopId
 
-  function slugInput(e: Event & { currentTarget: EventTarget & HTMLInputElement }) {
+  function slugInput() {
     newPageSlug = slugify(newPageSlug)
   }
 
@@ -33,17 +33,12 @@
       method: "POST",
       body: { slug: newPageSlug }
     })
-    if (!response) return
-
-    if (response.status == 401 || response.status == 403) {
-      goto("/login")
-    }
+    if (!response) return toast.serverError()
 
     const json = await callJson<Page>(response)
-    if (!json) return
+    if (!json) return toast.jsonError()
 
-    pages.push(json)
-    pages = pages
+    pages = [...pages, json]
   }
 </script>
 

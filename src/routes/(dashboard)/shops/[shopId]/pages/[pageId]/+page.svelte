@@ -3,7 +3,7 @@
   import type { PageData } from "./$types"
 
   import { isValidSlug } from "$lib"
-  import Markdown from "./Markdown.svelte"
+  import Markdown from "$features/Markdown.svelte"
   import { call } from "$lib/fetch"
   export let data: PageData
   let newPageSlug: string = data.slug

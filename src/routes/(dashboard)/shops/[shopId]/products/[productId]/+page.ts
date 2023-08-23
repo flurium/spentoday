@@ -1,12 +1,9 @@
 import type { PageLoad } from "./$types"
-import { error } from "@sveltejs/kit"
-import { api } from "$lib"
+import { api, errors } from "$lib"
 
 export const load = (async ({ fetch, params }) => {
   const output = await api.oneProduct(fetch, "load", params.productId)
-  if (!output) {
-    throw error(500, "Не можемо опрацювати данні з серверу. Зараз чортові програмісти полагодять.")
-  }
+  if (!output) throw errors.serverError()
 
   return {
     product: output.product,

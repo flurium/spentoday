@@ -43,8 +43,7 @@
       return
     }
 
-    categories.push(json)
-    categories = categories
+    categories = [...categories, json]
     editCategoryId = null
     categoryInput = ""
     parentInput = ""

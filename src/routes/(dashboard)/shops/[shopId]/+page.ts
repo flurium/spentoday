@@ -1,7 +1,6 @@
 import type { PageLoad } from "./$types"
-import { PUBLIC_API_URL } from "$env/static/public"
-import { error } from "@sveltejs/kit"
 import { shopProducts } from "$lib/api"
+import { serverError } from "$lib/errors"
 
 /*
 
@@ -17,7 +16,7 @@ export const load = (async ({ fetch, params }) => {
     start: 0,
     count: 10
   })
-  if (!products) throw error(500, { message: "AAAA" })
+  if (!products) throw serverError()
 
   return {
     products: products

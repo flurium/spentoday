@@ -1,6 +1,7 @@
 // place files you want to import through the `$lib` alias in this folder.
 
 export * as routes from "./routes"
+export * as errors from "./errors"
 export * as api from "./api"
 
 export function isValidSlug(slug: string): boolean {

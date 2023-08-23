@@ -3,6 +3,7 @@
   import { goto } from "$app/navigation"
   import type { Link, Banner } from "./+page"
   import { call, callJson } from "$lib/fetch"
+  import { toast } from "$features/toast"
 
   export let data: PageData
 
@@ -24,27 +25,14 @@
     const response = await call(fetch, "client", {
       route: `/v1/site/shopsettings/${data.shopId}/addlink`,
       method: "POST",
-      body: {
-        name: name,
-        link: link
-      }
+      body: { name, link }
     })
+    if (!response || !response.ok) return toast.serverError()
 
-    if (!response) return alert("we can`t add it now, try later")
+    const json = await callJson<Link>(response)
+    if (!json) return toast.jsonError()
 
-    if (response.status == 403 || response.status == 401) goto("/login")
-
-    if (!response.ok) goto("/")
-
-    if (response.ok) {
-      const link = await callJson<Link>(response)
-
-      if (!link) return alert("error of adding")
-
-      links.push(link)
-      links = links
-      return
-    }
+    links = [...links, json]
   }
 
   async function deleteLink(linkId: string) {
@@ -52,44 +40,28 @@
       route: `/v1/site/shopsettings/${linkId}/deletelink`,
       method: "DELETE"
     })
+    if (!response || !response.ok) return toast.serverError()
 
-    if (!response) return alert("we can`t delete it now, try later")
-
-    if (response.ok) {
-      links = links.filter((x) => x.id != linkId)
-      return
-    }
-
-    if (response.status == 403 || response.status == 401) goto("/login")
-
-    goto("/")
+    links = links.filter((x) => x.id != linkId)
+    return
   }
 
   async function addBanner() {
     const formdata = new FormData()
-    formdata.append("file", bannerFiles[0])
-    console.log(bannerFiles[0])
+    const file = bannerFiles.item(0)
+    if (file == null) return
+    formdata.append("file", file)
+
     const response = await call(fetch, "client", {
       route: `/v1/site/shopsettings/${data.shopId}/addbanner`,
       method: "POST",
       body: formdata
     })
+    if (!response || !response.ok) return toast.serverError()
+    const banner = await callJson<Banner>(response)
+    if (!banner) return toast.jsonError()
 
-    if (!response) return alert("we can`t add it now, try later")
-
-    if (response.status == 403 || response.status == 401) goto("/login")
-
-    if (!response.ok) goto("/")
-
-    if (response.ok) {
-      const banner = await callJson<Banner>(response)
-
-      if (!banner) return alert("error of adding")
-
-      banners.push(banner)
-      banners = banners
-      return
-    }
+    banners = [...banners, banner]
   }
 
   async function deleteBanner(bannerId: string) {
@@ -97,17 +69,8 @@
       route: `/v1/site/shopsettings/${bannerId}/deletebanner`,
       method: "DELETE"
     })
-
-    if (!response) return alert("we can`t delete it now, try later")
-
-    if (response.status == 403 || response.status == 401) goto("/login")
-
-    if (!response.ok) goto("/")
-
-    if (response.ok) {
-      banners = banners.filter((x) => x.id != bannerId)
-      return
-    }
+    if (!response || !response.ok) return toast.serverError()
+    banners = banners.filter((x) => x.id != bannerId)
   }
 
   async function newName() {
@@ -116,41 +79,27 @@
       method: "POST",
       body: { name: shopNameInput }
     })
-
-    if (!response) return alert("we can`t add it now, try later")
-
-    if (response.status == 403 || response.status == 401) goto("/login")
-
-    if (!response.ok) goto("/")
-
-    if (response.ok) {
-      shopName = shopNameInput
-      return
-    }
+    if (!response || !response.ok) return toast.serverError()
+    shopName = shopNameInput
   }
 
   async function setLogo() {
     const formdata = new FormData()
-    formdata.append("file", logoFiles[0])
-    console.log(logoFiles[0])
+    const logoFile = logoFiles.item(0)
+    if (logoFile == null) return
+    formdata.append("file", logoFile)
+
     const response = await call(fetch, "client", {
       route: `/v1/site/shopsettings/${data.shopId}/logo`,
       method: "POST",
       body: formdata
     })
-    console.log(response)
-    if (!response) return alert("we can`t add it now, try later")
+    if (!response || !response.ok) return toast.serverError()
 
-    if (response.ok) {
-      const json = await callJson<string>(response)
-      if (!json) return alert("aaa")
-      logo = json
-      return
-    }
+    const json = await callJson<string>(response)
+    if (!json) return toast.jsonError()
 
-    if (response.status == 403 || response.status == 401) goto("/login")
-
-    goto("/")
+    logo = json
   }
 </script>
 

@@ -1,6 +1,6 @@
 import type { PageLoad } from "./$types"
-import { error } from "@sveltejs/kit"
 import { call, callJson } from "$lib/fetch"
+import { errors } from "$lib"
 
 export type UpdatePage = {
   slug: string
@@ -8,15 +8,16 @@ export type UpdatePage = {
   content: string
   description: string
 }
-export const load = (async ({ fetch, params }) => {
+export const load: PageLoad = async ({ fetch, params }) => {
   const response = await call(fetch, "load", {
     route: `/v1/site/dashboard/${params.shopId}/page/${params.pageId}`,
     method: "GET"
   })
+  if (!response) throw errors.serverError()
 
-  if (!response) throw error(500)
   const page = await callJson<UpdatePage>(response)
-  if (page == null) throw error(500)
+  if (page == null) throw errors.jsonError()
+
   return {
     shopId: params.shopId,
     slug: page.slug,
@@ -24,4 +25,4 @@ export const load = (async ({ fetch, params }) => {
     description: page.description,
     title: page.title
   }
-}) satisfies PageLoad
+}
