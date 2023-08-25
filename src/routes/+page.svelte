@@ -4,7 +4,7 @@
   import Propositions from "$features/landing/Propositions.svelte"
   import Strip from "$features/landing/Strip.svelte"
   import Technologies from "$features/landing/Technologies.svelte"
-  import Flower from "$lib/assets/Flower.svelte"
+  import Footer from "$features/landing/footer/Footer.svelte"
   import Fondy from "$lib/assets/Fondy.svelte"
   import Hyperswitch from "$lib/assets/Hyperswitch.svelte"
   import Liqpay from "$lib/assets/Liqpay.svelte"
@@ -125,15 +125,6 @@
       />
     </form>
   </section>
-</main>
 
-<footer class="rounded-t-[3rem] bg-brand-violet text-white">
-  <div class="px-6 max-w-screen-xl m-auto py-36">
-    <div class="grid grid-cols-3 gap-3">
-      <Flower />
-      <h3 class="col-span-2 font-bold text-5xl md:text-7xl">
-        ЗАЛИШТЕ СВІЙ EMAIL ТА ОТРИМУЙТЕ ОСОБЛИВІ ПРОПОЗИЦІЇ
-      </h3>
-    </div>
-  </div>
-</footer>
+  <Footer />
+</main>
