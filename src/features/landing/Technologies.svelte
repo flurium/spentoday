@@ -2,10 +2,13 @@
   import Star from "$lib/assets/Star.svelte"
 </script>
 
-<section class="px-6 max-w-screen-xl m-auto py-24">
+<section class="px-6 max-w-screen-xl m-auto py-24 mb-24">
   <div class="flex justify-between">
     <span class="text-brand-violet">ТЕХНОЛОГІЇ</span>
-    <h2 class="text-4xl md:text-6xl font-bold px-2 py-1 bg-brand-violet text-white rounded-md">
+    <h2
+      class="text-4xl md:text-6xl font-bold px-2 py-1 bg-brand-violet
+      text-white rounded-md"
+    >
       ШВИДКІСТЬ ТА СУЧАСНІСТЬ
     </h2>
   </div>
@@ -36,7 +39,9 @@
         <Star color="violet" class="h-14 w-14" />
       </div>
       <div class="text-xl h-fit place-self-center">
-        SERVERLESS ІЗОЛЮЄ ОПЕРАЦІЇ: ВАША <span class="font-bold">НАДІЙНІСТЬ У БЕЗПЕЦІ </span>
+        SERVERLESS ІЗОЛЮЄ ОПЕРАЦІЇ: ВАША <span class="font-bold"
+          >НАДІЙНІСТЬ У БЕЗПЕЦІ
+        </span>
       </div>
     </div>
   </div>
