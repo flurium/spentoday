@@ -1,4 +1,5 @@
 <script>
+  import Technologies from "$features/landing/Technologies.svelte"
   import Flower from "$lib/assets/Flower.svelte"
   import Fondy from "$lib/assets/Fondy.svelte"
   import Hyperswitch from "$lib/assets/Hyperswitch.svelte"
@@ -100,6 +101,8 @@
     </div>
   </section>
 
+  <Technologies />
+
   <section class="bg-brand-violet py-32">
     <div class="px-6">
       <div
@@ -107,7 +110,7 @@
       grid grid-cols-3 gap-4"
       >
         <h2 class="text-6xl lg:text-8xl font-bold col-span-3">
-          <span class="px-4 rounded-xl bg-brand-pink">ЗРОБІТЬ</span> КРОК
+          <span class="px-4 bg-brand-pink text-white rounded-xl">ЗРОБІТЬ</span>
         </h2>
         <h2 class="text-6xl lg:text-8xl font-bold col-span-3">ДО БІЗНЕСУ РАЗОМ</h2>
         <h2 class="text-6xl lg:text-8xl font-bold col-start-2">З НАМИ</h2>
