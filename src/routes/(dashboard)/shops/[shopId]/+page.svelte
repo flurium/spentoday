@@ -69,7 +69,9 @@
     placeholder="Для додавання нового продукту введіть його назву."
   />
 
-  <button class="bg-brand-violet rounded-lg text-white px-8" type="submit"> Додати товар </button>
+  <button class="bg-brand-violet rounded-lg text-white px-8" type="submit">
+    Додати товар
+  </button>
 </form>
 
 <div class="flex flex-col gap-3 mt-8 rounded-xl bg-white p-8">
@@ -83,7 +85,9 @@
       </span>
 
       {#if product.isDraft}
-        <span class="bg-secondary-600 text-white text-sm rounded-full py-1 px-2">Чернетка</span>
+        <span class="bg-secondary-600 text-white text-sm rounded-full py-1 px-2"
+          >Чернетка</span
+        >
       {:else}
         <span
           class="bg-brand-green text-white

@@ -19,7 +19,9 @@
   $: isInvalidName = name.trim() == ""
 
   $: isInvalidPassword =
-    confirmPassword.trim() == "" || newPassword.trim() == "" || currentPassword.trim() == ""
+    confirmPassword.trim() == "" ||
+    newPassword.trim() == "" ||
+    currentPassword.trim() == ""
 
   async function changeName() {
     const status = await api.changeName(fetch, "client", name)
@@ -82,7 +84,9 @@
     messagePassword = "Щось пішло не так"
   }
 
-  async function setUserImage(event: Event & { currentTarget: EventTarget & HTMLInputElement }) {
+  async function setUserImage(
+    event: Event & { currentTarget: EventTarget & HTMLInputElement }
+  ) {
     const file = event.currentTarget.files?.item(0)
     if (!file) return alert("Can't upload")
 
@@ -115,7 +119,9 @@
 
 <main class="min-h-[70vh] max-w-screen-xl m-auto px-6">
   <h1 class="text-4xl md:text-6xl text-center m-auto font-bold">Налаштування</h1>
-  <p class="text-center text-gray-600 mt-6 max-w-3xl m-auto mb-10">Налаштування профілю</p>
+  <p class="text-center text-gray-600 mt-6 max-w-3xl m-auto mb-10">
+    Налаштування профілю
+  </p>
 
   {#if message}
     <div class="px-5 py-3 border border-green-200 bg-green-100 rounded-md text-green-800">
@@ -123,7 +129,10 @@
     </div>
   {/if}
 
-  <form on:submit|preventDefault={changeName} class="max-w-lg m-auto flex flex-col gap-4 mt-2">
+  <form
+    on:submit|preventDefault={changeName}
+    class="max-w-lg m-auto flex flex-col gap-4 mt-2"
+  >
     {#if messageName}
       <div class="px-5 py-3 border border-red-200 bg-red-100 rounded-md text-red-800">
         {messageName}
@@ -146,7 +155,10 @@
     </button>
   </form>
 
-  <form on:submit|preventDefault={changePassword} class="max-w-lg m-auto flex flex-col gap-4 mt-2">
+  <form
+    on:submit|preventDefault={changePassword}
+    class="max-w-lg m-auto flex flex-col gap-4 mt-2"
+  >
     {#if messagePassword}
       <div class="px-5 py-3 border border-red-200 bg-red-100 rounded-md text-red-800">
         {messagePassword}

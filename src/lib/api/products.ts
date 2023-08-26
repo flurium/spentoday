@@ -89,7 +89,11 @@ export type UpdateProductInput = {
   seoSlug?: string
 }
 
-export async function updateProduct(fetch: Fetch, side: FetchSide, input: UpdateProductInput) {
+export async function updateProduct(
+  fetch: Fetch,
+  side: FetchSide,
+  input: UpdateProductInput
+) {
   const response = await call(fetch, side, {
     route: `/v1/site/products`,
     method: "PATCH",

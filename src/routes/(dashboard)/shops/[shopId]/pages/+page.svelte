@@ -50,7 +50,8 @@
 <dialog bind:this={newPageModal} class="p-10 bg-white text-lg rounded-md max-w-2xl">
   <form class="flex gap-8 flex-col" on:submit|preventDefault={createPage}>
     <h3>
-      To add new page enter page slug/path, like: privacy-policy. Slug will be seen in url of page.
+      To add new page enter page slug/path, like: privacy-policy. Slug will be seen in url
+      of page.
     </h3>
 
     {#if !slugValid}
@@ -72,7 +73,10 @@
       >
         Cancel
       </button>
-      <button class="px-4 py-2 bg-gray-800 text-white hover:bg-gray-900 rounded-md" type="submit">
+      <button
+        class="px-4 py-2 bg-gray-800 text-white hover:bg-gray-900 rounded-md"
+        type="submit"
+      >
         Add
       </button>
     </div>

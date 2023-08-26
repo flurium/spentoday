@@ -4,7 +4,10 @@ import { redirect } from "@sveltejs/kit"
 
 export type HttpMethod = "POST" | "GET" | "PUT" | "DELETE" | "PATCH"
 
-export type Fetch = (input: RequestInfo | URL, init?: RequestInit | undefined) => Promise<Response>
+export type Fetch = (
+  input: RequestInfo | URL,
+  init?: RequestInit | undefined
+) => Promise<Response>
 
 export type FetchSide = "client" | "load"
 

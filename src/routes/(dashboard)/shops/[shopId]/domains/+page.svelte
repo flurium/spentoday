@@ -31,7 +31,8 @@
         description: "Доступно лише одержання одного безкоштовного домену .spentoday.com."
       })
     }
-    if (res.status == "domain-taken") return toast.push({ title: "Цей домен вже зайнятий" })
+    if (res.status == "domain-taken")
+      return toast.push({ title: "Цей домен вже зайнятий" })
     if (res.status == "bad-domain") return toast.push({ title: "Домен не є коректним" })
     if (res.status == "no-permission") {
       goto(routes.shop(data.shopId))
@@ -76,15 +77,16 @@
       return
     }
     if (res.status == "bad-domain") return alert("Домен не може бути порожнім")
-    if (res.status == "domain-taken") return alert("Цей домен вже зайнятий іншим магазином")
+    if (res.status == "domain-taken")
+      return alert("Цей домен вже зайнятий іншим магазином")
     return toast.serverError()
   }
 </script>
 
 {#if !hasFreeDomain}
   <div class="p-4 mb-4 text-green-900 bg-green-50 border border-green-200">
-    Ви можете безкоштовно отримати 1 домен від нашого сервісу! Наприклад: my-shop.spentoday.com. Для
-    цього введіть у поле назву вашого домену з закінченням
+    Ви можете безкоштовно отримати 1 домен від нашого сервісу! Наприклад:
+    my-shop.spentoday.com. Для цього введіть у поле назву вашого домену з закінченням
     <b>.spentoday.com</b>.
   </div>
 {/if}
@@ -117,8 +119,9 @@
           href="https://{domain.domain}">{domain.domain}</a
         >
         {#if domain.status == "not-verified" || domain.status == "no-status"}
-          <button class="bg-gray-100 py-2 px-4" on:click={() => verifyDomain(domain.domain)}
-            >Verify</button
+          <button
+            class="bg-gray-100 py-2 px-4"
+            on:click={() => verifyDomain(domain.domain)}>Verify</button
           >
         {:else if domain.status == "taken"}
           <span class="bg-gray-100 py-2 px-4">Domain is taken by another shop</span>

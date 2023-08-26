@@ -18,6 +18,7 @@ export type Shopsettings = {
   links: Link[]
   name: string
   logo: string
+  topBanner: string
 }
 
 export const load: PageLoad = async ({ fetch, params }) => {
@@ -36,6 +37,7 @@ export const load: PageLoad = async ({ fetch, params }) => {
   return {
     shopId,
     logo: shop.logo,
+    top: shop.topBanner,
     name: shop.name,
     banners: shop.banners,
     links: shop.links

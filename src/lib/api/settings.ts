@@ -26,7 +26,8 @@ export async function uploadUserImage(
     file: File
   }
 ): Promise<
-  { status: "not-found" | "not-image" | "problem" | "fail" } | { data: string; status: "success" }
+  | { status: "not-found" | "not-image" | "problem" | "fail" }
+  | { data: string; status: "success" }
 > {
   const formData = new FormData()
   formData.append("file", input.file)

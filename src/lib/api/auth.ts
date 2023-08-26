@@ -53,7 +53,8 @@ export async function register(
     confirmPassword: string
   }
 ): Promise<
-  { status: "success" | "fail" | "password-mismatch" } | { data: string[]; status: "problem" }
+  | { status: "success" | "fail" | "password-mismatch" }
+  | { data: string[]; status: "problem" }
 > {
   const response = await call(fetch, side, {
     route: "/v1/auth/register",

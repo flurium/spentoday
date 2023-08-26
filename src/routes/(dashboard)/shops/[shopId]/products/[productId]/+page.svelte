@@ -61,7 +61,9 @@
     if (input.description) data.product.description = input.description
   }
 
-  async function uploadImage(event: Event & { currentTarget: EventTarget & HTMLInputElement }) {
+  async function uploadImage(
+    event: Event & { currentTarget: EventTarget & HTMLInputElement }
+  ) {
     const file = event.currentTarget.files?.item(0)
     if (!file) return
 

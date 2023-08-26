@@ -44,7 +44,10 @@
     Прикро що Ви лишаєте нас. Для підтвердження введіть свою електронну адресу і пароль.
   </p>
 
-  <form on:submit|preventDefault={deleteAccount} class="max-w-lg m-auto flex flex-col gap-4 mt-2">
+  <form
+    on:submit|preventDefault={deleteAccount}
+    class="max-w-lg m-auto flex flex-col gap-4 mt-2"
+  >
     {#if message}
       <div class="px-5 py-3 border border-red-200 bg-red-100 rounded-md text-red-800">
         {message}
