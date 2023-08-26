@@ -11,7 +11,10 @@
 
   let div: HTMLDivElement
 
-  async function callback(entries: IntersectionObserverEntry[], observer: IntersectionObserver) {
+  async function callback(
+    entries: IntersectionObserverEntry[],
+    observer: IntersectionObserver
+  ) {
     for (let i = 0; i < entries.length; i += 1) {
       const entry = entries[i]
 
