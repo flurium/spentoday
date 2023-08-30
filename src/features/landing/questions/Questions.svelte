@@ -32,7 +32,7 @@
   </h2>
 
   {#each questions as question}
-    <details class="bg-white mt-3 rounded-xl" open>
+    <details class="bg-white mt-3 rounded-xl">
       <summary
         class="text-secondary-600 px-10 py-6 font-bold text-xl cursor-pointer
         select-none flex justify-between items-center gap-4"

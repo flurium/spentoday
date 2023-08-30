@@ -6,6 +6,7 @@
 
   let email = ""
   let question = ""
+  let sending = false
 
   const emailSchema = z.string().email()
 
@@ -21,13 +22,19 @@
         description: "Електронна пошта та текст питання не можуть бути порожніми."
       })
     }
+    sending = true
     const response = await call(fetch, "client", {
       route: "/v1/site/questions",
       method: "POST",
       body: { email: email, content: question }
     })
+    sending = false
     if (!response) return toast.push({ title: "Не можемо відправити ваше питання" })
-    if (response.ok) return toast.push({ title: "Скоро ми надамо відповідь" })
+    if (response.ok) {
+      email = ""
+      question = ""
+      return toast.push({ title: "Скоро ми надамо відповідь" })
+    }
     if (response.status == 400) {
       return toast.push({
         title: "Порожнє поле",
@@ -46,8 +53,8 @@
 
 <footer class="rounded-t-[2rem] bg-brand-violet text-white">
   <div class="px-6 max-w-screen-xl m-auto py-36">
-    <div class="grid grid-cols-2 gap-12">
-      <h3 class="col-span-2 font-bold text-5xl md:text-7xl">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+      <h3 class="md:col-span-2 font-bold text-5xl md:text-7xl">
         ЗАЛИШТЕ СВОЇ <span class="rounded-xl px-4 bg-brand-green">ПИТАННЯ,</span>
         МИ НАДАМО ВАМ ВІДПОВІДІ
       </h3>
@@ -71,7 +78,7 @@
         />
       </form>
 
-      <button class=" place-self-end" on:click={submitQuestion}>
+      <button disabled={sending} class="place-self-end" on:click={submitQuestion}>
         <SendQuestionStar />
       </button>
     </div>
@@ -84,6 +91,7 @@
       <div class="flex flex-col gap-4">
         <a href="/#faq">FAQ</a>
         <a href="/#propositions">Що ми пропонуємо</a>
+        <a href="/#technologies">Технології</a>
         <!-- <a href="/#price">Тарифи</a>
         <a href="/#faq">FAQ</a> -->
       </div>

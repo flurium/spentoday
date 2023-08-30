@@ -49,7 +49,7 @@
       <span class="col-span-3">
         ДО
         <span class="rounded-xl bg-brand-green px-4 text-white">УСПІХУ</span>
-        -
+        —
       </span>
       <span class="col-span-3 justify-self-end">ОДИН ДЕНЬ<span /></span>
     </h1>
