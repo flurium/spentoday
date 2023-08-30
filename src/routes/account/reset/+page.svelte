@@ -1,6 +1,5 @@
 <script lang="ts">
   import { goto } from "$app/navigation"
-  import { PUBLIC_API_URL } from "$env/static/public"
   import { api } from "$lib"
   import type { PageData } from "./$types"
 
