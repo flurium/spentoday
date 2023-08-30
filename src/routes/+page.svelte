@@ -2,6 +2,7 @@
   import Benefits from "$features/landing/Benefits.svelte"
   import Pricing from "$features/landing/Pricing.svelte"
   import Propositions from "$features/landing/Propositions.svelte"
+  import Questions from "$features/landing/questions/Questions.svelte"
   import Strip from "$features/landing/Strip.svelte"
   import Technologies from "$features/landing/Technologies.svelte"
   import Footer from "$features/landing/footer/Footer.svelte"
@@ -105,26 +106,7 @@
 
   <Pricing />
 
-  <section class="px-6 max-w-screen-xl m-auto py-24 mb-32">
-    <h2 class="text-4xl md:text-6xl font-bold mb-10">
-      <span class="text-secondary-700"> ЗАЛИШИЛИСЯ </span>
-      <span class="px-4 rounded-lg bg-brand-green text-white"> ПИТАННЯ? </span>
-    </h2>
-
-    <form on:submit|preventDefault={() => {}} class="grid md:grid-cols-2 gap-3 text-lg">
-      <input type="text" class="py-6 px-8 w-full rounded-xl" placeholder="Ваше ім'я" />
-      <input
-        type="text"
-        class="py-6 px-8 w-full rounded-xl"
-        placeholder="Електронна пошта або телефон"
-      />
-      <textarea
-        rows={10}
-        class="py-6 px-8 w-full rounded-xl md:col-span-2"
-        placeholder="Питання, ми відповімо цього ж дня."
-      />
-    </form>
-  </section>
+  <Questions />
 
   <Footer />
 </main>

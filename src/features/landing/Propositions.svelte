@@ -1,4 +1,4 @@
-<section class="bg-brand-violet py-24">
+<section class="bg-brand-violet py-24" id="propositions">
   <div class="max-w-screen-xl m-auto grid grid-cols-3 gap-3 text-lg text-white">
     <div
       class="rounded-full aspect-square m-6 p-14 bg-brand-pink
