@@ -5,6 +5,7 @@ import type { PageLoad } from "./$types"
 type Subscription = {
   id: string
   email: string
+  date: string
 }
 
 export const load: PageLoad = async ({ fetch, params }) => {

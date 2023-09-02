@@ -4,7 +4,13 @@
   import type { PageData } from "./$types"
 
   export let data: PageData
-  let subscriptions = data.subscriptions
+  let subscriptions = data.subscriptions.map((x) => {
+    return {
+      id: x.id,
+      email: x.email,
+      date: new Date(x.date)
+    }
+  })
 
   async function unsubscribe(id: string) {
     const res = await call(fetch, "client", {
@@ -31,6 +37,7 @@
     {#each subscriptions as subscription}
       <div class="flex justify-between items-center rounded-lg py-3 px-5 bg-secondary-50">
         <span>{subscription.email}</span>
+        <span>{subscription.date.toLocaleDateString()}</span>
         <button
           class=" px-3 py-1 rounded-full bg-red-200"
           on:click={() => unsubscribe(subscription.id)}
