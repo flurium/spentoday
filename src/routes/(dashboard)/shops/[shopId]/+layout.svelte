@@ -8,9 +8,12 @@
   const sidebar = [
     { name: "Головна", link: routes.shop(data.shopId) },
     { name: "Товари", link: "" },
-    { name: "Замовлення", link: routes.shopOrders(data.shopId) },
-    { name: "Сторінки", link: routes.shopPages(data.shopId) },
-    { name: "Налаштування", link: routes.shopSettings(data.shopId) }
+    { name: "Замовлення", link: routes.orders(data.shopId) },
+    { name: "Підписки", link: routes.subscriptions(data.shopId) },
+    { name: "Сторінки", link: routes.pages(data.shopId) },
+    { name: "Категорії", link: routes.categories(data.shopId) },
+    { name: "Домени", link: routes.domains(data.shopId) },
+    { name: "Налаштування", link: routes.settings(data.shopId) }
   ]
 </script>
 

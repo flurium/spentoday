@@ -41,6 +41,9 @@ async function secureFetch(fetch: Fetch, info: FetchInfo) {
 
     return response
   } catch {
+    // return new Response("Call error", {
+    //   status: 500
+    // })
     return null
   }
 }
