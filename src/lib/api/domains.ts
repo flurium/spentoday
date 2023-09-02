@@ -1,6 +1,12 @@
 import { call, callJson } from "$lib/fetch"
 import type { Fetch, FetchSide } from "$lib/fetch"
 
+export type DomainVerification = {
+  type: string
+  domain: string
+  value: string
+}
+
 export type ShopDomain =
   | {
       domain: string
@@ -10,11 +16,7 @@ export type ShopDomain =
   | {
       domain: string
       status: "not-verified"
-      verifications: {
-        type: string
-        domain: string
-        value: string
-      }[]
+      verifications: DomainVerification[]
     }
 
 export async function verifyDomain(
