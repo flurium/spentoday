@@ -4,25 +4,21 @@
   import slugify from "@sindresorhus/slugify"
   import { call, callJson } from "$lib/fetch"
   import { toast } from "$features/toast"
-
-  type Page = {
-    slug: string
-    title: string
-    updatedAt: Date
-  }
+  import type { Page } from "./+page"
 
   export let data: PageData
-  $: pages = data.pages
+  $: pages = data.pages ?? []
   let newPageSlug: string = ""
   let newPageModal: HTMLDialogElement
   let slugValid: boolean = true
   let shopId: string = data.shopId
 
   function slugInput() {
-    newPageSlug = slugify(newPageSlug)
+    slugValid = isValidSlug(newPageSlug)
   }
 
   async function createPage() {
+    newPageSlug = slugify(newPageSlug)
     if (!isValidSlug(newPageSlug)) {
       slugValid = false
       return
@@ -34,17 +30,26 @@
       body: { slug: newPageSlug }
     })
     if (!response) return toast.serverError()
-
     const json = await callJson<Page>(response)
     if (!json) return toast.jsonError()
-
     pages = [...pages, json]
+    newPageModal.close()
+  }
+  async function deletePage(slug: string) {
+    const response = await call(fetch, "client", {
+      route: `/v1/site/dashboard/${data.shopId}/page/${slug}`,
+      method: "DELETE"
+    })
+    if (!response || !response.ok) return toast.serverError()
+
+    pages = pages.filter((x) => x.slug != slug)
+    return
   }
 </script>
 
 <button
   class="px-4 py-2 bg-gray-800 text-white hover:bg-gray-900 rounded-md"
-  on:click={() => newPageModal.showModal()}>Add new</button
+  on:click={() => newPageModal.showModal()}>Створити нову</button
 >
 
 <dialog bind:this={newPageModal} class="p-10 bg-white text-lg rounded-md max-w-2xl">
@@ -71,13 +76,13 @@
         class="px-4 py-2 bg-gray-300 hover:bg-gray-200 rounded-md"
         on:click={() => newPageModal.close()}
       >
-        Cancel
+        Скасувати
       </button>
       <button
         class="px-4 py-2 bg-gray-800 text-white hover:bg-gray-900 rounded-md"
         type="submit"
       >
-        Add
+        Додати
       </button>
     </div>
   </form>
@@ -91,16 +96,20 @@
       <h5 class="mb-3 text-base font-semibold text-gray-900 md:text-xl dark:text-white">
         {page.title}
       </h5>
-      <span>{page.slug}</span>
-      <span
-        >{page.updatedAt.getDay()}/{page.updatedAt.getMonth()}/{page.updatedAt.getFullYear()}</span
-      >
+      <span>{page.slug}</span><br/>
+      <span>{page.updatedAt}</span><br/>
       <a
         class="inline-block rounded bg-indigo-500 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-danger-600 focus:bg-danger-600 focus:outline-none focus:ring-0 active:bg-danger-700"
         href={routes.shopPage(shopId, page.slug)}
       >
-        to Page
+        до Сторінки
       </a>
+      <button
+      class="inline-block rounded bg-red-700 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-danger-600 focus:bg-danger-600 focus:outline-none focus:ring-0 active:bg-danger-700"
+      on:click={() => deletePage(page.slug)}
+    >
+      Видалити
+    </button>
     </div>
   {/each}
 </div>

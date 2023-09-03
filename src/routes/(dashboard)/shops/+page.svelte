@@ -13,7 +13,7 @@
 
   async function addShop() {
     const response = await call(fetch, "client", {
-      route: "/v1/dashboard/addshop",
+      route: "/v1/site/dashboard/addshop",
       method: "POST",
       body: { shopName: shopName }
     })
