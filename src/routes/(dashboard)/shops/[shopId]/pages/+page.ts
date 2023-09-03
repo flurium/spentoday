@@ -15,7 +15,7 @@ export const load = (async ({ fetch, params }) => {
   })
 
   if (!response) throw errors.serverError()
-  
+
   const json = await callJson<Page[]>(response)
 
   if (!json) throw errors.jsonError()
