@@ -73,6 +73,7 @@
     />
     <div class="gap-4 items-end">
       <button
+        type="reset"
         class="px-4 py-2 bg-gray-300 hover:bg-gray-200 rounded-md"
         on:click={() => newPageModal.close()}
       >
@@ -96,8 +97,8 @@
       <h5 class="mb-3 text-base font-semibold text-gray-900 md:text-xl dark:text-white">
         {page.title}
       </h5>
-      <span>{page.slug}</span><br/>
-      <span>{page.updatedAt}</span><br/>
+      <span>{page.slug}</span><br />
+      <span>{page.updatedAt}</span><br />
       <a
         class="inline-block rounded bg-indigo-500 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-danger-600 focus:bg-danger-600 focus:outline-none focus:ring-0 active:bg-danger-700"
         href={routes.shopPage(shopId, page.slug)}
@@ -105,11 +106,11 @@
         до Сторінки
       </a>
       <button
-      class="inline-block rounded bg-red-700 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-danger-600 focus:bg-danger-600 focus:outline-none focus:ring-0 active:bg-danger-700"
-      on:click={() => deletePage(page.slug)}
-    >
-      Видалити
-    </button>
+        class="inline-block rounded bg-red-700 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-danger-600 focus:bg-danger-600 focus:outline-none focus:ring-0 active:bg-danger-700"
+        on:click={() => deletePage(page.slug)}
+      >
+        Видалити
+      </button>
     </div>
   {/each}
 </div>
