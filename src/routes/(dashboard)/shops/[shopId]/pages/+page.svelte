@@ -30,11 +30,26 @@
       body: { slug: newPageSlug }
     })
     if (!response) return toast.serverError()
-    const json = await callJson<Page>(response)
-    if (!json) return toast.jsonError()
-    pages = [...pages, json]
-    newPageModal.close()
+
+    if (response.ok) {
+      const json = await callJson<Page>(response)
+      if (!json) return toast.jsonError()
+
+      pages = [...pages, json]
+      newPageModal.close()
+      return
+    }
+
+    if (response.status == 403) {
+      return toast.push({
+        title: "Досягнуто обмеження",
+        description: "Ви досягли максимальної кількості сторінок для вашого тарифу."
+      })
+    }
+
+    return toast.serverError()
   }
+
   async function deletePage(slug: string) {
     const response = await call(fetch, "client", {
       route: `/v1/site/dashboard/${data.shopId}/page/${slug}`,
