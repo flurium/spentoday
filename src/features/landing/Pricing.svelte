@@ -44,13 +44,19 @@
     </ul>
 
     <footer class="mt-8">
-      <a
+      <!-- <a
         class="block w-fit rounded-full py-4 px-9 bg-white
           text-brand-dark font-bold"
         href="/login"
       >
         ПОЧАТИ
-      </a>
+      </a> -->
+      <span
+        class="block w-fit rounded-full py-4 px-9 bg-white
+          text-brand-dark font-bold"
+      >
+        НЕЗАБАРОМ
+      </span>
     </footer>
   </div>
   <div class="p-8 bg-brand-pink rounded-xl grid grid-rows-[auto_1fr_auto]">
@@ -68,13 +74,19 @@
     </ul>
 
     <footer class="mt-8">
-      <a
+      <!-- <a
         class="block w-fit rounded-full py-4 px-9 bg-brand-dark
           text-white font-bold"
         href="/login"
       >
         ПОЧАТИ
-      </a>
+      </a> -->
+      <span
+        class="block w-fit rounded-full py-4 px-9 bg-brand-dark
+          text-white font-bold"
+      >
+        НЕЗАБАРОМ
+      </span>
     </footer>
   </div>
 </section>
