@@ -52,13 +52,13 @@ When business share link to their shop, they often don't want users to be able t
 
 Trial plan is nessasary to give opportunity to try service. But it should be limited, because we need to gain money. Ideas for current stage:
 
-|           | Trial | Pro  | Business | Enterprice   |
-| --------- | ----- | ---- | -------- | ------------ |
-| Price     | 0 $   | 25 $ | 100 $    | custom       |
-| Support   | q&a   | 24/7 | 24/7     | 24/7 primary |
-| Products  | 3     | 1000 | 5000     | unlimited    |
-| Workers   | 2     | 10   | 100      | unlimited    |
-| Analytics | no    | full | full     | full         |
+|          | Hobby | Pro  | Business  | Enterprice   |
+| -------- | ----- | ---- | --------- | ------------ |
+| Price    | 0 $   | 25 $ | 100 $     | custom       |
+| Support  | q&a   | 24/7 | 24/7      | 24/7 primary |
+| Shops    | 1     | 3    | unlimited | unlimited    |
+| Products | 10    | 500  | unlimited | unlimited    |
+| Pages    | 5     | 25   | unlimited | unlimited    |
 
 ### Products
 

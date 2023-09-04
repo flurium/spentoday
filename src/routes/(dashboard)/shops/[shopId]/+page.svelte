@@ -29,10 +29,22 @@
     })
     if (!response) return toast.serverError()
 
-    const json = await callJson<Product>(response)
-    if (!json) return toast.jsonError()
+    if (response.ok) {
+      const json = await callJson<Product>(response)
+      if (!json) return toast.jsonError()
 
-    products = [...products, json]
+      products = [...products, json]
+      return
+    }
+
+    if (response.status == 403) {
+      return toast.push({
+        title: "Досягнуто обмеження",
+        description: "Ви досягли максимальної кількості продуктів для вашого тарифу."
+      })
+    }
+
+    return toast.serverError()
   }
 
   let start = data.products.length

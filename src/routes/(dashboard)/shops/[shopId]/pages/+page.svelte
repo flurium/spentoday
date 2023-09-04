@@ -35,10 +35,22 @@
     })
     if (!response) return toast.serverError()
 
-    const json = await callJson<Page>(response)
-    if (!json) return toast.jsonError()
+    if (response.ok) {
+      const json = await callJson<Page>(response)
+      if (!json) return toast.jsonError()
 
-    pages = [...pages, json]
+      pages = [...pages, json]
+      return
+    }
+
+    if (response.status == 403) {
+      return toast.push({
+        title: "Досягнуто обмеження",
+        description: "Ви досягли максимальної кількості сторінок для вашого тарифу."
+      })
+    }
+
+    return toast.serverError()
   }
 </script>
 

@@ -17,13 +17,24 @@
       method: "POST",
       body: { shopName: shopName }
     })
-    if (!response || !response.ok) return toast.serverError()
+    if (!response) return toast.serverError()
 
-    const shop = await callJson<DashboardShop>(response)
-    if (!shop) return toast.jsonError()
+    if (response.ok) {
+      const shop = await callJson<DashboardShop>(response)
+      if (!shop) return toast.jsonError()
 
-    shops = [...shops, shop]
-    return
+      shops = [...shops, shop]
+      return
+    }
+
+    if (response.status == 403) {
+      return toast.push({
+        title: "Досягнуто обмеження",
+        description: "Ви досягли максимальної кількості магазинів для вашого тарифу."
+      })
+    }
+
+    return toast.serverError()
   }
 
   async function deleteShop(shopId: string) {
