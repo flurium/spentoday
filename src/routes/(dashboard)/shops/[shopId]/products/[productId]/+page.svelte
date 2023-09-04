@@ -3,6 +3,7 @@
   import type { PageData } from "./$types"
   import { api, imageSize } from "$lib"
   import { toast } from "$features/toast"
+  import { slug, slugUpdate } from "$lib/slug"
 
   export let data: PageData
   $: images = data.product.images
@@ -15,7 +16,11 @@
   let description: string = data.product.description
   let seoTitle: string = data.product.seoTitle
   let seoDescription: string = data.product.seoDescription
-  let seoSlug: string = data.product.seoSlug
+
+  let seoSlug = data.product.seoSlug
+  $: {
+    console.log(seoSlug)
+  }
 
   let status: string = "Збережено"
   let timer: number = 0
@@ -232,20 +237,21 @@
   />
 
   <h3 class="mt-4 text-2xl">SEO - search engine optimizations</h3>
+
   <input
     class=" bg-gray-100 focus:bg-gray-50 px-6 py-3 rounded-md border border-gray-200"
-    bind:value={seoSlug}
     on:keyup={debounceChange}
-    on:input={() => {
-      seoSlug = slugify(seoSlug.replace(" ", "-"), {
-        preserveTrailingDash: true
-      })
-    }}
-    on:change={() => {
-      seoSlug = slugify(seoSlug)
-    }}
+    use:slug={seoSlug}
     placeholder="Slug, приклад: product-name"
   />
+  <!-- <input
+    class=" bg-gray-100 focus:bg-gray-50 px-6 py-3 rounded-md border border-gray-200"
+    on:keyup={debounceChange}
+    bind:value={seoSlug}
+    use:slugUpdate={(val) => (seoSlug = val)}
+    placeholder="Slug, приклад: product-name"
+  /> -->
+
   <input
     class=" bg-gray-100 focus:bg-gray-50 px-6 py-3 rounded-md border border-gray-200"
     bind:value={seoTitle}
