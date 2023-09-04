@@ -1,12 +1,7 @@
+import type { ApiSubscription } from "$features/subscriptions"
 import { errors } from "$lib"
 import { call, callJson } from "$lib/fetch"
 import type { PageLoad } from "./$types"
-
-type Subscription = {
-  id: string
-  email: string
-  date: string
-}
 
 export const load: PageLoad = async ({ fetch, params }) => {
   const shopId = params.shopId
@@ -17,7 +12,7 @@ export const load: PageLoad = async ({ fetch, params }) => {
   })
   if (response == null) throw errors.serverError()
 
-  const subscriptions = await callJson<Subscription[]>(response)
+  const subscriptions = await callJson<ApiSubscription[]>(response)
   if (subscriptions == null) throw errors.jsonError()
 
   return {
