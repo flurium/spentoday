@@ -6,6 +6,7 @@
   import ScrollLoad from "$features/ScrollLoad.svelte"
   import { shopProducts, type Product } from "$lib/api"
   import { toast } from "$features/toast"
+  import autoAnimate from "@formkit/auto-animate"
 
   export let data: PageData
   let products = data.products
@@ -86,7 +87,7 @@
   </button>
 </form>
 
-<div class="flex flex-col gap-3 mt-8 rounded-xl bg-white p-8">
+<div class="flex flex-col gap-3 mt-8 rounded-xl bg-white p-8" use:autoAnimate>
   {#each products as product (product.id)}
     <a
       class="flex justify-between items-center rounded-lg hover:bg-secondary-50 py-3 px-5 bg-secondary-50"

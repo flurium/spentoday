@@ -1,9 +1,10 @@
 <script lang="ts">
-  import { toSubscription } from "$features/subscriptions"
+  import { querySubscriptions, toSubscription } from "$features/subscriptions"
   import { toast } from "$features/toast"
   import { call, callJson } from "$lib/fetch"
-  import type { ApiSubscription } from "$features/subscriptions"
+  import { ukrDateString, type ApiSubscription } from "$features/subscriptions"
   import type { PageData } from "./$types"
+  import autoAnimate from "@formkit/auto-animate"
 
   export let data: PageData
   let subscriptions = data.subscriptions.map(toSubscription)
@@ -41,11 +42,22 @@
     subscriptions = [...subscriptions, toSubscription(json)]
     emailInput = ""
   }
+
+  let searchInput = ""
+  let timer = 0
+  function debounceSearch() {
+    clearTimeout(timer)
+    timer = setTimeout(async () => {
+      const res = await querySubscriptions(fetch, "client", data.shopId, searchInput)
+      if (res == null) return
+      subscriptions = res.map(toSubscription)
+    }, 300)
+  }
 </script>
 
 <h1 class="font-bold text-3xl text-secondary-700 mb-8">Ваші підписники</h1>
 
-<section class="bg-white p-8 rounded-xl">
+<section class="bg-white p-8 rounded-xl" use:autoAnimate>
   <form on:submit|preventDefault={addSubscriber} class="flex gap-4">
     <input
       bind:value={emailInput}
@@ -57,33 +69,36 @@
     <button class="px-8 py-3 rounded-md bg-brand-green" type="submit">Додати</button>
   </form>
 
-  {#if subscriptions.length == 0}
-    <span>Немає підписок</span>
-  {:else}
-    <div
-      class="grid grid-cols-2 px-5 py-3 text-secondary-400
-      border border-secondary-100 rounded-md mt-4"
-    >
-      <span>Пошта</span>
-      <span>Коли підписалися</span>
-    </div>
+  <input
+    bind:value={searchInput}
+    on:input={debounceSearch}
+    placeholder="Шукати підписника..."
+    class="rounded-md px-5 py-3 border border-secondary-100 w-full mt-8"
+  />
 
-    <div class="grid grid-cols-2">
-      {#each subscriptions as subscription, i (subscription.id)}
+  <div
+    class="grid grid-cols-2 gap-x-8 px-5 py-3 text-secondary-400
+      border border-secondary-100 rounded-md mt-4"
+  >
+    <span>Пошта</span>
+    <span>Коли підписалися</span>
+  </div>
+
+  {#if subscriptions.length == 0}
+    <p class="py-5 pl-5">Немає підписок</p>
+  {:else}
+    {#each subscriptions as subscription, i (subscription.id)}
+      <div
+        class="grid grid-cols-2 gap-x-8 {i != subscriptions.length - 1
+          ? 'border-b border-b-secondary-100'
+          : ''}"
+      >
         <!-- <div
           class="flex justify-between items-center py-3
           {i != subscriptions.length - 1 ? 'border-b border-b-secondary-100' : ''}"
         > -->
-        <span
-          class="py-5 pl-5 {i != subscriptions.length - 1
-            ? 'border-b border-b-secondary-100'
-            : ''}">{subscription.email}</span
-        >
-        <span
-          class="py-5 pr-5 {i != subscriptions.length - 1
-            ? 'border-b border-b-secondary-100'
-            : ''}">{subscription.date.toLocaleDateString()}</span
-        >
+        <span class="py-5 pl-5">{subscription.email}</span>
+        <span class="py-5 pr-5">{ukrDateString(subscription.date)}</span>
         <!-- <button
             class=" px-3 py-1 rounded-full bg-red-200"
             on:click={() => unsubscribe(subscription.id)}
@@ -91,7 +106,7 @@
             Відписати
           </button> -->
         <!-- </div> -->
-      {/each}
-    </div>
+      </div>
+    {/each}
   {/if}
 </section>
