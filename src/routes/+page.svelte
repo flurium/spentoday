@@ -83,6 +83,7 @@
       >
         <h2 class="text-6xl lg:text-8xl font-bold col-span-3">
           <span class="px-4 bg-brand-pink text-white rounded-xl">ЗРОБІТЬ</span>
+          КРОК
         </h2>
         <h2 class="text-6xl lg:text-8xl font-bold col-span-3">ДО БІЗНЕСУ РАЗОМ</h2>
         <h2 class="text-6xl lg:text-8xl font-bold col-start-2">З НАМИ</h2>
