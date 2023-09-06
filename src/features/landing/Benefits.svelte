@@ -3,12 +3,18 @@
     grid grid-cols-3 md:grid-rows-[auto_1fr] md:grid-cols-9 gap-x-3"
   id="benefits"
 >
-  <div class="col-start-3 rounded-t-lg bg-white h-7" />
+  <div
+    class="col-start-3 rounded-t-lg bg-white h-7
+    border-b-2 border-dashed border-secondary-100"
+  />
   <div
     class="col-start-3 md:row-start-1 md:col-start-6
-      rounded-t-lg bg-brand-green h-7"
+    rounded-t-lg bg-brand-green h-7 border-b-2 border-dashed border-secondary-100"
   />
-  <div class="col-start-3 md:col-start-9 rounded-t-lg bg-brand-violet h-7" />
+  <div
+    class="col-start-3 md:col-start-9 rounded-t-lg bg-brand-violet h-7
+    border-b-2 border-dashed border-secondary-100"
+  />
 
   <div
     class="row-start-2 col-span-3
@@ -32,7 +38,7 @@
 
   <div
     class="row-start-6 md:row-start-2 col-span-3 mb-3
-      text-white bg-brand-violet rounded-b-lg rounded-tl-lg p-7"
+    text-white bg-brand-violet rounded-b-lg rounded-tl-lg p-7"
   >
     <span class="text-4xl font-bold">100%</span>
     <h3 class="font-bold text-xl pt-10">ЗАДОВОЛЕНИХ КЛІЄНТІВ</h3>
