@@ -5,13 +5,14 @@
   import { call, callJson } from "$lib/fetch"
   import { toast } from "$features/toast"
   import type { Page } from "./+page"
+  import { ukrDateString } from "$features/subscriptions"
+  import autoAnimate from "@formkit/auto-animate"
 
   export let data: PageData
-  $: pages = data.pages ?? []
-  let newPageSlug: string = ""
+  let pages = data.pages
+  let newPageSlug = ""
   let newPageModal: HTMLDialogElement
-  let slugValid: boolean = true
-  let shopId: string = data.shopId
+  let slugValid = true
 
   function slugInput() {
     slugValid = isValidSlug(newPageSlug)
@@ -49,17 +50,6 @@
 
     return toast.serverError()
   }
-
-  async function deletePage(slug: string) {
-    const response = await call(fetch, "client", {
-      route: `/v1/site/dashboard/${data.shopId}/page/${slug}`,
-      method: "DELETE"
-    })
-    if (!response || !response.ok) return toast.serverError()
-
-    pages = pages.filter((x) => x.slug != slug)
-    return
-  }
 </script>
 
 <button
@@ -70,13 +60,13 @@
 <dialog bind:this={newPageModal} class="p-10 bg-white text-lg rounded-md max-w-2xl">
   <form class="flex gap-8 flex-col" on:submit|preventDefault={createPage}>
     <h3>
-      To add new page enter page slug/path, like: privacy-policy. Slug will be seen in url
-      of page.
+      Щоб додати нову сторінку, введіть посилання/шлях, наприклад: privacy-policy. Його
+      буде видно в URL-адресі сторінки.
     </h3>
 
     {#if !slugValid}
       <p class="border-red-800 rounded-md p-3 px-4 bg-red-50 text-red-800">
-        Slug/path can only contain lowercase english symbols, numbers and minus (-)
+        Посилання/шлях може містити лише малі англійські символи, цифри та мінус (-)
       </p>
     {/if}
 
@@ -84,7 +74,7 @@
       class="bg-gray-100 focus:bg-gray-50 px-6 py-4 rounded-md border border-gray-200"
       bind:value={newPageSlug}
       on:input={slugInput}
-      placeholder="New page slug"
+      placeholder="new-page-slug"
     />
     <div class="gap-4 items-end">
       <button
@@ -104,28 +94,25 @@
   </form>
 </dialog>
 
-<div class="flex flex-wrap justify-center mt-10">
-  {#each pages as page}
-    <div
-      class="max-w-sm p-6 m-2 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+<section class="bg-white p-8 rounded-xl" use:autoAnimate>
+  <div
+    class="grid grid-cols-3 gap-x-8 px-5 py-3 text-secondary-400
+    border border-secondary-100 rounded-md mt-4"
+  >
+    <span>Посилання</span>
+    <span>Заголовок</span>
+    <span>Коли оновлено</span>
+  </div>
+
+  {#each pages as page, i (page.slug)}
+    <a
+      href={routes.page(data.shopId, page.slug)}
+      class="grid grid-cols-3 gap-x-8 px-5
+      {i != pages.length - 1 ? 'border-b border-b-secondary-100' : ''}"
     >
-      <h5 class="mb-3 text-base font-semibold text-gray-900 md:text-xl dark:text-white">
-        {page.title}
-      </h5>
-      <span>{page.slug}</span><br />
-      <span>{page.updatedAt}</span><br />
-      <a
-        class="inline-block rounded bg-indigo-500 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-danger-600 focus:bg-danger-600 focus:outline-none focus:ring-0 active:bg-danger-700"
-        href={routes.shopPage(shopId, page.slug)}
-      >
-        до Сторінки
-      </a>
-      <button
-        class="inline-block rounded bg-red-700 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-danger-600 focus:bg-danger-600 focus:outline-none focus:ring-0 active:bg-danger-700"
-        on:click={() => deletePage(page.slug)}
-      >
-        Видалити
-      </button>
-    </div>
+      <span class="py-5">{page.slug}</span>
+      <span class="py-5">{page.title}</span>
+      <span class="py-5">{ukrDateString(new Date(page.updatedAt))}</span>
+    </a>
   {/each}
-</div>
+</section>

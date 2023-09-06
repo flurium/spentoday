@@ -5,7 +5,7 @@ import type { PageLoad } from "./$types"
 export type Page = {
   slug: string
   title: string
-  updatedAt: Date
+  updatedAt: string
 }
 
 export const load = (async ({ fetch, params }) => {

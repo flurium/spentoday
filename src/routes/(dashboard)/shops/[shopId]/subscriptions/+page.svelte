@@ -89,9 +89,8 @@
   {:else}
     {#each subscriptions as subscription, i (subscription.id)}
       <div
-        class="grid grid-cols-2 gap-x-8 {i != subscriptions.length - 1
-          ? 'border-b border-b-secondary-100'
-          : ''}"
+        class="grid grid-cols-2 gap-x-8 px-5
+         {i != subscriptions.length - 1 ? 'border-b border-b-secondary-100' : ''}"
       >
         <!-- <div
           class="flex justify-between items-center py-3

@@ -6,6 +6,7 @@
   import DnsTable from "$features/domains/DnsTable.svelte"
   import DomainInfo from "$features/domains/DomainInfo.svelte"
   import CrossIcon from "$features/domains/CrossIcon.svelte"
+  import autoAnimate from "@formkit/auto-animate"
 
   export let data: PageData
   let domains = data.domains
@@ -90,7 +91,7 @@
 
 <h1 class="font-bold text-3xl text-secondary-700 mb-8">Домени</h1>
 
-{#if hasFreeDomain == true && closeFreeDomainNotification == false}
+{#if hasFreeDomain == false && closeFreeDomainNotification == false}
   <button
     class="py-5 px-6 mb-8 text-sm flex justify-between items-center gap-3
     text-secondary-700 bg-brand-green bg-opacity-50 rounded-xl w-full"
@@ -124,7 +125,7 @@
     </button>
   </form>
 
-  <div class="flex flex-col gap-7">
+  <div class="flex flex-col gap-7" use:autoAnimate>
     {#each domains as domain, i (domain.domain)}
       <DomainInfo
         {domain}

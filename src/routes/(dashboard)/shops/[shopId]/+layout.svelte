@@ -7,7 +7,7 @@
 
   const sidebar = [
     { name: "Головна", link: routes.shop(data.shopId) },
-    { name: "Товари", link: "" },
+    { name: "Товари", link: routes.products(data.shopId) },
     { name: "Замовлення", link: routes.orders(data.shopId) },
     { name: "Підписки", link: routes.subscriptions(data.shopId) },
     { name: "Сторінки", link: routes.pages(data.shopId) },
