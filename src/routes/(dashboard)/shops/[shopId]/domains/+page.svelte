@@ -7,11 +7,13 @@
   import DomainInfo from "$features/domains/DomainInfo.svelte"
   import CrossIcon from "$features/domains/CrossIcon.svelte"
   import autoAnimate from "@formkit/auto-animate"
+  import DashboardSection from "$features/dashboard/DashboardSection.svelte"
 
   export let data: PageData
   let domains = data.domains
 
-  $: hasFreeDomain = domains.findIndex((x) => x.domain.endsWith("spentoday.com")) != -1
+  $: hasFreeDomain =
+    domains.findIndex((x) => x.domain.endsWith("spentoday.com")) != -1
   let closeFreeDomainNotification: boolean = false
 
   let domainInput: string = ""
@@ -20,7 +22,8 @@
     if (hasFreeDomain && domainInput.endsWith(".spentoday.com")) {
       return toast.push({
         title: "Безкоштовний домен вже використано",
-        description: "Доступно лише одержання одного безкоштовного домену .spentoday.com."
+        description:
+          "Доступно лише одержання одного безкоштовного домену .spentoday.com."
       })
     }
     const res = await api.addDomain(fetch, "client", {
@@ -34,12 +37,14 @@
     if (res.status == "has-free-domain") {
       return toast.push({
         title: "Безкоштовний домен вже використано",
-        description: "Доступно лише одержання одного безкоштовного домену .spentoday.com."
+        description:
+          "Доступно лише одержання одного безкоштовного домену .spentoday.com."
       })
     }
     if (res.status == "domain-taken")
       return toast.push({ title: "Цей домен вже зайнятий" })
-    if (res.status == "bad-domain") return toast.push({ title: "Домен не є коректним" })
+    if (res.status == "bad-domain")
+      return toast.push({ title: "Домен не є коректним" })
     if (res.status == "no-permission") {
       goto(routes.shop(data.shopId))
       return
@@ -53,13 +58,18 @@
       domains = domains.filter((x) => x.domain != domain)
       return
     }
-    if (res == "not-found") return toast.push({ title: "Ми не можемо знайти цей домен" })
-    if (res == "bad-domain") return toast.push({ title: "Вказаний домен є некоректним" })
+    if (res == "not-found")
+      return toast.push({ title: "Ми не можемо знайти цей домен" })
+    if (res == "bad-domain")
+      return toast.push({ title: "Вказаний домен є некоректним" })
     return toast.serverError()
   }
 
   async function verifyDomain(domain: string) {
-    const res = await api.verifyDomain(fetch, "client", { domain, shopId: data.shopId })
+    const res = await api.verifyDomain(fetch, "client", {
+      domain,
+      shopId: data.shopId
+    })
 
     if (res.status == "ok") {
       const domainElement = domains.find((x) => x.domain == domain)
@@ -100,18 +110,18 @@
     }}
   >
     <p>
-      Безкоштовно отримайте 1 домен від нашого сервісу! Наприклад: my-shop.spentoday.com.
-      Для цього введіть у поле назву домену з закінченням
+      Безкоштовно отримайте 1 домен від нашого сервісу! Наприклад:
+      my-shop.spentoday.com. Для цього введіть у поле назву домену з закінченням
       <b>.spentoday.com</b>.
     </p>
     <CrossIcon />
   </button>
 {/if}
 
-<section class="bg-white p-8 rounded-xl">
+<DashboardSection animate={true}>
   <form on:submit|preventDefault={addDomain} class="flex gap-5 mb-10">
     <input
-      class="flex-1 bg-gray-100 px-5 py-2 rounded-md"
+      class="flex-1 border border-secondary-200 px-5 py-2 rounded-md"
       bind:value={domainInput}
       placeholder={hasFreeDomain
         ? "Кастомний домен: example.com"
@@ -135,4 +145,4 @@
       />
     {/each}
   </div>
-</section>
+</DashboardSection>

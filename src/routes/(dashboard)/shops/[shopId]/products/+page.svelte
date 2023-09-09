@@ -7,6 +7,7 @@
   import { shopProducts, type Product } from "$lib/api"
   import { toast } from "$features/toast"
   import autoAnimate from "@formkit/auto-animate"
+  import DashboardSection from "$features/dashboard/DashboardSection.svelte"
 
   export let data: PageData
   let products = data.products
@@ -41,7 +42,8 @@
     if (response.status == 403) {
       return toast.push({
         title: "Досягнуто обмеження",
-        description: "Ви досягли максимальної кількості продуктів для вашого тарифу."
+        description:
+          "Ви досягли максимальної кількості продуктів для вашого тарифу."
       })
     }
 
@@ -77,7 +79,7 @@
 
 <form on:submit|preventDefault={add} class="flex gap-2">
   <input
-    class="flex-1 bg-white rounded-lg px-4 py-3"
+    class="flex-1 border border-secondary-200 rounded-lg px-5 py-3"
     bind:value={newProduct}
     placeholder="Для додавання нового продукту введіть його назву."
   />
@@ -87,27 +89,33 @@
   </button>
 </form>
 
-<div class="flex flex-col gap-3 mt-8 rounded-xl bg-white p-8" use:autoAnimate>
-  {#each products as product, i (product.id)}
-    <a
-      class="flex justify-between items-center rounded-lg py-3 px-5
+<DashboardSection class="mt-8" animate={true}>
+  <div class="flex flex-col gap-3">
+    {#each products as product, i (product.id)}
+      <a
+        class="flex justify-between items-center rounded-lg py-3 px-5
       {i < products.length - 1 ? 'border-b border-b-secondary-100' : ''}"
-      href={routes.product(data.shopId, product.id)}
-    >
-      <span>
-        {product.name}
-      </span>
+        href={routes.product(data.shopId, product.id)}
+      >
+        <span>
+          {product.name}
+        </span>
 
-      {#if product.isDraft}
-        <span class="bg-secondary-600 text-white text-sm rounded-full py-1 px-2">
-          Чернетка
-        </span>
-      {:else}
-        <span class="bg-brand-green text-white text-sm rounded-full py-1 px-2">
-          Активний
-        </span>
-      {/if}
-    </a>
-  {/each}
-  <ScrollLoad load={loadProducts} />
-</div>
+        {#if product.isDraft}
+          <span
+            class="bg-secondary-600 text-white text-sm rounded-full py-1 px-2"
+          >
+            Чернетка
+          </span>
+        {:else}
+          <span
+            class="bg-brand-green text-white text-sm rounded-full py-1 px-2"
+          >
+            Активний
+          </span>
+        {/if}
+      </a>
+    {/each}
+    <ScrollLoad load={loadProducts} />
+  </div>
+</DashboardSection>

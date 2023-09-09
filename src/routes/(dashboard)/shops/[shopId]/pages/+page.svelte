@@ -7,6 +7,7 @@
   import type { Page } from "./+page"
   import { ukrDateString } from "$features/subscriptions"
   import autoAnimate from "@formkit/auto-animate"
+  import DashboardSection from "$features/dashboard/DashboardSection.svelte"
 
   export let data: PageData
   let pages = data.pages
@@ -44,7 +45,8 @@
     if (response.status == 403) {
       return toast.push({
         title: "Досягнуто обмеження",
-        description: "Ви досягли максимальної кількості сторінок для вашого тарифу."
+        description:
+          "Ви досягли максимальної кількості сторінок для вашого тарифу."
       })
     }
 
@@ -57,16 +59,20 @@
   on:click={() => newPageModal.showModal()}>Створити нову</button
 >
 
-<dialog bind:this={newPageModal} class="p-10 bg-white text-lg rounded-md max-w-2xl">
+<dialog
+  bind:this={newPageModal}
+  class="p-10 bg-white text-lg rounded-md max-w-2xl"
+>
   <form class="flex gap-8 flex-col" on:submit|preventDefault={createPage}>
     <h3>
-      Щоб додати нову сторінку, введіть посилання/шлях, наприклад: privacy-policy. Його
-      буде видно в URL-адресі сторінки.
+      Щоб додати нову сторінку, введіть посилання/шлях, наприклад:
+      privacy-policy. Його буде видно в URL-адресі сторінки.
     </h3>
 
     {#if !slugValid}
       <p class="border-red-800 rounded-md p-3 px-4 bg-red-50 text-red-800">
-        Посилання/шлях може містити лише малі англійські символи, цифри та мінус (-)
+        Посилання/шлях може містити лише малі англійські символи, цифри та мінус
+        (-)
       </p>
     {/if}
 
@@ -94,11 +100,8 @@
   </form>
 </dialog>
 
-<section class="bg-white p-8 rounded-xl" use:autoAnimate>
-  <div
-    class="grid grid-cols-3 gap-x-8 px-5 py-3 text-secondary-400
-    border border-secondary-100 rounded-md mt-4"
-  >
+<DashboardSection class="mt-5" animate={true}>
+  <div class="grid grid-cols-3 gap-x-8 px-5 py-3 text-secondary-400">
     <span>Посилання</span>
     <span>Заголовок</span>
     <span>Коли оновлено</span>
@@ -107,12 +110,11 @@
   {#each pages as page, i (page.slug)}
     <a
       href={routes.page(data.shopId, page.slug)}
-      class="grid grid-cols-3 gap-x-8 px-5
-      {i != pages.length - 1 ? 'border-b border-b-secondary-100' : ''}"
+      class="grid grid-cols-3 gap-x-8 px-5 border-t border-secondary-100"
     >
       <span class="py-5">{page.slug}</span>
       <span class="py-5">{page.title}</span>
       <span class="py-5">{ukrDateString(new Date(page.updatedAt))}</span>
     </a>
   {/each}
-</section>
+</DashboardSection>

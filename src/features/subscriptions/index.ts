@@ -37,7 +37,7 @@ const months = [
 
 export function ukrDateString(date: Date) {
   const month = months[date.getMonth()]
-  return `${date.getDate()} ${month} ${date.getFullYear()}`
+  return `${date.getDate()} ${month} ${date.getFullYear()} р`
 }
 
 export async function querySubscriptions(

@@ -111,8 +111,6 @@
 
   async function setTopBanner() {
     const formdata = new FormData()
-    const { width, height } = await imageSize(topFiles[0])
-    if (width != 1299 || height != 759) return alert("top Banner must be 1299x759")
     formdata.append("file", topFiles[0])
     const response = await call(fetch, "client", {
       route: `/v1/site/shopsettings/${data.shopId}/top`,

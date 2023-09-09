@@ -23,23 +23,30 @@
   />
 </svelte:head>
 
-<header class="px-5 py-8 max-w-screen-xl m-auto flex justify-between items-center">
-  <nav class="basis-1/4">
-    <a class="text-brand-violet font-bold text-2xl" href="/">Spentoday</a>
-  </nav>
+<header class="px-5 py-8 bg-secondary-100">
+  <div class="flex justify-between items-center max-w-screen-xl m-auto">
+    <nav class="basis-1/4">
+      <a class="text-brand-violet font-bold text-2xl" href="/">Spentoday</a>
+    </nav>
 
-  <nav class="flex-1 justify-center flex gap-5">
-    <a href="/#benefits">Переваги</a>
-    <a href="/#price">Ціна</a>
-    <a href="/#faq">FAQ</a>
-  </nav>
+    <nav class="flex-1 justify-center flex gap-5">
+      <a href="/#benefits">Переваги</a>
+      <a href="/#price">Ціна</a>
+      <a href="/#faq">FAQ</a>
+    </nav>
 
-  <nav class="basis-1/4 text-right">
-    <a class="px-8 py-3 rounded-full bg-brand-violet text-white" href="/login">Почати</a>
-  </nav>
+    <nav class="basis-1/4 text-right">
+      <a
+        class="px-8 py-3 rounded-full bg-brand-violet text-white"
+        href="/login"
+      >
+        Почати
+      </a>
+    </nav>
+  </div>
 </header>
 
-<main class="min-h-[70vh]">
+<main class="min-h-[70vh] bg-secondary-100">
   <section class="px-6 pt-10 pb-36">
     <h1
       class="max-w-screen-xl m-auto text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-bold
@@ -85,12 +92,14 @@
           <span class="px-4 bg-brand-pink text-white rounded-xl">ЗРОБІТЬ</span>
           КРОК
         </h2>
-        <h2 class="text-6xl lg:text-8xl font-bold col-span-3">ДО БІЗНЕСУ РАЗОМ</h2>
+        <h2 class="text-6xl lg:text-8xl font-bold col-span-3">
+          ДО БІЗНЕСУ РАЗОМ
+        </h2>
         <h2 class="text-6xl lg:text-8xl font-bold col-start-2">З НАМИ</h2>
 
         <p class="col-start-2 row-start-4">
-          Ми запрошуємо вас випробувати всі можливості платформи абсолютно безкоштовно на
-          14 днів. Почніть свій шлях до успіху вже сьогодні!
+          Ми запрошуємо вас випробувати всі можливості платформи абсолютно
+          безкоштовно на 14 днів. Почніть свій шлях до успіху вже сьогодні!
         </p>
 
         <div
