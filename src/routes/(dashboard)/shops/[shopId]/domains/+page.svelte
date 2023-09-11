@@ -12,6 +12,10 @@
   export let data: PageData
   let domains = data.domains
 
+  $: {
+    console.log(domains)
+  }
+
   $: hasFreeDomain =
     domains.findIndex((x) => x.domain.endsWith("spentoday.com")) != -1
   let closeFreeDomainNotification: boolean = false
