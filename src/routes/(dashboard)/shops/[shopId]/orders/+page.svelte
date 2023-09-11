@@ -1,53 +1,53 @@
 <script lang="ts">
   import type { PageData } from "./$types"
-  import { api } from "$lib"
+  import { api, routes } from "$lib"
+    import { ukrDateString } from "$features/subscriptions"
 
   export let data: PageData
 
-  let customerEmail: string = ""
   let productName: string = ""
   let timer: number
 
   $: orders = data.orders ?? []
-
-  function debounceSearch() {
-    clearTimeout(timer)
-    timer = setTimeout(search, 500)
-  }
-
-  async function search() {
-    const response = await api.shopOrders(fetch, "client", {
-      shop: data.shopId,
-      customerEmail: customerEmail,
-      productName: productName
-    })
-    if (response == null) return
-    orders = response
+  function filter(status:string) {
+    if(status == "Всі"){
+      orders = data.orders
+      return
+    }
+   orders= data.orders.filter((x) => x.status == status)
   }
 </script>
 
 <main>
-  <form>
-    <input
-      class="flex-1 bg-gray-100 focus:bg-gray-50 px-6 py-3 rounded-md border border-gray-200"
-      type="email"
-      placeholder="Customer email"
-      bind:value={customerEmail}
-      on:keyup={debounceSearch}
-    />
-    <input
-      class="flex-1 bg-gray-100 focus:bg-gray-50 px-6 py-3 rounded-md border border-gray-200"
-      placeholder="Product name/slug"
-      bind:value={productName}
-      on:keyup={debounceSearch}
-    />
-  </form>
-
-  <div class="flex flex-col gap-4">
-    {#each orders as order}
-      <div>
-        <h3>{order.id}</h3>
-      </div>
-    {/each}
+  <div class="flex flex-row">
+     <button on:click={() =>filter("Всі")} class="border-none me-5">Всі</button>
+     <button on:click={() =>filter("Готується")} class="border-none me-5">Готується</button>
+     <button on:click={() =>filter("Виконано")} class="border-none me-5">Виконано</button>
+     <button on:click={() =>filter("Скасовано")} class="border-none me-5">Скасовано</button>
   </div>
+  <table class="table-fixed w-full text-sm">
+    <thead>
+      <tr class=" text-secondary-400">
+        <th>Замовлення</th>
+        <th>Дата</th>
+        <th>Статус</th>
+        <th>Кількість</th>
+        <th>Ціна</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+    {#each orders as order}
+      <tr>
+        <td class="text-center">{order.id}</td>
+        <td class="text-center">{order.date}</td>
+        <td class="text-center">{order.status}</td>
+        <td class="text-center">{order.amount}</td>
+        <td class="text-center">{order.total}</td>
+        <td class="text-center"><a href="{routes.order(data.shopId, order.id)}"> . . . </a></td>
+      </tr>
+    {/each}
+    </tbody>
+  </table>
 </main>
