@@ -3,12 +3,13 @@ import { call, callJson } from "$lib/fetch"
 import type { PageLoad } from "./$types"
 
 export type Order = {
-id: string
-total: number
-amount: number
-status: string
-date: Date
+  id: string
+  total: number
+  amount: number
+  status: string
+  date: string
 }
+
 export const load = (async ({ fetch, params }) => {
   const response = await call(fetch, "load", {
     route: `/v1/site/order/${params.shopId}/orders`,
