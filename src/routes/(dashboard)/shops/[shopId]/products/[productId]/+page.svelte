@@ -163,7 +163,7 @@
     <DashboardSection animate={false}>
       <!-- svelte-ignore a11y-label-has-associated-control -->
       <label class="text-2xl font-semibold">Медіа</label>
-      <div class="grid grid-cols-4 gap-2 my-4">
+      <div class="grid grid-cols-4 gap-2 my-4 items-center justify-center">
         {#each images as image (image.id)}
           <div>
             <img
@@ -175,7 +175,7 @@
               on:click={() => deleteImage(image.id)}
               class="w-full rounded-b p-2 bg-red-100 hover:bg-red-200 text-red-800"
             >
-              Delete
+              Видалити
             </button>
           </div>
         {/each}
@@ -203,7 +203,7 @@
                 />
               </svg>
               <p class="mb-2 text-sm text-gray-500 font-semibold">
-                Click to upload image
+                Додати фото
               </p>
             </div>
             <input
@@ -225,7 +225,7 @@
         <select
           bind:value={categoryIdToChange}
           on:change={changeCategory}
-          class="bg-gray-100 focus:bg-gray-50 px-6 py-3 rounded-md border border-gray-200"
+          class="px-6 py-3 rounded-md border border-secondary-200"
         >
           <option value={null}>No category</option>
           {#each categories as category}
@@ -243,7 +243,7 @@
         <label class="text-2xl font-semibold">SEO</label>
 
         <input
-          class="flex-1 bg-gray-100 focus:bg-gray-50 px-6 py-3 rounded-md border border-gray-200"
+          class="block border my-4 px-5 py-2 rounded-md border-secondary-200 w-full"
           on:keyup={debounceChange}
           use:slug={seoSlug}
           placeholder="Slug, приклад: product-name"
@@ -257,13 +257,13 @@
    /> -->
 
         <input
-          class="flex-1 bg-gray-100 focus:bg-gray-50 px-6 py-3 rounded-md border border-gray-200"
+          class="block border my-4 px-5 py-2 rounded-md border-secondary-200 w-full"
           bind:value={seoTitle}
           on:keyup={debounceChange}
           placeholder="Назва"
         />
         <textarea
-          class="flex-1 bg-gray-100 focus:bg-gray-50 px-6 py-3 rounded-md border border-gray-200"
+          class="block border my-4 px-5 py-2 rounded-md border-secondary-200 w-full"
           bind:value={seoDescription}
           on:keyup={debounceChange}
           placeholder="Опис"
