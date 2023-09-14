@@ -62,17 +62,9 @@
     const res = await api.verifyDomain(fetch, "client", { domain, shopId: data.shopId })
 
     if (res.status == "ok") {
-      const domainElement = domains.find((x) => x.domain == domain)
-      if (!domainElement) return
-
-      domainElement.status = "verified"
-      domainElement.verification = undefined
-      domains = domains
-      return
-    }
-
-    if (res.status == "not-verified") {
-      toast.push({ title: "Домен не підтверджено" })
+      if (res.data.status != "verified") {
+        toast.push({ title: "Домен не підтверджено" })
+      }
 
       const domainElement = domains.find((x) => x.domain == domain)
       if (!domainElement) return
@@ -82,10 +74,12 @@
       domains = domains
       return
     }
-    if (res.status == "bad-domain") return alert("Домен не може бути порожнім")
-    if (res.status == "domain-taken")
-      return alert("Цей домен вже зайнятий іншим магазином")
-    return toast.serverError()
+
+    if (res.status == "domain-taken") {
+      return toast.push({ title: "Цей домен вже зайнятий іншим магазином" })
+    }
+
+    toast.push({ title: "Домен не підтверджено" })
   }
 </script>
 
