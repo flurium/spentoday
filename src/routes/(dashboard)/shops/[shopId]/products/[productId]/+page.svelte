@@ -278,27 +278,36 @@
     <DashboardSection animate={false}>
       <!-- svelte-ignore a11y-label-has-associated-control -->
       <label class="text-2xl font-semibold">Вартість</label>
-      <div class="flex gap-4 my-5 py-3">
-        <div class="flex-row">
-          <!-- svelte-ignore a11y-label-has-associated-control -->
-          <label class="text-1xl text-secondary-400">Базова ціна</label>
+      <div
+        class="grid grid-flow-row-dense grid-cols-3 grid-rows-2 my-5 py-3 items-center"
+      >
+        <!-- svelte-ignore a11y-label-has-associated-control -->
+        <label class="text-1xl text-secondary-400">Базова ціна</label>
+        <div class="flex items-center justify-end col-span-2">
+          <span class="inline-block py-2 px-3 bg-gray-200 rounded-l-md"
+            >&#8372;</span
+          >
           <input
-            class=" bg-gray-100 focus:bg-gray-50 px-6 py-3 rounded-md border border-gray-200"
+            class="w-1/2 px-6 py-3 rounded-md border border-secondary-200"
             bind:value={price}
             on:keyup={debounceChange}
+            min="0"
             type="number"
-            placeholder="Price"
+            placeholder="Ціна"
           />
         </div>
-        <div class="flex-row">
-          <!-- svelte-ignore a11y-label-has-associated-control -->
-          <label class="text-1xl text-secondary-400">Кількість</label>
+
+        <!-- svelte-ignore a11y-label-has-associated-control -->
+        <label class="text-1xl text-secondary-400">Кількість</label>
+        <div class="flex items-center justify-end col-span-2">
+          <span class="inline-block py-2 px-3 bg-gray-200 rounded-l-md">#</span>
           <input
-            class=" bg-gray-100 focus:bg-gray-50 px-6 py-3 rounded-md border border-gray-200"
+            class="w-1/2 px-6 py-3 rounded-md border border-secondary-200"
             bind:value={amount}
             on:keyup={debounceChange}
+            min="0"
             type="number"
-            placeholder="Amount"
+            placeholder="Кількість"
           />
         </div>
       </div>
