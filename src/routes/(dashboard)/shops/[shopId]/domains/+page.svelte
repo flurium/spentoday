@@ -66,7 +66,7 @@
       if (!domainElement) return
 
       domainElement.status = "verified"
-      domainElement.verifications = undefined
+      domainElement.verification = undefined
       domains = domains
       return
     }
@@ -78,7 +78,7 @@
       if (!domainElement) return
 
       domainElement.status = res.data.status
-      domainElement.verifications = res.data.verifications
+      domainElement.verification = res.data.verification
       domains = domains
       return
     }

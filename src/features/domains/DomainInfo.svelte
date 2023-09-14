@@ -53,6 +53,6 @@
   </div>
 
   {#if domain.status == "not-verified"}
-    <DnsTable verifications={domain.verifications} />
+    <DnsTable verification={domain.verification} />
   {/if}
 </div>

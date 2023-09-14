@@ -11,12 +11,12 @@ export type ShopDomain =
   | {
       domain: string
       status: "no-status" | "taken" | "verified"
-      verifications?: undefined
+      verification?: undefined
     }
   | {
       domain: string
       status: "not-verified"
-      verifications: DomainVerification[]
+      verification: DomainVerification
     }
 
 export async function verifyDomain(
