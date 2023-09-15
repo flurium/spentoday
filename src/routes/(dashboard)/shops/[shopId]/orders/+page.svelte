@@ -3,6 +3,7 @@
   import { api, routes } from "$lib"
   import { ukrDateString } from "$features/subscriptions"
   import { goto } from "$app/navigation"
+    import DashboardSection from "$features/dashboard/DashboardSection.svelte"
 
   export let data: PageData
 
@@ -21,7 +22,7 @@
 
 <main class="h-full w-full">
   <h1 class="font-bold text-2xl text-secondary-700 mb-8">Ваші замовлення</h1>
-  <div class="w-full p-10 border border-gray-300 rounded-md">
+  <DashboardSection animate class="m-2 p-10">
     <div class="flex flex-row mb-7">
       <button on:click={() => filter("Всі")} class="hover:bg-gray-300 hover:text-purple-800 rounded-lg p-2 border-none me-5">Всі</button>
       <button on:click={() => filter("Готується")} class="hover:bg-gray-300 hover:text-purple-800 rounded-lg p-2 border-none me-5"
@@ -60,5 +61,5 @@
           <div class="text-center">{order.total}</div>  
       </button>
       {/each}
-  </div>
+  </DashboardSection>
 </main>
