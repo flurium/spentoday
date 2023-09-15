@@ -58,7 +58,10 @@ export function slug(node: HTMLInputElement, value: string) {
   }
 }
 
-export function slugUpdate(node: HTMLInputElement, update: (value: string) => void) {
+export function slugUpdate(
+  node: HTMLInputElement,
+  update: (value: string) => void
+) {
   const input = () => {
     const cursor = node.selectionStart
 

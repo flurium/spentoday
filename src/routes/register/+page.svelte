@@ -44,7 +44,8 @@
         if (element == "digit") message = "Пароль вимагає цифри"
         if (element == "lower") message = "Пароль вимагає нижній реєстр"
         if (element == "upper") message = "Пароль вимагає верхній реєстр"
-        if (element == "nonAlphanumeric") message = "Пароль вимагає спеціальні знаки"
+        if (element == "nonAlphanumeric")
+          message = "Пароль вимагає спеціальні знаки"
       })
       return
     }
@@ -69,8 +70,8 @@
 <main class="min-h-[70vh] max-w-screen-xl m-auto px-6">
   <h1 class="text-4xl md:text-6xl text-center m-auto font-bold">Register</h1>
   <p class="text-center text-gray-600 mt-6 max-w-3xl m-auto mb-10">
-    By registering you accept our Terms of Servic and Privacy Policy. And get closer to
-    making money.
+    By registering you accept our Terms of Servic and Privacy Policy. And get
+    closer to making money.
   </p>
 
   <form
@@ -78,7 +79,9 @@
     class="max-w-lg m-auto flex flex-col gap-4 mt-2"
   >
     {#if message}
-      <div class="px-5 py-3 border border-red-200 bg-red-100 rounded-md text-red-800">
+      <div
+        class="px-5 py-3 border border-red-200 bg-red-100 rounded-md text-red-800"
+      >
         {message}
       </div>
     {/if}

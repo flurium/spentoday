@@ -30,7 +30,8 @@
     if (response.status == 403) {
       return toast.push({
         title: "Досягнуто обмеження",
-        description: "Ви досягли максимальної кількості магазинів для вашого тарифу."
+        description:
+          "Ви досягли максимальної кількості магазинів для вашого тарифу."
       })
     }
 
@@ -47,7 +48,10 @@
   }
 </script>
 
-<form on:submit|preventDefault={addShop} class="max-w-lg m-auto flex flex-col gap-4 mt-2">
+<form
+  on:submit|preventDefault={addShop}
+  class="max-w-lg m-auto flex flex-col gap-4 mt-2"
+>
   <input
     class="bg-gray-100 focus:bg-gray-50 px-6 py-4 rounded-md border border-gray-200"
     bind:value={shopName}
@@ -71,7 +75,9 @@
       <div
         class="max-w-sm p-6 m-2 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
       >
-        <h5 class="mb-3 text-base font-semibold text-gray-900 md:text-xl dark:text-white">
+        <h5
+          class="mb-3 text-base font-semibold text-gray-900 md:text-xl dark:text-white"
+        >
           {shop.name}
         </h5>
         <button

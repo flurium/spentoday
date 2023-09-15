@@ -30,7 +30,9 @@
 <script lang="ts">
 </script>
 
-<div class="fixed bottom-0 right-0 z-50 m-6 flex flex-col gap-4 max-w-md w-full">
+<div
+  class="fixed bottom-0 right-0 z-50 m-6 flex flex-col gap-4 max-w-md w-full"
+>
   {#each $toasts as toast (toast.id)}
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div

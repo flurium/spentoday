@@ -35,14 +35,17 @@
 
 <svelte:head>
   <title>Login to Spentoday</title>
-  <meta name="description" content="Login to Spentoday to start earning money online." />
+  <meta
+    name="description"
+    content="Login to Spentoday to start earning money online."
+  />
 </svelte:head>
 
 <main class="min-h-[70vh] max-w-screen-xl m-auto pt-20 px-6">
   <h1 class="text-4xl md:text-6xl text-center m-auto font-bold">Login</h1>
   <p class="text-center text-gray-600 mt-6 max-w-3xl m-auto">
-    By login you accept our Terms of Servic and Privacy Policy. And get closer to making
-    money.
+    By login you accept our Terms of Servic and Privacy Policy. And get closer
+    to making money.
   </p>
 
   {#if message}

@@ -120,7 +120,10 @@
 
 <header />
 <main class="px-6 mt-20">
-  <form on:submit|preventDefault={submit} class="max-w-xl m-auto flex flex-col gap-6">
+  <form
+    on:submit|preventDefault={submit}
+    class="max-w-xl m-auto flex flex-col gap-6"
+  >
     <h3>{editCategoryId ? "Edit" : "Add new category"}</h3>
     <input
       class="bg-gray-100 focus:bg-gray-50 px-6 py-3 rounded-md border border-gray-200"
@@ -153,7 +156,9 @@
 
   <ul class="mt-10">
     {#each categories as category}
-      <li class="p-4 mb-4 border-2 rounded-md border-gray-100 flex justify-between">
+      <li
+        class="p-4 mb-4 border-2 rounded-md border-gray-100 flex justify-between"
+      >
         <h3>{category.name}</h3>
         {#if category.parentId}
           <span>

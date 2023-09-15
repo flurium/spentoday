@@ -41,7 +41,8 @@
 <main class="min-h-[70vh] max-w-screen-xl m-auto px-6">
   <h1 class="text-4xl md:text-6xl text-center m-auto font-bold">Видалити</h1>
   <p class="text-center text-gray-600 mt-6 max-w-3xl m-auto mb-10">
-    Прикро що Ви лишаєте нас. Для підтвердження введіть свою електронну адресу і пароль.
+    Прикро що Ви лишаєте нас. Для підтвердження введіть свою електронну адресу і
+    пароль.
   </p>
 
   <form
@@ -49,7 +50,9 @@
     class="max-w-lg m-auto flex flex-col gap-4 mt-2"
   >
     {#if message}
-      <div class="px-5 py-3 border border-red-200 bg-red-100 rounded-md text-red-800">
+      <div
+        class="px-5 py-3 border border-red-200 bg-red-100 rounded-md text-red-800"
+      >
         {message}
       </div>
     {/if}
