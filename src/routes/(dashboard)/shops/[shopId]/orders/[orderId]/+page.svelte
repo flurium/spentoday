@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { ukrDateString } from "$features/subscriptions"
+  import DashboardSection from "$features/dashboard/DashboardSection.svelte"
+import { ukrDateString } from "$features/subscriptions"
   import { toast } from "$features/toast"
   import { call } from "$lib/fetch"
   import type { PageData } from "./$types"
-
   export let data: PageData
 
   let selected: any
@@ -14,89 +14,93 @@
       body: { status: selected }
     })
     if (!response) return toast.serverError()
-
-    if (response.ok) {
-      return
-    }
-
-    if (response.status == 403) {
-      return toast.push({
-        title: "Досягнуто обмеження",
-        description:
-          "Ви досягли максимальної кількості сторінок для вашого тарифу."
-      })
-    }
-
-    return toast.serverError()
   }
 </script>
 
-<span class=" text-secondary-400 py-2 px-4 xl text-sm">
-  Замовлення {data.order.id}
-</span>
+<DashboardSection animate class="m-2 p-5">
+<div>
+  <span class="xl text-lg font-bold">
+    Замовлення <span class="text-sm">{data.order.id}</span>
+  </span>
+  
+  <div class="flex flex-row h-full mt-4">
 
-<div class="flex flex-row h-full">
-  <div class="basis-1/2 h-full grid">
-    <span class="text-2xl font-bold max-w-lg">Основні</span>
-    <div>
-      <span class="text-xl font-bold max-w-lg">Дата Створення:</span><br />
-      {ukrDateString(new Date(data.order.date))}
-    </div>
-    <div class="row-span-3 md:row-span-4">
+    <div class="basis-1/2 h-full grid grid-row gap-5">
+      <span class="text-lg font-bold">Основні</span>
       <div>
-        <span class="text-xl font-bold max-w-lg">Статус:</span><br />
-        <select
-          bind:value={selected}
-          on:change={setStatus}
-          class="w-5/6 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        >
-          <option selected>{data.order.status}</option>
+        <span class="text-sm font-bold max-w-lg">Дата Створення:</span><br />
+        {ukrDateString(new Date(data.order.date))}
+      </div>
+      <div class="row-span-3">
+        <div>
+          <span class="text-sm font-bold max-w-lg">Статус:</span><br />
+          <select
+            bind:value={selected}
+            on:change={setStatus}
+            class="w-5/6 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          >
+          {#if data.order.status =="Виконано"}
+          <option selected value="Виконано">Виконано</option>
           <option value="Готується">Готується</option>
-          <option value="Виконано">Виконано</option>
           <option value="Скасовано">Скасовано</option>
-        </select>
+          {:else if data.order.status =="Готується"}
+          <option selected value="Готується">Готується</option>
+          <option  value="Виконано">Виконано</option>
+          <option value="Скасовано">Скасовано</option>
+          {:else}
+          <option selected value="Скасовано">Скасовано</option>
+          <option value="Виконано">Виконано</option>
+          <option value="Готується">Готується</option>
+          {/if}
+          </select>
+
+        </div>
+      </div>
+      <div>
+        <span class="text-sm font-bold max-w-lg">Замовник:</span><br />
+        {data.order.fullName}
       </div>
     </div>
-    <div>
-      <span class="text-xl font-bold max-w-lg">Замовник:</span><br />
-      {data.order.fullName}
-    </div>
-  </div>
-  <div class="basis-1/4">
-    <span class="text-2xl font-bold max-w-lg">Платіж</span>
-    <div class="w-full h-full grid gap-5">
-      <p>
-        {data.order.fullName} <br />
-        {data.order.adress}
-      </p>
-      <p>
-        <span class="text-xl font-bold max-w-lg">Email:</span><br />
-        {data.order.email}
-      </p>
-      <p>
-        <span class="text-xl font-bold max-w-lg">Телефон:</span><br />
-        {data.order.phone}
-      </p>
-    </div>
-  </div>
-  <div class="basis-1/4">
-    <span class="text-2xl font-bold">Доставка</span>
-    <div class="w-full h-full grid gap-y-36">
-      <p>
-        {data.order.fullName} <br />
-        {data.order.adress}
-      </p>
 
-      <p>
-        <span class="text-xl font-bold max-w-lg">Телефон:</span><br />
-        {data.order.phone}
-      </p>
-    </div>
+    <div class="basis-1/2 grid grid-cols-2 gap-4">
+      <span class="text-lg font-bold max-w-lg">Платіж</span>
+      <span class="text-lg font-bold">Доставка</span>
+
+        <div class="text-sm">
+          {data.order.fullName} <br />
+          {data.order.adress}
+        </div >
+
+        <div class="text-sm">
+          {data.order.fullName} <br />
+          {data.order.adress}
+        </div>
+
+        <div >
+          <span class="text-sm font-bold max-w-lg">Email:</span><br />
+          {data.order.email}
+        </div >
+
+        <div>
+        </div>
+
+        <div >
+          <span class="text-sm font-bold max-w-lg">Телефон:</span><br />
+          {data.order.phone}
+        </div >
+
+        <div >
+          <span class="text-sm font-bold max-w-lg">Телефон:</span><br />
+          {data.order.phone}
+        </div >
+      </div>
+
   </div>
 </div>
+</DashboardSection>
 
 <div class="flex flex-row">
-  <div class="basis-3/5">
+  <DashboardSection animate class="basis-3/5 m-2 p-5">
     <table class="table-fixed w-full">
       <thead>
         <tr class=" text-secondary-400 text-sm">
@@ -118,9 +122,11 @@
         {/each}
       </tbody>
     </table>
-  </div>
-  <div class="basis-2/5">
-    <span class="text-lg font-bold">Примітки до замовлення:</span><br />
+</DashboardSection>
+
+<DashboardSection animate class="m-2 p-5 basis-2/5">
+    <span class="text-lg font-bold">Примітки до замовлення</span><br />
     {data.order.comment}
-  </div>
+</DashboardSection>
 </div>
+
