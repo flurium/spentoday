@@ -13,6 +13,8 @@ export const products = (shopId: string) => `/shops/${shopId}/products`
 export const categories = (shopId: string) => `/shops/${shopId}/categories`
 export const domains = (shopId: string) => `/shops/${shopId}/domains`
 export const orders = (shopId: string) => `/shops/${shopId}/orders`
+export const order = (shopId: string, orderId: string) =>
+  `/shops/${shopId}/orders/${orderId}`
 export const pages = (shopId: string) => `/shops/${shopId}/pages`
 export const page = (shopId: string, slug: string) => `/shops/${shopId}/pages/${slug}`
 export const settings = (shopId: string) => `/shops/${shopId}/settings`
