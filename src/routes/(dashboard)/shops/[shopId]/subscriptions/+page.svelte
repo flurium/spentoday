@@ -61,7 +61,7 @@
   }
 </script>
 
-<h1 class="font-bold text-3xl text-secondary-700 mb-8">Ваші підписники</h1>
+<h1 class="font-bold text-3xl text-header mb-8">Ваші підписники</h1>
 
 <form on:submit|preventDefault={addSubscriber} class="flex gap-4">
   <input
@@ -71,9 +71,9 @@
     placeholder="E-mail нового підписника"
     class="rounded-md px-5 py-3 border border-secondary-200 w-full flex-1"
   />
-  <button class="px-8 py-3 rounded-md bg-brand-green" type="submit"
-    >Додати</button
-  >
+  <button class="px-8 py-3 rounded-md bg-brand-green" type="submit">
+    Додати
+  </button>
 </form>
 
 <DashboardSection class="mt-8" animate={false}>

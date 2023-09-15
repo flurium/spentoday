@@ -75,7 +75,7 @@
   }
 </script>
 
-<h1 class="font-bold text-3xl text-secondary-700 mb-8">Ваші товари</h1>
+<h1 class="font-bold text-3xl text-header mb-8">Ваші товари</h1>
 
 <form on:submit|preventDefault={add} class="flex gap-2">
   <input

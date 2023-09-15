@@ -22,13 +22,15 @@
 <main>
   <div class="flex flex-row">
     <button on:click={() => filter("Всі")} class="border-none me-5">Всі</button>
-    <button on:click={() => filter("Готується")} class="border-none me-5"
-      >Готується</button
-    >
-    <button on:click={() => filter("Виконано")} class="border-none me-5">Виконано</button>
-    <button on:click={() => filter("Скасовано")} class="border-none me-5"
-      >Скасовано</button
-    >
+    <button on:click={() => filter("Готується")} class="border-none me-5">
+      Готується
+    </button>
+    <button on:click={() => filter("Виконано")} class="border-none me-5">
+      Виконано
+    </button>
+    <button on:click={() => filter("Скасовано")} class="border-none me-5">
+      Скасовано
+    </button>
   </div>
   <table class="table-fixed w-full text-sm">
     <thead>

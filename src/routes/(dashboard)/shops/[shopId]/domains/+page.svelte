@@ -97,12 +97,12 @@
   }
 </script>
 
-<h1 class="font-bold text-3xl text-secondary-700 mb-8">Домени</h1>
+<h1 class="font-bold text-3xl text-header mb-8">Домени</h1>
 
 {#if hasFreeDomain == false && closeFreeDomainNotification == false}
   <button
     class="py-5 px-6 mb-8 text-sm flex justify-between items-center gap-3
-    text-secondary-700 bg-brand-green bg-opacity-50 rounded-xl w-full"
+    text-header bg-brand-green bg-opacity-50 rounded-xl w-full"
     on:click={() => {
       closeFreeDomainNotification = true
     }}
