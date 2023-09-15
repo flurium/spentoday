@@ -139,14 +139,16 @@
       <Arrow class="-rotate-90" />
     </a>
   </div>
-  <h1 class="text-3xl font-semibold">Редагувати продукт</h1>
+  <h1 class="text-3xl font-semibold text-header">Редагувати продукт</h1>
 </div>
 
 <span>{savingStatus}</span>
 <div class="grid grid-cols-3 gap-4 my-4">
   <div class="col-span-2">
     <DashboardSection class="mb-4" animate={false}>
-      <label class="text-2xl font-semibold" for="nameInput">Назва</label>
+      <label class="text-2xl font-semibold text-header" for="nameInput">
+        Назва
+      </label>
       <input
         class="block border my-4 px-5 py-2 rounded-md border-secondary-200 w-full"
         id="nameInput"
@@ -154,7 +156,10 @@
         on:keyup={debounceChange}
         placeholder="Назва"
       />
-      <label class="text-2xl font-semibold" for="descInput">Опис</label>
+
+      <label class="text-2xl font-semibold text-header" for="descInput">
+        Опис
+      </label>
       <textarea
         class="block border my-4 px-5 py-2 rounded-md border-secondary-200 w-full"
         id="descInput"
@@ -166,7 +171,9 @@
     </DashboardSection>
 
     <DashboardSection class="my-4" animate={false}>
-      <label class="text-2xl font-semibold" for="mediaInput">Медіа</label>
+      <label class="text-2xl font-semibold text-header" for="mediaInput">
+        Медіа
+      </label>
       <div
         class="grid grid-cols-4 gap-2 my-4 items-center justify-center"
         id="mediaInput"
@@ -227,9 +234,9 @@
 
     <DashboardSection class="my-4" animate={false}>
       <div class="flex flex-col gap-4 max-w-3xl">
-        <label class="text-2xl font-semibold" for="categorySelect"
-          >Організація товарів</label
-        >
+        <label class="text-2xl font-semibold text-header" for="categorySelect">
+          Організація товарів
+        </label>
         <select
           bind:value={categoryIdToChange}
           on:change={changeCategory}
@@ -248,9 +255,13 @@
 
     <DashboardSection class="my-4" animate={false}>
       <div class="flex flex-col gap-4 max-w-3xl" id="seo">
-        <label class="text-2xl font-semibold my-3" for="seo">SEO</label>
+        <label class="text-2xl font-semibold my-3 text-header" for="seo">
+          SEO
+        </label>
 
-        <label class="text-1xl font-semibold" for="seoSlugInput">Slug</label>
+        <label class="text-1xl font-semibold text-header" for="seoSlugInput">
+          Slug/Посилання
+        </label>
         <input
           class="block border mb-4 px-5 py-2 rounded-md border-secondary-200 w-full"
           id="seoSlugInput"
@@ -265,7 +276,9 @@
     use:slugUpdate={(val) => (seoSlug = val)}
     placeholder="Slug, приклад: product-name"
    /> -->
-        <label class="text-1xl font-semibold" for="seoNameInput">Назва</label>
+        <label class="text-1xl font-semibold text-header" for="seoNameInput">
+          Назва
+        </label>
         <input
           class="block border mb-4 px-5 py-2 rounded-md border-secondary-200 w-full"
           id="seoNameInput"
@@ -273,7 +286,9 @@
           on:keyup={debounceChange}
           placeholder="Назва"
         />
-        <label class="text-1xl font-semibold" for="seoDescInput">Опис</label>
+        <label class="text-1xl font-semibold text-header" for="seoDescInput">
+          Опис
+        </label>
         <textarea
           class="block border mb-4 px-5 py-2 rounded-md border-secondary-200 w-full"
           id="seoDescInput"
@@ -290,7 +305,7 @@
   <div class="flex flex-col gap-4">
     <DashboardSection animate={false}>
       <div class="flex flex-col gap-4 max-w-3xl">
-        <label class="text-2xl font-semibold" for="statusSelect">
+        <label class="text-2xl font-semibold text-header" for="statusSelect">
           Статус товару
         </label>
         <select
@@ -305,7 +320,9 @@
 
     <DashboardSection animate={false}>
       <!-- svelte-ignore a11y-label-has-associated-control -->
-      <label class="text-2xl font-semibold">Кількість товару</label>
+      <label class="text-2xl font-semibold text-header">
+        Кількість товару
+      </label>
       <div
         class="grid grid-flow-row-dense grid-cols-3 grid-rows-1 mt-6 items-center gap-4"
       >
@@ -325,10 +342,9 @@
     </DashboardSection>
 
     <DashboardSection animate={false}>
-      <label class="text-2xl font-semibold" for="cost">Вартість</label>
+      <h3 class="text-2xl font-semibold text-header">Вартість</h3>
       <div
         class="grid grid-flow-row-dense grid-cols-3 grid-rows-2 my-5 py-3 items-center gap-4"
-        id="cost"
       >
         <label class="text-1xl text-secondary-400" for="priceInput">
           Базова ціна
