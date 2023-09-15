@@ -1,11 +1,12 @@
 <script lang="ts">
   import slugify from "@sindresorhus/slugify"
   import type { PageData } from "./$types"
-  import { api, imageSize } from "$lib"
+  import { api, imageSize, routes } from "$lib"
   import { toast } from "$features/toast"
   import { slug, slugUpdate } from "$lib/slug"
   import DashboardSection from "$features/dashboard/DashboardSection.svelte"
   import Arrow from "$features/landing/questions/Arrow.svelte"
+  import { product } from "$lib/routes"
 
   export let data: PageData
   $: images = data.product.images
@@ -133,26 +134,30 @@
 </script>
 
 <div class="flex gap-2 my-10 items-center">
-  <Arrow class="-rotate-90" />
+  <div class="cursor-pointer">
+    <a href={routes.products(data.shopId)}>
+      <Arrow class="-rotate-90" />
+    </a>
+  </div>
   <h1 class="text-3xl font-semibold">Редагувати продукт</h1>
 </div>
 
 <span>{status}</span>
 <div class="grid grid-cols-3 gap-4 my-4">
   <div class="col-span-2">
-    <DashboardSection animate={false}>
-      <!-- svelte-ignore a11y-label-has-associated-control -->
-      <label class="text-2xl font-semibold">Назва</label>
+    <DashboardSection class="my-4" animate={false}>
+      <label class="text-2xl font-semibold" for="nameInput">Назва</label>
       <input
         class="block border my-4 px-5 py-2 rounded-md border-secondary-200 w-full"
+        id="nameInput"
         bind:value={name}
         on:keyup={debounceChange}
         placeholder="Назва"
       />
-      <!-- svelte-ignore a11y-label-has-associated-control -->
-      <label class="text-2xl font-semibold">Опис</label>
+      <label class="text-2xl font-semibold" for="descInput">Опис</label>
       <textarea
         class="block border my-4 px-5 py-2 rounded-md border-secondary-200 w-full"
+        id="descInput"
         bind:value={description}
         on:keyup={debounceChange}
         placeholder="Опис"
@@ -160,10 +165,12 @@
       />
     </DashboardSection>
 
-    <DashboardSection animate={false}>
-      <!-- svelte-ignore a11y-label-has-associated-control -->
-      <label class="text-2xl font-semibold">Медіа</label>
-      <div class="grid grid-cols-4 gap-2 my-4 items-center justify-center">
+    <DashboardSection class="my-4" animate={false}>
+      <label class="text-2xl font-semibold" for="mediaInput">Медіа</label>
+      <div
+        class="grid grid-cols-4 gap-2 my-4 items-center justify-center"
+        id="mediaInput"
+      >
         {#each images as image (image.id)}
           <div>
             <img
@@ -218,14 +225,16 @@
       </div>
     </DashboardSection>
 
-    <DashboardSection animate={false}>
+    <DashboardSection class="my-4" animate={false}>
       <div class="flex flex-col gap-4 max-w-3xl">
-        <!-- svelte-ignore a11y-label-has-associated-control -->
-        <label class="text-2xl font-semibold">Организація товарів</label>
+        <label class="text-2xl font-semibold" for="categorySelect"
+          >Організація товарів</label
+        >
         <select
           bind:value={categoryIdToChange}
           on:change={changeCategory}
-          class="px-6 py-3 rounded-md border border-secondary-200"
+          class="px-6 py-3 rounded-md border text-secondary-400 border-secondary-200"
+          id="categorySelect"
         >
           <option value={null}>No category</option>
           {#each categories as category}
@@ -237,13 +246,14 @@
       </div>
     </DashboardSection>
 
-    <DashboardSection animate={false}>
-      <div class="flex flex-col gap-4 max-w-3xl">
-        <!-- svelte-ignore a11y-label-has-associated-control -->
-        <label class="text-2xl font-semibold">SEO</label>
+    <DashboardSection class="my-4" animate={false}>
+      <div class="flex flex-col gap-4 max-w-3xl" id="seo">
+        <label class="text-2xl font-semibold my-3" for="seo">SEO</label>
 
+        <label class="text-1xl font-semibold" for="seoSlugInput">Slug</label>
         <input
-          class="block border my-4 px-5 py-2 rounded-md border-secondary-200 w-full"
+          class="block border mb-4 px-5 py-2 rounded-md border-secondary-200 w-full"
+          id="seoSlugInput"
           on:keyup={debounceChange}
           use:slug={seoSlug}
           placeholder="Slug, приклад: product-name"
@@ -255,15 +265,18 @@
     use:slugUpdate={(val) => (seoSlug = val)}
     placeholder="Slug, приклад: product-name"
    /> -->
-
+        <label class="text-1xl font-semibold" for="seoNameInput">Назва</label>
         <input
-          class="block border my-4 px-5 py-2 rounded-md border-secondary-200 w-full"
+          class="block border mb-4 px-5 py-2 rounded-md border-secondary-200 w-full"
+          id="seoNameInput"
           bind:value={seoTitle}
           on:keyup={debounceChange}
           placeholder="Назва"
         />
+        <label class="text-1xl font-semibold" for="seoDescInput">Опис</label>
         <textarea
-          class="block border my-4 px-5 py-2 rounded-md border-secondary-200 w-full"
+          class="block border mb-4 px-5 py-2 rounded-md border-secondary-200 w-full"
+          id="seoDescInput"
           bind:value={seoDescription}
           on:keyup={debounceChange}
           placeholder="Опис"
@@ -275,32 +288,30 @@
   </div>
 
   <div class="flex flex-col gap-4">
-    <DashboardSection animate={false}>
+    <DashboardSection class="my-4" animate={false}>
+      <div class="flex flex-col gap-4 max-w-3xl">
+        <label class="text-2xl font-semibold" for="statusSelect"
+          >Статус товару</label
+        >
+        <select
+          class="px-6 py-3 rounded-md border text-secondary-400 border-secondary-200"
+          id="statusSelect"
+        >
+          <option value={null}>Активний</option>
+          <option>Чернетка</option>
+        </select>
+      </div>
+    </DashboardSection>
+
+    <DashboardSection class="my-4" animate={false}>
       <!-- svelte-ignore a11y-label-has-associated-control -->
-      <label class="text-2xl font-semibold">Вартість</label>
+      <label class="text-2xl font-semibold">Кількість товару</label>
       <div
-        class="grid grid-flow-row-dense grid-cols-3 grid-rows-2 my-5 py-3 items-center"
+        class="grid grid-flow-row-dense grid-cols-3 grid-rows-1 my-5 py-3 items-center gap-4"
       >
         <!-- svelte-ignore a11y-label-has-associated-control -->
-        <label class="text-1xl text-secondary-400">Базова ціна</label>
+        <label class="text-1xl text-secondary-400">Залишилося</label>
         <div class="flex items-center justify-end col-span-2">
-          <span class="inline-block py-2 px-3 bg-gray-200 rounded-l-md"
-            >&#8372;</span
-          >
-          <input
-            class="w-1/2 px-6 py-3 rounded-md border border-secondary-200"
-            bind:value={price}
-            on:keyup={debounceChange}
-            min="0"
-            type="number"
-            placeholder="Ціна"
-          />
-        </div>
-
-        <!-- svelte-ignore a11y-label-has-associated-control -->
-        <label class="text-1xl text-secondary-400">Кількість</label>
-        <div class="flex items-center justify-end col-span-2">
-          <span class="inline-block py-2 px-3 bg-gray-200 rounded-l-md">#</span>
           <input
             class="w-1/2 px-6 py-3 rounded-md border border-secondary-200"
             bind:value={amount}
@@ -311,12 +322,59 @@
           />
         </div>
       </div>
+    </DashboardSection>
+
+    <DashboardSection class="my-4" animate={false}>
+      <label class="text-2xl font-semibold" for="cost">Вартість</label>
+      <div
+        class="grid grid-flow-row-dense grid-cols-3 grid-rows-2 my-5 py-3 items-center gap-4"
+        id="cost"
+      >
+        <label class="text-1xl text-secondary-400" for="priceInput"
+          >Базова ціна</label
+        >
+        <div class="flex items-center justify-end col-span-2" id="priceInput">
+          <span class="h-12 inline-block py-3 px-3 bg-gray-200 rounded-l-md"
+            >&#8372;</span
+          >
+          <input
+            class="w-1/2 px-6 py-3 rounded-r-lg border border-secondary-200"
+            bind:value={price}
+            on:keyup={debounceChange}
+            min="0"
+            step="0.01"
+            type="number"
+            placeholder="Ціна"
+          />
+        </div>
+
+        <label class="text-1xl text-secondary-400" for="promPriceInput"
+          >Акційна ціна</label
+        >
+        <div
+          class="flex items-center justify-end col-span-2"
+          id="promPriceInput"
+        >
+          <span class="h-12 inline-block py-3 px-3 bg-gray-200 rounded-l-md"
+            >&#8372;</span
+          >
+          <input
+            class="w-1/2 px-6 py-3 rounded-r-lg border border-secondary-200"
+            bind:value={price}
+            on:keyup={debounceChange}
+            min="0"
+            step="0.01"
+            type="number"
+            placeholder="Акційна ціна"
+          />
+        </div>
+      </div>
 
       <input
         type="checkbox"
         checked
         id="myCheckbox"
-        class="-my-1 mx-1 peer relative h-5 w-5 appearance-none rounded border after:absolute after:left-0 after:top-0 after:h-full after:w-full after:bg-[url('data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9JzMwMHB4JyB3aWR0aD0nMzAwcHgnICBmaWxsPSIjZmZmZmZmIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgdmVyc2lvbj0iMS4xIiB4PSIwcHgiIHk9IjBweCI+PHRpdGxlPmljb25fYnlfUG9zaGx5YWtvdjEwPC90aXRsZT48ZGVzYz5DcmVhdGVkIHdpdGggU2tldGNoLjwvZGVzYz48ZyBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48ZyBmaWxsPSIjZmZmZmZmIj48ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyNi4wMDAwMDAsIDI2LjAwMDAwMCkiPjxwYXRoIGQ9Ik0xNy45OTk5ODc4LDMyLjQgTDEwLjk5OTk4NzgsMjUuNCBDMTAuMjI2Nzg5MSwyNC42MjY4MDE0IDguOTczMTg2NDQsMjQuNjI2ODAxNCA4LjE5OTk4Nzc5LDI1LjQgTDguMTk5OTg3NzksMjUuNCBDNy40MjY3ODkxNCwyNi4xNzMxOTg2IDcuNDI2Nzg5MTQsMjcuNDI2ODAxNCA4LjE5OTk4Nzc5LDI4LjIgTDE2LjU4NTc3NDIsMzYuNTg1Nzg2NCBDMTcuMzY2ODIyOCwzNy4zNjY4MzUgMTguNjMzMTUyOCwzNy4zNjY4MzUgMTkuNDE0MjAxNCwzNi41ODU3ODY0IEw0MC41OTk5ODc4LDE1LjQgQzQxLjM3MzE4NjQsMTQuNjI2ODAxNCA0MS4zNzMxODY0LDEzLjM3MzE5ODYgNDAuNTk5OTg3OCwxMi42IEw0MC41OTk5ODc4LDEyLjYgQzM5LjgyNjc4OTEsMTEuODI2ODAxNCAzOC41NzMxODY0LDExLjgyNjgwMTQgMzcuNzk5OTg3OCwxMi42IEwxNy45OTk5ODc4LDMyLjQgWiI+PC9wYXRoPjwvZz48L2c+PC9nPjwvc3ZnPg==')] after:bg-[length:40px] after:bg-center after:bg-no-repeat after:content-[''] checked:bg-purple-400 hover:ring hover:ring-purple-500 focus:outline-none"
+        class="-my-1 mx-1 peer relative h-5 w-5 appearance-none rounded border after:absolute after:left-0 after:top-0 after:h-full after:w-full after:bg-[url('data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9JzMwMHB4JyB3aWR0aD0nMzAwcHgnICBmaWxsPSIjZmZmZmZmIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgdmVyc2lvbj0iMS4xIiB4PSIwcHgiIHk9IjBweCI+PHRpdGxlPmljb25fYnlfUG9zaGx5YWtvdjEwPC90aXRsZT48ZGVzYz5DcmVhdGVkIHdpdGggU2tldGNoLjwvZGVzYz48ZyBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48ZyBmaWxsPSIjZmZmZmZmIj48ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyNi4wMDAwMDAsIDI2LjAwMDAwMCkiPjxwYXRoIGQ9Ik0xNy45OTk5ODc4LDMyLjQgTDEwLjk5OTk4NzgsMjUuNCBDMTAuMjI2Nzg5MSwyNC42MjY4MDE0IDguOTczMTg2NDQsMjQuNjI2ODAxNCA4LjE5OTk4Nzc5LDI1LjQgTDguMTk5OTg3NzksMjUuNCBDNy40MjY3ODkxNCwyNi4xNzMxOTg2IDcuNDI2Nzg5MTQsMjcuNDI2ODAxNCA4LjE5OTk4Nzc5LDI4LjIgTDE2LjU4NTc3NDIsMzYuNTg1Nzg2NCBDMTcuMzY2ODIyOCwzNy4zNjY4MzUgMTguNjMzMTUyOCwzNy4zNjY4MzUgMTkuNDE0MjAxNCwzNi41ODU3ODY0IEw0MC41OTk5ODc4LDE1LjQgQzQxLjM3MzE4NjQsMTQuNjI2ODAxNCA0MS4zNzMxODY0LDEzLjM3MzE5ODYgNDAuNTk5OTg3OCwxMi42IEw0MC41OTk5ODc4LDEyLjYgQzM5LjgyNjc4OTEsMTEuODI2ODAxNCAzOC41NzMxODY0LDExLjgyNjgwMTQgMzcuNzk5OTg3OCwxMi42IEwxNy45OTk5ODc4LDMyLjQgWiI+PC9wYXRoPjwvZz48L2c+PC9nPjwvc3ZnPg==')] after:bg-[length:40px] after:bg-center after:bg-no-repeat after:content-[''] checked:bg-purple-400 checked:border-purple-500 hover:cursor-pointer focus:outline-none"
       />
       <label class="" for="myCheckbox">Зробити товар акційним</label>
     </DashboardSection>
