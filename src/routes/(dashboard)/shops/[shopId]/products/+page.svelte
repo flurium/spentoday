@@ -34,7 +34,7 @@
       const json = await callJson<Product>(response)
       if (!json) return toast.jsonError()
 
-      products = [...products, json]
+      products = [json, ...products]
       return
     }
 
