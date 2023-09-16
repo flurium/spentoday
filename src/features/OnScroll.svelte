@@ -1,3 +1,7 @@
+<script lang="ts" context="module">
+  export type OnScrollResult = "skip" | "stop" | "continue"
+</script>
+
 <script lang="ts">
   import { onMount } from "svelte"
 
@@ -7,7 +11,7 @@
    * Return "stop" to stop tracking scroll.
    * Return "continue" to continue tracking.
    */
-  export let load: () => Promise<"skip" | "stop" | "continue">
+  export let action: () => Promise<OnScrollResult>
 
   let div: HTMLDivElement
 
@@ -20,7 +24,7 @@
 
       if (!entry.isIntersecting) return
 
-      const status = await load()
+      const status = await action()
       if (status == "skip") return
 
       observer.unobserve(div)

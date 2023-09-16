@@ -4,16 +4,19 @@
   import slugify from "@sindresorhus/slugify"
   import { call, callJson } from "$lib/fetch"
   import { toast } from "$features/toast"
-  import type { Page } from "./+page"
+  import type { InfoPage } from "./+page"
   import { ukrDateString } from "$features/subscriptions"
-  import autoAnimate from "@formkit/auto-animate"
   import DashboardSection from "$features/dashboard/DashboardSection.svelte"
+  import InfinityLoader from "$features/InfinityLoader.svelte"
+  import autoAnimate from "@formkit/auto-animate"
 
   export let data: PageData
-  let pages = data.pages
+  let pages = data.pages as InfoPage[]
   let newPageSlug = ""
   let newPageModal: HTMLDialogElement
   let slugValid = true
+
+  let start: number = data.pages.length
 
   function slugInput() {
     slugValid = isValidSlug(newPageSlug)
@@ -34,10 +37,10 @@
     if (!response) return toast.serverError()
 
     if (response.ok) {
-      const json = await callJson<Page>(response)
+      const json = await callJson<InfoPage>(response)
       if (!json) return toast.jsonError()
 
-      pages = [...pages, json]
+      pages = [json, ...pages]
       newPageModal.close()
       return
     }
@@ -51,6 +54,21 @@
     }
 
     return toast.serverError()
+  }
+
+  async function loadPages(): Promise<"stop" | "continue"> {
+    const response = await call(fetch, "load", {
+      route: `/v1/site/dashboard/${data.shopId}/pages?start=${start}`,
+      method: "GET"
+    })
+    if (response == null) return "continue"
+    const json = await callJson<InfoPage[]>(response)
+    if (!json) return "continue"
+    if (json.length == 0) return "stop"
+
+    start += json.length
+    pages = [...pages, ...json]
+    return "continue"
   }
 </script>
 
@@ -100,21 +118,24 @@
   </form>
 </dialog>
 
-<DashboardSection class="mt-5" animate={true}>
+<DashboardSection class="mt-5">
   <div class="grid grid-cols-3 gap-x-8 px-5 py-3 text-secondary-400">
     <span>Посилання</span>
     <span>Заголовок</span>
     <span>Коли оновлено</span>
   </div>
 
-  {#each pages as page, i (page.slug)}
-    <a
-      href={routes.page(data.shopId, page.slug)}
-      class="grid grid-cols-3 gap-x-8 px-5 border-t border-secondary-100"
-    >
-      <span class="py-5">{page.slug}</span>
-      <span class="py-5">{page.title}</span>
-      <span class="py-5">{ukrDateString(new Date(page.updatedAt))}</span>
-    </a>
-  {/each}
+  <div use:autoAnimate>
+    {#each pages as page (page.slug)}
+      <a
+        href={routes.page(data.shopId, page.slug)}
+        class="grid grid-cols-3 gap-x-8 px-5 border-t border-secondary-100"
+      >
+        <span class="py-5">{page.slug}</span>
+        <span class="py-5">{page.title}</span>
+        <span class="py-5">{ukrDateString(new Date(page.updatedAt))}</span>
+      </a>
+    {/each}
+    <InfinityLoader load={loadPages} />
+  </div>
 </DashboardSection>

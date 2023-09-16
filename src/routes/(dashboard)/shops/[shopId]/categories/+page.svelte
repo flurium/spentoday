@@ -7,9 +7,9 @@
   $: categories = data.categories
 
   let editCategoryId: string | null = null
-  let categoryInput: string = ""
+  let categoryInput = ""
   let parentInput: string | null = null
-  let message: string = ""
+  let message = ""
 
   async function submit() {
     if (editCategoryId == null) add()
@@ -60,7 +60,6 @@
     }
 
     let body: { [key: string]: any } = { id: category.id }
-    console.log(name, category.name)
     if (name != category.name) body.name = name
     if (parentInput != category.parentId) body.parentId = parentInput
 

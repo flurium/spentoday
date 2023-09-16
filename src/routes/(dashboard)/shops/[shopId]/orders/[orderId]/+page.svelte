@@ -3,10 +3,11 @@
   import { ukrDateString } from "$features/subscriptions"
   import { toast } from "$features/toast"
   import { call } from "$lib/fetch"
+  import autoAnimate from "@formkit/auto-animate"
   import type { PageData } from "./$types"
   export let data: PageData
 
-  let selected: any
+  let selected: string
   async function setStatus() {
     const response = await call(fetch, "client", {
       route: `/v1/site/order/${data.order.id}/status`,
@@ -17,8 +18,8 @@
   }
 </script>
 
-<DashboardSection animate class="m-2 p-5">
-  <div>
+<DashboardSection class="m-2 p-5">
+  <div use:autoAnimate>
     <span class="xl text-lg font-bold">
       Замовлення <span class="text-sm">{data.order.id}</span>
     </span>
@@ -96,7 +97,7 @@
 </DashboardSection>
 
 <div class="flex flex-row">
-  <DashboardSection animate class="basis-3/5 m-2 p-5">
+  <DashboardSection class="basis-3/5 m-2 p-5">
     <table class="table-fixed w-full">
       <thead>
         <tr class=" text-secondary-400 text-sm">
@@ -107,7 +108,7 @@
         </tr>
       </thead>
 
-      <tbody>
+      <tbody use:autoAnimate>
         {#each data.order.details as detail}
           <tr class="mt-5 py-5 px-4 xl">
             <td class="text-center">{detail.name}</td>

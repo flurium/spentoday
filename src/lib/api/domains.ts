@@ -103,12 +103,12 @@ export async function addDomain(
   })
   if (!response) return { status: "fail" }
   if (response.ok) {
-    var json = await callJson<ShopDomain>(response)
+    const json = await callJson<ShopDomain>(response)
     if (!json) return { status: "fail" }
     return { data: json, status: "ok" }
   }
   if (response.status == 409) {
-    var reason = await callJson<"has-free-domain" | "domain-taken">(response)
+    const reason = await callJson<"has-free-domain" | "domain-taken">(response)
     return { status: reason ?? "fail" }
   }
   if (response.status == 400) return { status: "bad-domain" }

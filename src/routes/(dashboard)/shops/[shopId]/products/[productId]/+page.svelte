@@ -1,21 +1,18 @@
 <script lang="ts">
-  import slugify from "@sindresorhus/slugify"
   import type { PageData } from "./$types"
   import { api, imageSize, routes } from "$lib"
   import { toast } from "$features/toast"
-  import { slug, slugUpdate } from "$lib/slug"
   import DashboardSection from "$features/dashboard/DashboardSection.svelte"
   import Arrow from "$features/landing/questions/Arrow.svelte"
-  import { product } from "$lib/routes"
 
   export let data: PageData
   $: images = data.product.images
   $: categories = data.categories
   let isDraft = data.product.isDraft
 
-  let name: string = data.product.name
-  let price: number = data.product.price
-  let amount: number = data.product.amount
+  let name = data.product.name
+  let price = data.product.price
+  let amount = data.product.amount
   let description: string = data.product.description
   let seoTitle: string = data.product.seoTitle
   let seoDescription: string = data.product.seoDescription
@@ -25,8 +22,8 @@
     console.log(seoSlug)
   }
 
-  let savingStatus: string = "Збережено"
-  let savingTimer: number = 0
+  let savingStatus = "Збережено"
+  let savingTimer = 0
 
   function debounceChange() {
     savingStatus = "Пишеться"

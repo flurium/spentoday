@@ -6,7 +6,7 @@
     violet: "#8576E1"
   }
 
-  let className: string = "h-11 w-11"
+  let className = "h-11 w-11"
   export { className as class }
 </script>
 

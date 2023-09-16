@@ -5,10 +5,10 @@
 
   const emailSchema = z.string().email()
 
-  let name: string = ""
-  let email: string = ""
-  let password: string = ""
-  let confirmPassword: string = ""
+  let name = ""
+  let email = ""
+  let password = ""
+  let confirmPassword = ""
 
   let message: string | null = null
 

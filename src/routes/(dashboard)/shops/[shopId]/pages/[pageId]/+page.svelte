@@ -13,8 +13,8 @@
   let newPageContent: string = data.content
   let newPageDescription: string = data.description
 
-  let status: string = "Збережено"
-  let timer: number = 0
+  let status = "Збережено"
+  let timer = 0
 
   function debounceChange() {
     status = "Пишеться"

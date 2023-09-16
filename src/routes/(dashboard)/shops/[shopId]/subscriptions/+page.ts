@@ -1,7 +1,4 @@
-import {
-  querySubscriptions,
-  type ApiSubscription
-} from "$features/subscriptions"
+import { querySubscriptions } from "$features/subscriptions"
 import { errors } from "$lib"
 import type { PageLoad } from "./$types"
 

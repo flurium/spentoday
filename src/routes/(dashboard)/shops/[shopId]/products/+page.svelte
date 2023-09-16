@@ -3,15 +3,16 @@
   import type { PageData } from "./$types"
   import { routes } from "$lib"
   import { call, callJson } from "$lib/fetch"
-  import ScrollLoad from "$features/ScrollLoad.svelte"
   import { shopProducts, type Product } from "$lib/api"
   import { toast } from "$features/toast"
   import DashboardSection from "$features/dashboard/DashboardSection.svelte"
+  import InfinityLoader from "$features/InfinityLoader.svelte"
+  import autoAnimate from "@formkit/auto-animate"
 
   export let data: PageData
   let products = data.products
 
-  let newProduct: string = ""
+  let newProduct = ""
 
   async function add() {
     const name = newProduct.trim()
@@ -50,26 +51,17 @@
   }
 
   let start = data.products.length
-  let isLoading = false
-
-  async function loadProducts(): Promise<"skip" | "stop" | "continue"> {
-    if (isLoading) return "skip"
-
-    isLoading = true
+  async function loadProducts(): Promise<"stop" | "continue"> {
     const loadProducts = await shopProducts(fetch, "client", {
       shopId: data.shopId,
       start: start,
       count: 10
     })
-    if (!loadProducts) {
-      isLoading = false
-      return "continue"
-    }
+    if (loadProducts == null) return "continue"
     if (loadProducts.length == 0) return "stop"
 
     start += loadProducts.length
     products = [...products, ...loadProducts]
-    isLoading = false
     return "continue"
   }
 </script>
@@ -88,8 +80,8 @@
   </button>
 </form>
 
-<DashboardSection class="mt-8" animate={true}>
-  <div class="flex flex-col gap-3">
+<DashboardSection class="mt-8">
+  <div class="flex flex-col gap-3" use:autoAnimate>
     {#each products as product, i (product.id)}
       <a
         class="flex justify-between items-center rounded-lg py-3 px-5
@@ -115,6 +107,8 @@
         {/if}
       </a>
     {/each}
-    <ScrollLoad load={loadProducts} />
+    <InfinityLoader load={loadProducts} />
+
+    <!-- <ScrollLoad load={loadProducts} /> -->
   </div>
 </DashboardSection>

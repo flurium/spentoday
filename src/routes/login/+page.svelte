@@ -5,8 +5,8 @@
 
   const emailSchema = z.string().email()
 
-  let email: string = ""
-  let password: string = ""
+  let email = ""
+  let password = ""
   let message: string | null = null
 
   $: isEmailCorrect = emailSchema.safeParse(email).success

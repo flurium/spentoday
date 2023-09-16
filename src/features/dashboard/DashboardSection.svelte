@@ -1,9 +1,9 @@
 <script lang="ts">
   import autoAnimate from "@formkit/auto-animate"
 
-  export let animate: boolean
+  export let animate = false
 
-  let className: string = ""
+  let className = ""
   export { className as class }
 </script>
 

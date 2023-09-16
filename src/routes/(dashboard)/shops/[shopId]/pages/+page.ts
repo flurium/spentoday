@@ -2,7 +2,7 @@ import { errors } from "$lib"
 import { call, callJson } from "$lib/fetch"
 import type { PageLoad } from "./$types"
 
-export type Page = {
+export type InfoPage = {
   slug: string
   title: string
   updatedAt: string
@@ -16,12 +16,12 @@ export const load = (async ({ fetch, params }) => {
 
   if (!response) throw errors.serverError()
 
-  const json = await callJson<Page[]>(response)
+  const json = await callJson<InfoPage[]>(response)
 
   if (!json) throw errors.jsonError()
 
   return {
-    pages: json,
+    pages: [], //json,
     shopId: params.shopId
   }
 }) satisfies PageLoad

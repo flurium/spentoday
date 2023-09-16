@@ -8,7 +8,7 @@
   export let data: PageData
   let shops = data.shops
 
-  let shopName: string = ""
+  let shopName = ""
   $: isInvalid = shopName.trim() == ""
 
   async function addShop() {

@@ -13,12 +13,12 @@
   $: shopName = data.name
   let logo = data.logo
   let top = data.top
-  let name: string = ""
-  let link: string = ""
+  let name = ""
+  let link = ""
   let bannerFiles: FileList
   let logoFiles: FileList
   let topFiles: FileList
-  let shopNameInput: string = ""
+  let shopNameInput = ""
 
   $: isInvalidLink = name.trim() == "" || link.trim() == ""
   $: isInvalidName = shopNameInput.trim() == ""

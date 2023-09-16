@@ -5,11 +5,11 @@
 
   export let data: PageData
 
-  let name: string = ""
+  let name = ""
 
-  let currentPassword: string = ""
-  let newPassword: string = ""
-  let confirmPassword: string = ""
+  let currentPassword = ""
+  let newPassword = ""
+  let confirmPassword = ""
 
   let message: string | null = null
   let messageName: string | null = null

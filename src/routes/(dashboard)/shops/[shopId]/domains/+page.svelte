@@ -3,7 +3,6 @@
   import { goto } from "$app/navigation"
   import { api, routes } from "$lib"
   import { toast } from "$features/toast"
-  import DnsTable from "$features/domains/DnsTable.svelte"
   import DomainInfo from "$features/domains/DomainInfo.svelte"
   import CrossIcon from "$features/domains/CrossIcon.svelte"
   import autoAnimate from "@formkit/auto-animate"
@@ -18,9 +17,9 @@
 
   $: hasFreeDomain =
     domains.findIndex((x) => x.domain.endsWith("spentoday.com")) != -1
-  let closeFreeDomainNotification: boolean = false
+  let closeFreeDomainNotification = false
 
-  let domainInput: string = ""
+  let domainInput = ""
 
   async function addDomain() {
     if (hasFreeDomain && domainInput.endsWith(".spentoday.com")) {

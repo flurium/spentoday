@@ -4,7 +4,6 @@
   import { call, callJson } from "$lib/fetch"
   import { ukrDateString, type ApiSubscription } from "$features/subscriptions"
   import type { PageData } from "./$types"
-  import autoAnimate from "@formkit/auto-animate"
   import DashboardSection from "$features/dashboard/DashboardSection.svelte"
 
   export let data: PageData
@@ -92,7 +91,7 @@
   {#if subscriptions.length == 0}
     <p class="p-5 border-t border-secondary-100">Немає підписок</p>
   {:else}
-    {#each subscriptions as subscription, i (subscription.id)}
+    {#each subscriptions as subscription (subscription.id)}
       <div class="grid grid-cols-2 gap-x-8 px-5 border-t border-secondary-100">
         <!-- <div
           class="flex justify-between items-center py-3
