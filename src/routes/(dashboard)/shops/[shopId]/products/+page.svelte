@@ -6,7 +6,6 @@
   import ScrollLoad from "$features/ScrollLoad.svelte"
   import { shopProducts, type Product } from "$lib/api"
   import { toast } from "$features/toast"
-  import autoAnimate from "@formkit/auto-animate"
   import DashboardSection from "$features/dashboard/DashboardSection.svelte"
 
   export let data: PageData
