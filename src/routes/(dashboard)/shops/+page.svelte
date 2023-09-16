@@ -11,6 +11,12 @@
   let shopName: string = ""
   $: isInvalid = shopName.trim() == ""
 
+  let activeDropdownShopId: string | null = null;
+
+  function toggleDropdown(shopId: string) {
+    activeDropdownShopId = activeDropdownShopId === shopId ? null : shopId;
+  }
+
   async function addShop() {
     const response = await call(fetch, "client", {
       route: "/v1/site/dashboard/addshop",
@@ -36,57 +42,61 @@
 
     return toast.serverError()
   }
-
-  async function deleteShop(shopId: string) {
-    const response = await call(fetch, "client", {
-      route: `/v1/dashboard/delete/${shopId}`,
-      method: "DELETE"
-    })
-    if (!response || !response.ok) return toast.serverError()
-    shops = shops.filter((x) => x.id != shopId)
-  }
 </script>
 
-<form on:submit|preventDefault={addShop} class="max-w-lg m-auto flex flex-col gap-4 mt-2">
-  <input
-    class="bg-gray-100 focus:bg-gray-50 px-6 py-4 rounded-md border border-gray-200"
-    bind:value={shopName}
-    placeholder="Shop name"
-  />
-
-  <button
-    class="bg-primary-500 disabled:bg-gray-100 font-semibold px-6 py-3 text-white
-       hover:bg-primary-400 disabled:text-gray-400 rounded-md"
-    type="submit"
-    disabled={isInvalid}
-  >
-    Add
-  </button>
-</form>
-
-<div>
-  <div>your shops:</div>
-  <div class="flex flex-wrap justify-center mt-10">
-    {#each shops as shop}
-      <div
-        class="max-w-sm p-6 m-2 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+<div class="px-32 text-center">
+  <div class="mt-20 flex justify-between items-center">
+    <span class="text-4xl font-extrabold dark:bg-gray-800 text-left pl-2">Мої сайти</span>
+    <form on:submit|preventDefault={addShop} class="flex items-center pr-5">
+      <input
+        class="focus:bg-gray-50 mx-3 p-2 w-72 rounded-md border border-gray-200"
+        bind:value={shopName}
+        placeholder="Назва магазину"
+      />
+      <button
+        class="bg-purple-600 disabled:bg-gray-100 font-semibold px-4 py-2 text-white
+          hover:bg-purple-400 disabled:text-gray-400 rounded-md"
+        type="submit"
+        disabled={isInvalid}
       >
-        <h5 class="mb-3 text-base font-semibold text-gray-900 md:text-xl dark:text-white">
-          {shop.name}
-        </h5>
-        <button
-          class="inline-block rounded bg-red-600 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-danger-600 focus:bg-danger-600 focus:outline-none focus:ring-0 active:bg-danger-700"
-          on:click={() => deleteShop(shop.id)}
-        >
-          Delete
-        </button>
-        <a
-          class="inline-block rounded bg-indigo-500 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-danger-600 focus:bg-danger-600 focus:outline-none focus:ring-0 active:bg-danger-700"
-          href={routes.shop(shop.id)}
-        >
-          to Shop
-        </a>
+        Cтворити сайт
+      </button>
+    </form>
+  </div>
+  <div class="mt-5 flex flex-wrap -m-2">
+    {#each shops as shop}
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <div
+      class="max-w-sm m-5 pb-2 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700
+      {activeDropdownShopId === shop.id ? 'bg-gray-100' : ''} static"
+      on:click={() => toggleDropdown(shop.id)}
+    >
+      {#if shop.topBanner}
+      <div class=" w-full h-56 relative {activeDropdownShopId === shop.id ? 'p-4 rounded-t-lg' : ''}">
+        <img
+          class="w-full h-full rounded-t-lg {activeDropdownShopId === shop.id ? 'brightness-50' : ''}"
+          src={shop.topBanner}
+          alt="Shop"
+        />
+
+        {#if activeDropdownShopId === shop.id}
+        <div class="absolute inset-0 flex justify-center items-center">
+          <a href={routes.shop(shop.id)} class="bg-purple-600 text-white px-4 py-2 rounded-lg">Управляти</a>
+        </div>
+        {/if}
       </div>
+      {/if}
+
+      <h5 class="mt-2 ml-4 text-base font-semibold text-gray-900 md:text-xl dark:text-white text-left">
+        {shop.name}
+      </h5>
+      <div class="flex justify-between items-center">
+        <p class="break-words whitespace-normal text-gray-500 text-15 text-left mt-1 ml-4">
+          {shop.slug}
+        </p>
+      </div>
+    </div>
     {/each}
   </div>
 </div>

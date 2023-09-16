@@ -3,8 +3,10 @@ import { call, callJson } from "$lib/fetch"
 import { jsonError, serverError } from "$lib/errors"
 
 export type DashboardShop = {
-  name: string
   id: string
+  name: string
+  topBanner: string
+  slug: string
 }
 
 export const load: PageLoad = async ({ fetch }) => {
