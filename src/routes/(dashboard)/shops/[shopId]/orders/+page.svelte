@@ -1,15 +1,13 @@
 <script lang="ts">
   import type { PageData } from "./$types"
-  import { api, routes } from "$lib"
+  import { routes } from "$lib"
   import { ukrDateString } from "$features/subscriptions"
   import { goto } from "$app/navigation"
+  import DashboardSection from "$features/dashboard/DashboardSection.svelte"
 
   export let data: PageData
+  let orders = data.orders
 
-  let productName: string = ""
-  let timer: number
-
-  $: orders = data.orders ?? []
   function filter(status: string) {
     if (status == "Всі") {
       orders = data.orders
@@ -19,43 +17,72 @@
   }
 </script>
 
-<main>
-  <div class="flex flex-row">
-    <button on:click={() => filter("Всі")} class="border-none me-5">Всі</button>
-    <button on:click={() => filter("Готується")} class="border-none me-5">
-      Готується
-    </button>
-    <button on:click={() => filter("Виконано")} class="border-none me-5">
-      Виконано
-    </button>
-    <button on:click={() => filter("Скасовано")} class="border-none me-5">
-      Скасовано
-    </button>
-  </div>
-  <table class="table-fixed w-full text-sm">
-    <thead>
-      <tr class=" text-secondary-400">
-        <th>Замовлення</th>
-        <th>Дата</th>
-        <th>Статус</th>
-        <th>Кількість</th>
-        <th>Ціна</th>
-      </tr>
-    </thead>
+<main class="h-full w-full">
+  <h1 class="font-bold text-2xl text-secondary-700 mb-8">Ваші замовлення</h1>
+  <DashboardSection animate class="m-2 p-10">
+    <div class="flex flex-row mb-7">
+      <button
+        on:click={() => filter("Всі")}
+        class="hover:bg-secondary-50 border border-white p-2 me-5
+        hover:border-secondary-300 hover:text-brand-violet rounded-lg"
+      >
+        Всі
+      </button>
+      <button
+        on:click={() => filter("Готується")}
+        class="hover:bg-secondary-50 border border-white p-2 me-5
+        hover:border-secondary-300 hover:text-brand-violet rounded-lg"
+      >
+        Готується
+      </button>
+      <button
+        on:click={() => filter("Виконано")}
+        class="hover:bg-secondary-50 border border-white p-2 me-5
+        hover:border-secondary-300 hover:text-brand-violet rounded-lg"
+      >
+        Виконано
+      </button>
+      <button
+        on:click={() => filter("Скасовано")}
+        class="hover:bg-secondary-50 border border-white p-2 me-5
+        hover:border-secondary-300 hover:text-brand-violet rounded-lg"
+      >
+        Скасовано
+      </button>
+    </div>
 
-    <tbody>
-      {#each orders as order}
-        <tr
-          class=" cursor-pointer"
-          on:click={() => goto(routes.order(data.shopId, order.id))}
-        >
-          <td class="text-center">{order.id}</td>
-          <td class="text-center">{ukrDateString(new Date(order.date))}</td>
-          <td class="text-center">{order.status}</td>
-          <td class="text-center">{order.amount}</td>
-          <td class="text-center">{order.total}</td>
-        </tr>
-      {/each}
-    </tbody>
-  </table>
+    <div class="grid grid-cols-5 gap-4 w-full text-sm">
+      <div class="text-secondary-300 text-center">Замовлення</div>
+      <div class="text-secondary-300 text-center">Дата</div>
+      <div class="text-secondary-300 text-center">Статус</div>
+      <div class="text-secondary-300 text-center">Кількість</div>
+      <div class="text-secondary-300 text-center">Ціна</div>
+    </div>
+
+    {#each orders as order}
+      <button
+        on:click={() => goto(routes.order(data.shopId, order.id))}
+        class=" w-full grid grid-cols-5 gap-4 border-t pt-3"
+      >
+        <div class="text-center break-words">{order.id}</div>
+        <div class="text-center">{ukrDateString(new Date(order.date))}</div>
+
+        <div>
+          <span
+            class="text-white rounded-full py-1 px-3
+            {order.status == 'Виконано'
+              ? 'bg-green-600'
+              : order.status == 'Скасовано'
+              ? 'bg-red-600'
+              : 'bg-blue-600'}"
+          >
+            {order.status}
+          </span>
+        </div>
+
+        <div class="text-center">{order.amount}</div>
+        <div class="text-center">{order.total}</div>
+      </button>
+    {/each}
+  </DashboardSection>
 </main>
