@@ -1,16 +1,13 @@
 <script lang="ts">
   import type { PageData } from "./$types"
-  import { api, routes } from "$lib"
+  import { routes } from "$lib"
   import { ukrDateString } from "$features/subscriptions"
   import { goto } from "$app/navigation"
   import DashboardSection from "$features/dashboard/DashboardSection.svelte"
 
   export let data: PageData
+  let orders = data.orders
 
-  let productName: string = ""
-  let timer: number
-
-  $: orders = data.orders ?? []
   function filter(status: string) {
     if (status == "Всі") {
       orders = data.orders
@@ -26,25 +23,32 @@
     <div class="flex flex-row mb-7">
       <button
         on:click={() => filter("Всі")}
-        class="hover:bg-gray-300 hover:text-purple-800 rounded-lg p-2 border-none me-5"
-        >Всі</button
+        class="hover:bg-secondary-50 border border-white p-2 me-5
+        hover:border-secondary-300 hover:text-brand-violet rounded-lg"
       >
+        Всі
+      </button>
       <button
         on:click={() => filter("Готується")}
-        class="hover:bg-gray-300 hover:text-purple-800 rounded-lg p-2 border-none me-5"
+        class="hover:bg-secondary-50 border border-white p-2 me-5
+        hover:border-secondary-300 hover:text-brand-violet rounded-lg"
       >
         Готується
       </button>
       <button
         on:click={() => filter("Виконано")}
-        class="hover:bg-gray-300 hover:text-purple-800 rounded-lg p-2 border-none me-5"
-        >Виконано</button
+        class="hover:bg-secondary-50 border border-white p-2 me-5
+        hover:border-secondary-300 hover:text-brand-violet rounded-lg"
       >
+        Виконано
+      </button>
       <button
         on:click={() => filter("Скасовано")}
-        class="hover:bg-gray-300 hover:text-purple-800 rounded-lg p-2 border-none me-5"
-        >Скасовано</button
+        class="hover:bg-secondary-50 border border-white p-2 me-5
+        hover:border-secondary-300 hover:text-brand-violet rounded-lg"
       >
+        Скасовано
+      </button>
     </div>
 
     <div class="grid grid-cols-5 gap-4 w-full text-sm">
