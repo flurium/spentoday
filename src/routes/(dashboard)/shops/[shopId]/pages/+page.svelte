@@ -4,19 +4,24 @@
   import slugify from "@sindresorhus/slugify"
   import { call, callJson } from "$lib/fetch"
   import { toast } from "$features/toast"
-  import type { InfoPage } from "./+page"
   import { ukrDateString } from "$features/subscriptions"
   import DashboardSection from "$features/dashboard/DashboardSection.svelte"
   import InfinityLoader from "$features/InfinityLoader.svelte"
   import autoAnimate from "@formkit/auto-animate"
 
+  type InfoPage = {
+    slug: string
+    title: string
+    updatedAt: string
+  }
+
   export let data: PageData
-  let pages = data.pages as InfoPage[]
+  let pages: InfoPage[] = []
+  let start = pages.length
+
   let newPageSlug = ""
   let newPageModal: HTMLDialogElement
   let slugValid = true
-
-  let start: number = data.pages.length
 
   function slugInput() {
     slugValid = isValidSlug(newPageSlug)
@@ -129,11 +134,11 @@
     {#each pages as page (page.slug)}
       <a
         href={routes.page(data.shopId, page.slug)}
-        class="grid grid-cols-3 gap-x-8 px-5 border-t border-secondary-100"
+        class="grid grid-cols-3 gap-x-8 px-5 py-5 border-t border-secondary-100"
       >
-        <span class="py-5">{page.slug}</span>
-        <span class="py-5">{page.title}</span>
-        <span class="py-5">{ukrDateString(new Date(page.updatedAt))}</span>
+        <span>{page.slug}</span>
+        <span>{page.title}</span>
+        <span>{ukrDateString(new Date(page.updatedAt))}</span>
       </a>
     {/each}
     <InfinityLoader load={loadPages} />

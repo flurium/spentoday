@@ -1,76 +1,91 @@
 <script lang="ts">
   import type { PageData } from "./$types"
-  import { routes } from "$lib"
+  import { api, routes } from "$lib"
   import { ukrDateString } from "$features/subscriptions"
-  import { goto } from "$app/navigation"
   import DashboardSection from "$features/dashboard/DashboardSection.svelte"
+  import InfinityLoader from "$features/InfinityLoader.svelte"
+  import autoAnimate from "@formkit/auto-animate"
+  import { goto } from "$app/navigation"
 
   export let data: PageData
   let orders = data.orders
+  let start = data.orders.length
 
-  function filter(status: string) {
-    if (status == "Всі") {
-      orders = data.orders
-      return
-    }
-    orders = data.orders.filter((x) => x.status == status)
+  let status = "Всі"
+  $: filteredOrders =
+    status == "Всі" ? orders : orders.filter((x) => x.status == status)
+
+  async function load() {
+    const json = await api.queryOrders(fetch, "client", {
+      shopId: data.shopId,
+      start: start
+    })
+    if (!json) return "continue"
+    if (json.length == 0) return "stop"
+
+    start += json.length
+    orders = [...orders, ...json]
+    return "continue"
   }
 </script>
 
-<main class="h-full w-full">
-  <h1 class="font-bold text-2xl text-secondary-700 mb-8">Ваші замовлення</h1>
-  <DashboardSection animate class="m-2 p-10">
-    <div class="flex flex-row mb-7">
-      <button
-        on:click={() => filter("Всі")}
-        class="hover:bg-secondary-50 border border-white p-2 me-5
+<h1 class="font-bold text-2xl text-secondary-700 mb-8">Ваші замовлення</h1>
+<DashboardSection animate>
+  <div class="flex flex-row mb-7">
+    <button
+      on:click={() => (status = "Всі")}
+      class="hover:bg-secondary-50 border border-white p-2 me-5
         hover:border-secondary-300 hover:text-brand-violet rounded-lg"
-      >
-        Всі
-      </button>
-      <button
-        on:click={() => filter("Готується")}
-        class="hover:bg-secondary-50 border border-white p-2 me-5
+    >
+      Всі
+    </button>
+    <button
+      on:click={() => (status = "Готується")}
+      class="hover:bg-secondary-50 border border-white p-2 me-5
         hover:border-secondary-300 hover:text-brand-violet rounded-lg"
-      >
-        Готується
-      </button>
-      <button
-        on:click={() => filter("Виконано")}
-        class="hover:bg-secondary-50 border border-white p-2 me-5
+    >
+      Готується
+    </button>
+    <button
+      on:click={() => (status = "Виконано")}
+      class="hover:bg-secondary-50 border border-white p-2 me-5
         hover:border-secondary-300 hover:text-brand-violet rounded-lg"
-      >
-        Виконано
-      </button>
-      <button
-        on:click={() => filter("Скасовано")}
-        class="hover:bg-secondary-50 border border-white p-2 me-5
+    >
+      Виконано
+    </button>
+    <button
+      on:click={() => (status = "Скасовано")}
+      class="hover:bg-secondary-50 border border-white p-2 me-5
         hover:border-secondary-300 hover:text-brand-violet rounded-lg"
-      >
-        Скасовано
-      </button>
-    </div>
+    >
+      Скасовано
+    </button>
+  </div>
 
-    <div class="grid grid-cols-5 gap-4 w-full text-sm">
-      <div class="text-secondary-300 text-center">Замовлення</div>
-      <div class="text-secondary-300 text-center">Дата</div>
-      <div class="text-secondary-300 text-center">Статус</div>
-      <div class="text-secondary-300 text-center">Кількість</div>
-      <div class="text-secondary-300 text-center">Ціна</div>
-    </div>
+  <div
+    class="py-3 grid grid-cols-[2fr_1fr_1fr_1fr_1fr]
+    gap-x-8 text-secondary-400 w-full text-left"
+  >
+    <span>Замовлення</span>
+    <span>Дата</span>
+    <span>Статус</span>
+    <span>Кількість</span>
+    <span>Ціна</span>
+  </div>
 
-    {#each orders as order}
+  <div use:autoAnimate>
+    {#each filteredOrders as order, i (order.id)}
       <button
+        class="py-5 grid grid-cols-[2fr_1fr_1fr_1fr_1fr] gap-x-8
+        border-t border-secondary-100 w-full text-left"
         on:click={() => goto(routes.order(data.shopId, order.id))}
-        class=" w-full grid grid-cols-5 gap-4 border-t pt-3"
       >
-        <div class="text-center break-words">{order.id}</div>
-        <div class="text-center">{ukrDateString(new Date(order.date))}</div>
-
+        <span class="break-all">{order.id}</span>
+        <span class="break-all">{ukrDateString(new Date(order.date))} </span>
         <div>
           <span
             class="text-white rounded-full py-1 px-3
-            {order.status == 'Виконано'
+              {order.status == 'Виконано'
               ? 'bg-green-600'
               : order.status == 'Скасовано'
               ? 'bg-red-600'
@@ -79,10 +94,11 @@
             {order.status}
           </span>
         </div>
-
-        <div class="text-center">{order.amount}</div>
-        <div class="text-center">{order.total}</div>
+        <span>{order.amount}</span>
+        <span>{order.total} грн</span>
       </button>
     {/each}
-  </DashboardSection>
-</main>
+
+    <InfinityLoader {load} />
+  </div>
+</DashboardSection>

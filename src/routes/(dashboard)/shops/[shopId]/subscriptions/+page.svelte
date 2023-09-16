@@ -75,7 +75,7 @@
   </button>
 </form>
 
-<DashboardSection class="mt-8" animate={false}>
+<DashboardSection class="mt-8" animate>
   <input
     bind:value={searchInput}
     on:input={debounceSearch}

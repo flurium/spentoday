@@ -2,6 +2,7 @@
   import type { PageData } from "./$types"
   import { api, imageSize, routes } from "$lib"
   import { toast } from "$features/toast"
+  import { slug } from "$lib/slug"
   import DashboardSection from "$features/dashboard/DashboardSection.svelte"
   import Arrow from "$features/landing/questions/Arrow.svelte"
 
@@ -22,8 +23,8 @@
     console.log(seoSlug)
   }
 
-  let savingStatus = "Збережено"
-  let savingTimer = 0
+  let savingStatus: string = "Збережено"
+  let savingTimer: number = 0
 
   function debounceChange() {
     savingStatus = "Пишеться"

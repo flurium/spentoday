@@ -1,29 +1,14 @@
-import { errors } from "$lib"
-import { call, callJson } from "$lib/fetch"
+import { api, errors } from "$lib"
 import type { PageLoad } from "./$types"
 
-export type Order = {
-  id: string
-  total: number
-  amount: number
-  status: string
-  date: string
-}
-
-export const load = (async ({ fetch, params }) => {
-  const response = await call(fetch, "load", {
-    route: `/v1/site/order/${params.shopId}/orders`,
-    method: "GET"
+export const load: PageLoad = async ({ fetch, params }) => {
+  const orders = await api.queryOrders(fetch, "load", {
+    shopId: params.shopId,
+    start: 0
   })
-
-  if (!response) throw errors.serverError()
-
-  const json = await callJson<Order[]>(response)
-
-  if (!json) throw errors.jsonError()
+  if (orders == null) throw errors.serverError()
 
   return {
-    orders: json,
-    shopId: params.shopId
+    orders: orders
   }
-}) satisfies PageLoad
+}
