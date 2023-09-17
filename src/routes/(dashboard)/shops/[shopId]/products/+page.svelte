@@ -6,11 +6,12 @@
   import { shopProducts, type Product } from "$lib/api"
   import { toast } from "$features/toast"
   import DashboardSection from "$features/dashboard/DashboardSection.svelte"
-  import InfinityLoader from "$features/InfinityLoader.svelte"
   import autoAnimate from "@formkit/auto-animate"
+  import { createScrollLoader, scrollLoader } from "$features/loader"
 
   export let data: PageData
   let products = data.products
+  let start = data.products.length
 
   let newProduct = ""
 
@@ -50,19 +51,22 @@
     return toast.serverError()
   }
 
-  let start = data.products.length
-  async function loadProducts(): Promise<"stop" | "continue"> {
-    const loadProducts = await shopProducts(fetch, "client", {
+  const loader = createScrollLoader(loadMore)
+
+  async function loadMore(version: number) {
+    let items = await shopProducts(fetch, "client", {
       shopId: data.shopId,
       start: start,
       count: 10
     })
-    if (loadProducts == null) return "continue"
-    if (loadProducts.length == 0) return "stop"
+    if (items == null || loader.versionChanged(version)) return true
 
-    start += loadProducts.length
-    products = [...products, ...loadProducts]
-    return "continue"
+    items = items.filter((x) => !products.some((p) => p.id == x.id))
+    if (items.length == 0) return false
+
+    start += items.length
+    products = [...products, ...items]
+    return true
   }
 </script>
 
@@ -107,8 +111,6 @@
         {/if}
       </a>
     {/each}
-    <InfinityLoader load={loadProducts} />
-
-    <!-- <ScrollLoad load={loadProducts} /> -->
+    <div use:scrollLoader={loader} />
   </div>
 </DashboardSection>

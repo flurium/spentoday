@@ -6,8 +6,8 @@
   import { toast } from "$features/toast"
   import { ukrDateString } from "$features/subscriptions"
   import DashboardSection from "$features/dashboard/DashboardSection.svelte"
-  import InfinityLoader from "$features/InfinityLoader.svelte"
   import autoAnimate from "@formkit/auto-animate"
+  import { createScrollLoader, scrollLoader } from "$features/loader"
 
   type InfoPage = {
     slug: string
@@ -61,19 +61,25 @@
     return toast.serverError()
   }
 
-  async function loadPages(): Promise<"stop" | "continue"> {
-    const response = await call(fetch, "load", {
+  const loader = createScrollLoader(loadMore)
+
+  async function loadMore(version: number) {
+    const response = await call(fetch, "client", {
       route: `/v1/site/dashboard/${data.shopId}/pages?start=${start}`,
       method: "GET"
     })
-    if (response == null) return "continue"
-    const json = await callJson<InfoPage[]>(response)
-    if (!json) return "continue"
-    if (json.length == 0) return "stop"
+    if (response == null || loader.versionChanged(version)) return true
 
-    start += json.length
-    pages = [...pages, ...json]
-    return "continue"
+    let items = await callJson<InfoPage[]>(response)
+    if (!items) return true
+
+    items = items.filter((x) => !pages.some((p) => p.slug == x.slug))
+
+    if (items.length == 0) return false
+
+    start += items.length
+    pages = [...pages, ...items]
+    return true
   }
 </script>
 
@@ -141,6 +147,6 @@
         <span>{ukrDateString(new Date(page.updatedAt))}</span>
       </a>
     {/each}
-    <InfinityLoader load={loadPages} />
+    <div use:scrollLoader={loader} />
   </div>
 </DashboardSection>

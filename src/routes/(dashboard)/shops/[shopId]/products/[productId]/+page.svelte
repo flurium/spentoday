@@ -23,8 +23,8 @@
     console.log(seoSlug)
   }
 
-  let savingStatus: string = "Збережено"
-  let savingTimer: number = 0
+  let savingStatus = "Збережено"
+  let savingTimer = 0
 
   function debounceChange() {
     savingStatus = "Пишеться"
@@ -143,7 +143,7 @@
 <span>{savingStatus}</span>
 <div class="grid grid-cols-3 gap-4 my-4">
   <div class="col-span-2">
-    <DashboardSection class="mb-4" animate={false}>
+    <DashboardSection class="mb-4">
       <label class="text-2xl font-semibold text-header" for="nameInput">
         Назва
       </label>
@@ -168,7 +168,7 @@
       />
     </DashboardSection>
 
-    <DashboardSection class="my-4" animate={false}>
+    <DashboardSection class="my-4">
       <label class="text-2xl font-semibold text-header" for="mediaInput">
         Медіа
       </label>
@@ -230,7 +230,7 @@
       </div>
     </DashboardSection>
 
-    <DashboardSection class="my-4" animate={false}>
+    <DashboardSection class="my-4">
       <div class="flex flex-col gap-4 max-w-3xl">
         <label class="text-2xl font-semibold text-header" for="categorySelect">
           Організація товарів
@@ -251,7 +251,7 @@
       </div>
     </DashboardSection>
 
-    <DashboardSection class="my-4" animate={false}>
+    <DashboardSection class="my-4">
       <div class="flex flex-col gap-4 max-w-3xl" id="seo">
         <label class="text-2xl font-semibold my-3 text-header" for="seo">
           SEO
@@ -301,7 +301,7 @@
   </div>
 
   <div class="flex flex-col gap-4">
-    <DashboardSection animate={false}>
+    <DashboardSection>
       <div class="flex flex-col gap-4 max-w-3xl">
         <label class="text-2xl font-semibold text-header" for="statusSelect">
           Статус товару
@@ -316,7 +316,7 @@
       </div>
     </DashboardSection>
 
-    <DashboardSection animate={false}>
+    <DashboardSection>
       <!-- svelte-ignore a11y-label-has-associated-control -->
       <label class="text-2xl font-semibold text-header">
         Кількість товару
@@ -339,7 +339,7 @@
       </div>
     </DashboardSection>
 
-    <DashboardSection animate={false}>
+    <DashboardSection>
       <h3 class="text-2xl font-semibold text-header">Вартість</h3>
       <div
         class="grid grid-flow-row-dense grid-cols-3 grid-rows-2 my-5 py-3 items-center gap-4"

@@ -5,9 +5,16 @@
   import { ukrDateString, type ApiSubscription } from "$features/subscriptions"
   import type { PageData } from "./$types"
   import DashboardSection from "$features/dashboard/DashboardSection.svelte"
+  import { createScrollLoader, scrollLoader } from "$features/loader"
+  import autoAnimate from "@formkit/auto-animate"
 
   export let data: PageData
   let subscriptions = data.subscriptions.map(toSubscription)
+  let start = data.subscriptions.length
+
+  let emailInput = ""
+  let searchInput = ""
+  let timer = 0
 
   async function unsubscribe(id: string) {
     const res = await call(fetch, "client", {
@@ -24,7 +31,6 @@
     toast.serverError()
   }
 
-  let emailInput = ""
   async function addSubscriber() {
     const response = await call(fetch, "client", {
       route: "/v1/site/subscriptions",
@@ -43,21 +49,67 @@
     emailInput = ""
   }
 
-  let searchInput = ""
-  let timer = 0
+  const loader = createScrollLoader(loadMore)
+
+  async function loadMore(version: number) {
+    let items = await querySubscriptions(fetch, "client", {
+      shopId: data.shopId,
+      search: searchInput,
+      start: start
+    })
+    if (items == null || loader.versionChanged(version)) return true
+
+    items = items.filter((x) => !subscriptions.some((y) => y.id == x.id))
+    if (items.length == 0) return false
+
+    start += items.length
+    subscriptions = [...subscriptions, ...items.map(toSubscription)]
+    return true
+  }
+
+  async function resetFilter() {
+    const res = await querySubscriptions(fetch, "client", {
+      shopId: data.shopId,
+      search: searchInput,
+      start: 0
+    })
+    if (res == null) {
+      subscriptions = []
+      return
+    }
+
+    start = res.length
+    subscriptions = res.map(toSubscription)
+
+    console.log("reset end", start, subscriptions)
+  }
+
   function debounceSearch() {
     clearTimeout(timer)
-    timer = setTimeout(async () => {
-      const res = await querySubscriptions(
-        fetch,
-        "client",
-        data.shopId,
-        searchInput
-      )
-      if (res == null) return
-      subscriptions = res.map(toSubscription)
-    }, 300)
+    timer = setTimeout(async () => await loader.reset(resetFilter), 300)
   }
+
+  // async function load(): Promise<"stop" | "continue"> {
+  //   if (true) return "stop"
+  //   // if (loadReset) return "continue"
+
+  //   // const items = await querySubscriptions(fetch, "client", {
+  //   //   shopId: data.shopId,
+  //   //   search: searchInput,
+  //   //   start: start
+  //   // })
+  //   // console.log(items)
+  //   // if (items == null) return "continue"
+  //   // if (items.length == 0) {
+  //   //   loadReset = true
+  //   //   return "continue"
+  //   // }
+  //   // // console.log(items)
+  //   // start += items.length
+  //   // subscriptions = [...subscriptions, ...items.map(toSubscription)]
+  //   // loadReset = false
+  //   // return "continue"
+  // }
 </script>
 
 <h1 class="font-bold text-3xl text-header mb-8">Ваші підписники</h1>
@@ -75,7 +127,7 @@
   </button>
 </form>
 
-<DashboardSection class="mt-8" animate>
+<DashboardSection class="mt-8">
   <input
     bind:value={searchInput}
     on:input={debounceSearch}
@@ -88,25 +140,32 @@
     <span>Коли підписалися</span>
   </div>
 
-  {#if subscriptions.length == 0}
-    <p class="p-5 border-t border-secondary-100">Немає підписок</p>
-  {:else}
-    {#each subscriptions as subscription (subscription.id)}
-      <div class="grid grid-cols-2 gap-x-8 px-5 border-t border-secondary-100">
-        <!-- <div
+  <div use:autoAnimate>
+    {#if subscriptions.length == 0}
+      <p class="p-5 border-t border-secondary-100">Немає підписок</p>
+    {:else}
+      {#each subscriptions as subscription}
+        <div
+          class="grid grid-cols-2 gap-x-8 px-5 border-t border-secondary-100"
+        >
+          <!-- <div
           class="flex justify-between items-center py-3
           {i != subscriptions.length - 1 ? 'border-b border-b-secondary-100' : ''}"
         > -->
-        <span class="py-5">{subscription.email}</span>
-        <span class="py-5">{ukrDateString(subscription.date)}</span>
-        <!-- <button
+          <span class="py-5">{subscription.email}</span>
+          <span class="py-5">{ukrDateString(subscription.date)}</span>
+          <!-- <button
             class=" px-3 py-1 rounded-full bg-red-200"
             on:click={() => unsubscribe(subscription.id)}
           >
             Відписати
           </button> -->
-        <!-- </div> -->
-      </div>
-    {/each}
-  {/if}
+          <!-- </div> -->
+        </div>
+      {/each}
+    {/if}
+
+    <!-- <OnScroll action={load} /> -->
+  </div>
+  <div use:scrollLoader={loader} />
 </DashboardSection>

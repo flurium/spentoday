@@ -3,9 +3,9 @@
   import { api, routes } from "$lib"
   import { ukrDateString } from "$features/subscriptions"
   import DashboardSection from "$features/dashboard/DashboardSection.svelte"
-  import InfinityLoader from "$features/InfinityLoader.svelte"
   import autoAnimate from "@formkit/auto-animate"
   import { goto } from "$app/navigation"
+  import { createScrollLoader, scrollLoader } from "$features/loader"
 
   export let data: PageData
   let orders = data.orders
@@ -15,22 +15,26 @@
   $: filteredOrders =
     status == "Всі" ? orders : orders.filter((x) => x.status == status)
 
-  async function load() {
-    const json = await api.queryOrders(fetch, "client", {
+  const loader = createScrollLoader(loadMore)
+
+  async function loadMore(version: number) {
+    let items = await api.queryOrders(fetch, "client", {
       shopId: data.shopId,
       start: start
     })
-    if (!json) return "continue"
-    if (json.length == 0) return "stop"
+    if (!items || loader.versionChanged(version)) return true
 
-    start += json.length
-    orders = [...orders, ...json]
-    return "continue"
+    items = items.filter((x) => !orders.some((o) => x.id == o.id))
+    if (items.length == 0) return false
+
+    start += items.length
+    orders = [...orders, ...items]
+    return true
   }
 </script>
 
 <h1 class="font-bold text-2xl text-secondary-700 mb-8">Ваші замовлення</h1>
-<DashboardSection animate>
+<DashboardSection>
   <div class="flex flex-row mb-7">
     <button
       on:click={() => (status = "Всі")}
@@ -74,7 +78,7 @@
   </div>
 
   <div use:autoAnimate>
-    {#each filteredOrders as order, i (order.id)}
+    {#each filteredOrders as order (order.id)}
       <button
         class="py-5 grid grid-cols-[2fr_1fr_1fr_1fr_1fr] gap-x-8
         border-t border-secondary-100 w-full text-left"
@@ -99,6 +103,6 @@
       </button>
     {/each}
 
-    <InfinityLoader {load} />
+    <div use:scrollLoader={loader} />
   </div>
 </DashboardSection>

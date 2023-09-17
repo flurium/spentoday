@@ -3,9 +3,11 @@ import { errors } from "$lib"
 import type { PageLoad } from "./$types"
 
 export const load: PageLoad = async ({ fetch, params }) => {
-  const shopId = params.shopId
-
-  const subscriptions = await querySubscriptions(fetch, "load", shopId, null)
+  const subscriptions = await querySubscriptions(fetch, "load", {
+    shopId: params.shopId,
+    search: null,
+    start: 0
+  })
   if (subscriptions == null) throw errors.serverError()
 
   return {
