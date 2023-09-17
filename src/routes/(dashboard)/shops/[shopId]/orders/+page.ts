@@ -1,17 +1,14 @@
-import type { Order } from "$lib/api"
+import { api, errors } from "$lib"
 import type { PageLoad } from "./$types"
 
-/*
-
-- get orders of shop (user should own shop)
-- search orders of shop
-
-*/
-export const load = (async ({ fetch, params }) => {
-  const orders: Order[] = []
+export const load: PageLoad = async ({ fetch, params }) => {
+  const orders = await api.queryOrders(fetch, "load", {
+    shopId: params.shopId,
+    start: 0
+  })
+  if (orders == null) throw errors.serverError()
 
   return {
-    shopId: params.shopId,
     orders: orders
   }
-}) satisfies PageLoad
+}

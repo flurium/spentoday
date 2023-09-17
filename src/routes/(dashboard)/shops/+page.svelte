@@ -8,74 +8,74 @@
   export let data: PageData
   let shops = data.shops
 
-  let shopName: string = ""
+  let shopName = ""
   $: isInvalid = shopName.trim() == ""
 
   async function addShop() {
     const response = await call(fetch, "client", {
-      route: "/v1/dashboard/addshop",
+      route: "/v1/site/dashboard/addshop",
       method: "POST",
       body: { shopName: shopName }
     })
-    if (!response || !response.ok) return toast.serverError()
+    if (!response) return toast.serverError()
 
-    const shop = await callJson<DashboardShop>(response)
-    if (!shop) return toast.jsonError()
+    if (response.ok) {
+      const shop = await callJson<DashboardShop>(response)
+      if (!shop) return toast.jsonError()
 
-    shops = [...shops, shop]
-    return
-  }
+      shops = [...shops, shop]
+      return
+    }
 
-  async function deleteShop(shopId: string) {
-    const response = await call(fetch, "client", {
-      route: `/v1/dashboard/delete/${shopId}`,
-      method: "DELETE"
-    })
-    if (!response || !response.ok) return toast.serverError()
-    shops = shops.filter((x) => x.id != shopId)
+    if (response.status == 403) {
+      return toast.push({
+        title: "Досягнуто обмеження",
+        description:
+          "Ви досягли максимальної кількості магазинів для вашого тарифу."
+      })
+    }
+
+    return toast.serverError()
   }
 </script>
 
-<form on:submit|preventDefault={addShop} class="max-w-lg m-auto flex flex-col gap-4 mt-2">
-  <input
-    class="bg-gray-100 focus:bg-gray-50 px-6 py-4 rounded-md border border-gray-200"
-    bind:value={shopName}
-    placeholder="Shop name"
-  />
-
-  <button
-    class="bg-primary-500 disabled:bg-gray-100 font-semibold px-6 py-3 text-white
-       hover:bg-primary-400 disabled:text-gray-400 rounded-md"
-    type="submit"
-    disabled={isInvalid}
-  >
-    Add
-  </button>
-</form>
-
-<div>
-  <div>your shops:</div>
-  <div class="flex flex-wrap justify-center mt-10">
-    {#each shops as shop}
-      <div
-        class="max-w-sm p-6 m-2 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+<div class="px-6 mt-20 mx-auto max-w-screen-xl w-full">
+  <div class="flex justify-between items-center">
+    <h1 class="text-header text-4xl font-extrabold">Мої сайти</h1>
+    <form on:submit|preventDefault={addShop} class="flex items-center gap-4">
+      <input
+        class="py-2 px-4 w-72 rounded-md border border-gray-200"
+        bind:value={shopName}
+        placeholder="Назва магазину"
+      />
+      <button
+        class="bg-brand-violet disabled:bg-gray-100 font-semibold px-6
+        py-2 text-white disabled:text-gray-400 rounded-md"
+        type="submit"
+        disabled={isInvalid}
       >
-        <h5 class="mb-3 text-base font-semibold text-gray-900 md:text-xl dark:text-white">
-          {shop.name}
-        </h5>
-        <button
-          class="inline-block rounded bg-red-600 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-danger-600 focus:bg-danger-600 focus:outline-none focus:ring-0 active:bg-danger-700"
-          on:click={() => deleteShop(shop.id)}
-        >
-          Delete
-        </button>
-        <a
-          class="inline-block rounded bg-indigo-500 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-danger-600 focus:bg-danger-600 focus:outline-none focus:ring-0 active:bg-danger-700"
-          href={routes.shop(shop.id)}
-        >
-          to Shop
-        </a>
-      </div>
+        Cтворити сайт
+      </button>
+    </form>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-11">
+    {#each shops as shop}
+      <a
+        class="max-w-sm border border-gray-200 rounded-lg overflow-hidden"
+        href={routes.shop(shop.id)}
+      >
+        {#if shop.topBanner}
+          <img class="w-full" src={shop.topBanner} alt={shopName} />
+        {/if}
+
+        <div class="pt-5 px-7 pb-5">
+          <h5 class="font-bold text-header text-xl">{shop.name}</h5>
+          <p class="break-words text-secondary-400">
+            {shop.slug}
+          </p>
+        </div>
+      </a>
     {/each}
   </div>
 </div>

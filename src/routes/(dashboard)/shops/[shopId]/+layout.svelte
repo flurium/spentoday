@@ -7,15 +7,18 @@
 
   const sidebar = [
     { name: "Головна", link: routes.shop(data.shopId) },
-    { name: "Товари", link: "" },
-    { name: "Замовлення", link: routes.shopOrders(data.shopId) },
-    { name: "Сторінки", link: routes.shopPages(data.shopId) },
-    { name: "Налаштування", link: routes.shopSettings(data.shopId) }
+    { name: "Товари", link: routes.products(data.shopId) },
+    { name: "Замовлення", link: routes.orders(data.shopId) },
+    { name: "Підписки", link: routes.subscriptions(data.shopId) },
+    { name: "Сторінки", link: routes.pages(data.shopId) },
+    { name: "Категорії", link: routes.categories(data.shopId) },
+    { name: "Домени", link: routes.domains(data.shopId) },
+    { name: "Налаштування", link: routes.settings(data.shopId) }
   ]
 </script>
 
-<div class="grid grid-cols-[minmax(auto,_16rem)_1fr] p-8">
-  <nav class="flex flex-col gap-2 pr-8">
+<div class="grid grid-cols-[minmax(auto,_16rem)_1fr] flex-1">
+  <nav class="flex flex-col gap-2 p-8 bg-secondary-50">
     {#each sidebar as section}
       <a
         href={section.link}
@@ -27,7 +30,7 @@
     {/each}
   </nav>
 
-  <div>
+  <div class="p-8">
     <slot />
   </div>
 </div>

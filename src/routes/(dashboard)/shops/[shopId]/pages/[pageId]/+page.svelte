@@ -2,17 +2,19 @@
   import slugify from "@sindresorhus/slugify"
   import type { PageData } from "./$types"
 
-  import { isValidSlug } from "$lib"
+  import { isValidSlug, routes } from "$lib"
   import Markdown from "$features/Markdown.svelte"
   import { call } from "$lib/fetch"
+  import { toast } from "$features/toast"
+  import { goto } from "$app/navigation"
   export let data: PageData
   let newPageSlug: string = data.slug
   let newPageTitle: string = data.title
   let newPageContent: string = data.content
   let newPageDescription: string = data.description
 
-  let status: string = "Збережено"
-  let timer: number = 0
+  let status = "Збережено"
+  let timer = 0
 
   function debounceChange() {
     status = "Пишеться"
@@ -26,7 +28,11 @@
     let updatedContent: string | null = null
 
     newPageSlug = slugify(newPageSlug)
-    if (data.slug != newPageSlug && isValidSlug(newPageSlug) && newPageSlug != "")
+    if (
+      data.slug != newPageSlug &&
+      isValidSlug(newPageSlug) &&
+      newPageSlug != ""
+    )
       updatedSlug = newPageSlug.slice()
     if (data.title != newPageTitle) updatedTitle = newPageTitle.slice()
     if (data.description != newPageDescription) {
@@ -60,10 +66,20 @@
       data.content = updatedContent
     }
   }
+
+  async function deletePage(slug: string) {
+    const response = await call(fetch, "client", {
+      route: `/v1/site/dashboard/${data.shopId}/page/${slug}`,
+      method: "DELETE"
+    })
+    if (!response || !response.ok) return toast.serverError()
+    goto(routes.pages(data.shopId))
+  }
 </script>
 
 <div>
   <span>{status}</span>
+
   <form class="flex gap-8 flex-col">
     <input
       class="bg-gray-100 focus:bg-gray-50 px-6 py-4 rounded-md border border-gray-200"
@@ -98,3 +114,10 @@
 <div>
   <Markdown content={newPageContent} />
 </div>
+
+<button
+  class="px-5 py-3 rounded-md bg-red-200"
+  on:click={() => deletePage(data.slug)}
+>
+  Видалити
+</button>

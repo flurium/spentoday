@@ -17,7 +17,7 @@ export async function login(
   email: string,
   password: string
 ): Promise<"ok" | "fail" | "email-not-found" | "bad-password"> {
-  var response = await call(fetch, side, {
+  const response = await call(fetch, side, {
     route: "/v1/auth/login",
     method: "POST",
     body: {

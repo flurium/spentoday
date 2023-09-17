@@ -3,27 +3,21 @@ import type { Fetch, FetchSide } from "$lib/fetch"
 
 export type Order = {
   id: string
-  productId: string
-  productSlug: string
-  email: string
-  amount: string
-  price: string
+  total: number
+  amount: number
+  status: string
+  date: string
 }
 
-export async function shopOrders(
+export async function queryOrders(
   fetch: Fetch,
   side: FetchSide,
-  info: {
-    shop: string
-    customerEmail: string
-    productName: string
-  }
-): Promise<Order[] | null> {
+  query: { shopId: string; start: number }
+) {
   const response = await call(fetch, side, {
-    route: `/v1/site/orders/${info.shop}?email=${info.customerEmail}&product=${info.productName}`,
+    route: `/v1/site/order/${query.shopId}/orders?start=${query.start}`,
     method: "GET"
   })
-  if (!response) return null
-
+  if (response == null) return null
   return await callJson<Order[]>(response)
 }

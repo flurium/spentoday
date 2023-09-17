@@ -35,7 +35,11 @@ type CategoryOutput = {
   name: string
 }
 
-export async function oneProduct(fetch: Fetch, side: FetchSide, productId: string) {
+export async function oneProduct(
+  fetch: Fetch,
+  side: FetchSide,
+  productId: string
+) {
   const response = await call(fetch, side, {
     route: `/v1/site/products/${productId}`,
     method: "GET"
@@ -161,7 +165,11 @@ export async function uploadProductImage(
 //
 // DELETE PRODUCT IMAGE
 
-export async function deleteProductImage(fetch: Fetch, side: FetchSide, imageId: string) {
+export async function deleteProductImage(
+  fetch: Fetch,
+  side: FetchSide,
+  imageId: string
+) {
   const response = await call(fetch, side, {
     route: `/v1/site/products/image/${imageId}`,
     method: "DELETE"

@@ -19,7 +19,8 @@
     if (email.trim() == "" || question.trim() == "") {
       return toast.push({
         title: "Порожнє поле",
-        description: "Електронна пошта та текст питання не можуть бути порожніми."
+        description:
+          "Електронна пошта та текст питання не можуть бути порожніми."
       })
     }
     sending = true
@@ -29,7 +30,8 @@
       body: { email: email, content: question }
     })
     sending = false
-    if (!response) return toast.push({ title: "Не можемо відправити ваше питання" })
+    if (!response)
+      return toast.push({ title: "Не можемо відправити ваше питання" })
     if (response.ok) {
       email = ""
       question = ""
@@ -38,7 +40,8 @@
     if (response.status == 400) {
       return toast.push({
         title: "Порожнє поле",
-        description: "Електронна пошта та текст питання не можуть бути порожніми."
+        description:
+          "Електронна пошта та текст питання не можуть бути порожніми."
       })
     }
     return toast.push({ title: "Не можемо відправити ваше питання" })
@@ -55,7 +58,8 @@
   <div class="px-6 max-w-screen-xl m-auto py-36">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
       <h3 class="md:col-span-2 font-bold text-5xl md:text-7xl">
-        ЗАЛИШТЕ СВОЇ <span class="rounded-xl px-4 bg-brand-green">ПИТАННЯ,</span>
+        ЗАЛИШТЕ СВОЇ <span class="rounded-xl px-4 bg-brand-green">ПИТАННЯ,</span
+        >
         МИ НАДАМО ВАМ ВІДПОВІДІ
       </h3>
 
@@ -78,7 +82,11 @@
         />
       </form>
 
-      <button disabled={sending} class="place-self-end" on:click={submitQuestion}>
+      <button
+        disabled={sending}
+        class="place-self-end"
+        on:click={submitQuestion}
+      >
         <SendQuestionStar />
       </button>
     </div>

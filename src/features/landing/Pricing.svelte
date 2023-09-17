@@ -16,6 +16,7 @@
     <ul class="list-disc list-inside text-lg mt-14">
       <li>1 магазин</li>
       <li>10 товарів</li>
+      <li>5 інформаційних сторінок</li>
     </ul>
 
     <footer class="mt-8">
@@ -37,18 +38,25 @@
     <ul class="list-disc list-inside text-secondary-50 text-lg mt-14">
       <li>3 магазини</li>
       <li>500 товарів</li>
+      <li>25 інформаційних сторінок</li>
       <li>Сповіщення електронною поштою</li>
       <li>Персональна підтримка</li>
     </ul>
 
     <footer class="mt-8">
-      <a
+      <!-- <a
         class="block w-fit rounded-full py-4 px-9 bg-white
           text-brand-dark font-bold"
         href="/login"
       >
         ПОЧАТИ
-      </a>
+      </a> -->
+      <span
+        class="block w-fit rounded-full py-4 px-9 bg-white
+          text-brand-dark font-bold"
+      >
+        НЕЗАБАРОМ
+      </span>
     </footer>
   </div>
   <div class="p-8 bg-brand-pink rounded-xl grid grid-rows-[auto_1fr_auto]">
@@ -58,20 +66,27 @@
     </header>
 
     <ul class="list-disc list-inside text-secondary-50 text-lg mt-14">
-      <li>Необмежена кількість магазинів</li>
-      <li>Необмежена кількість товарів</li>
+      <li>Необмежена кіл-ть магазинів</li>
+      <li>Необмежена кіл-ть товарів</li>
+      <li>Необмежена кіл-ть інформаційних сторінок</li>
       <li>Сповіщення електронною поштою</li>
       <li>Персональна підтримка</li>
     </ul>
 
     <footer class="mt-8">
-      <a
+      <!-- <a
         class="block w-fit rounded-full py-4 px-9 bg-brand-dark
           text-white font-bold"
         href="/login"
       >
         ПОЧАТИ
-      </a>
+      </a> -->
+      <span
+        class="block w-fit rounded-full py-4 px-9 bg-brand-dark
+          text-white font-bold"
+      >
+        НЕЗАБАРОМ
+      </span>
     </footer>
   </div>
 </section>

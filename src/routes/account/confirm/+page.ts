@@ -9,7 +9,9 @@ export const load: PageLoad = async ({ fetch, url }) => {
 
   const user = url.searchParams.get("user")
   if (user == null) {
-    return { message: "Електронна адреса відсутня, перевірте правильність посилання." }
+    return {
+      message: "Електронна адреса відсутня, перевірте правильність посилання."
+    }
   }
 
   const response = await call(fetch, "load", {

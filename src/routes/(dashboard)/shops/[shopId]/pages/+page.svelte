@@ -4,25 +4,31 @@
   import slugify from "@sindresorhus/slugify"
   import { call, callJson } from "$lib/fetch"
   import { toast } from "$features/toast"
+  import { ukrDateString } from "$features/subscriptions"
+  import DashboardSection from "$features/dashboard/DashboardSection.svelte"
+  import autoAnimate from "@formkit/auto-animate"
+  import { createScrollLoader, scrollLoader } from "$features/loader"
 
-  type Page = {
+  type InfoPage = {
     slug: string
     title: string
-    updatedAt: Date
+    updatedAt: string
   }
 
   export let data: PageData
-  $: pages = data.pages
-  let newPageSlug: string = ""
+  let pages: InfoPage[] = []
+  let start = pages.length
+
+  let newPageSlug = ""
   let newPageModal: HTMLDialogElement
-  let slugValid: boolean = true
-  let shopId: string = data.shopId
+  let slugValid = true
 
   function slugInput() {
-    newPageSlug = slugify(newPageSlug)
+    slugValid = isValidSlug(newPageSlug)
   }
 
   async function createPage() {
+    newPageSlug = slugify(newPageSlug)
     if (!isValidSlug(newPageSlug)) {
       slugValid = false
       return
@@ -35,28 +41,67 @@
     })
     if (!response) return toast.serverError()
 
-    const json = await callJson<Page>(response)
-    if (!json) return toast.jsonError()
+    if (response.ok) {
+      const json = await callJson<InfoPage>(response)
+      if (!json) return toast.jsonError()
 
-    pages = [...pages, json]
+      pages = [json, ...pages]
+      newPageModal.close()
+      return
+    }
+
+    if (response.status == 403) {
+      return toast.push({
+        title: "Досягнуто обмеження",
+        description:
+          "Ви досягли максимальної кількості сторінок для вашого тарифу."
+      })
+    }
+
+    return toast.serverError()
+  }
+
+  const loader = createScrollLoader(loadMore)
+
+  async function loadMore(version: number) {
+    const response = await call(fetch, "client", {
+      route: `/v1/site/dashboard/${data.shopId}/pages?start=${start}`,
+      method: "GET"
+    })
+    if (response == null || loader.versionChanged(version)) return true
+
+    let items = await callJson<InfoPage[]>(response)
+    if (!items) return true
+
+    items = items.filter((x) => !pages.some((p) => p.slug == x.slug))
+
+    if (items.length == 0) return false
+
+    start += items.length
+    pages = [...pages, ...items]
+    return true
   }
 </script>
 
 <button
   class="px-4 py-2 bg-gray-800 text-white hover:bg-gray-900 rounded-md"
-  on:click={() => newPageModal.showModal()}>Add new</button
+  on:click={() => newPageModal.showModal()}>Створити нову</button
 >
 
-<dialog bind:this={newPageModal} class="p-10 bg-white text-lg rounded-md max-w-2xl">
+<dialog
+  bind:this={newPageModal}
+  class="p-10 bg-white text-lg rounded-md max-w-2xl"
+>
   <form class="flex gap-8 flex-col" on:submit|preventDefault={createPage}>
     <h3>
-      To add new page enter page slug/path, like: privacy-policy. Slug will be seen in url
-      of page.
+      Щоб додати нову сторінку, введіть посилання/шлях, наприклад:
+      privacy-policy. Його буде видно в URL-адресі сторінки.
     </h3>
 
     {#if !slugValid}
       <p class="border-red-800 rounded-md p-3 px-4 bg-red-50 text-red-800">
-        Slug/path can only contain lowercase english symbols, numbers and minus (-)
+        Посилання/шлях може містити лише малі англійські символи, цифри та мінус
+        (-)
       </p>
     {/if}
 
@@ -64,43 +109,44 @@
       class="bg-gray-100 focus:bg-gray-50 px-6 py-4 rounded-md border border-gray-200"
       bind:value={newPageSlug}
       on:input={slugInput}
-      placeholder="New page slug"
+      placeholder="new-page-slug"
     />
     <div class="gap-4 items-end">
       <button
+        type="reset"
         class="px-4 py-2 bg-gray-300 hover:bg-gray-200 rounded-md"
         on:click={() => newPageModal.close()}
       >
-        Cancel
+        Скасувати
       </button>
       <button
         class="px-4 py-2 bg-gray-800 text-white hover:bg-gray-900 rounded-md"
         type="submit"
       >
-        Add
+        Додати
       </button>
     </div>
   </form>
 </dialog>
 
-<div class="flex flex-wrap justify-center mt-10">
-  {#each pages as page}
-    <div
-      class="max-w-sm p-6 m-2 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
-    >
-      <h5 class="mb-3 text-base font-semibold text-gray-900 md:text-xl dark:text-white">
-        {page.title}
-      </h5>
-      <span>{page.slug}</span>
-      <span
-        >{page.updatedAt.getDay()}/{page.updatedAt.getMonth()}/{page.updatedAt.getFullYear()}</span
-      >
+<DashboardSection class="mt-5">
+  <div class="grid grid-cols-3 gap-x-8 px-5 py-3 text-secondary-400">
+    <span>Посилання</span>
+    <span>Заголовок</span>
+    <span>Коли оновлено</span>
+  </div>
+
+  <div use:autoAnimate>
+    {#each pages as page (page.slug)}
       <a
-        class="inline-block rounded bg-indigo-500 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-danger-600 focus:bg-danger-600 focus:outline-none focus:ring-0 active:bg-danger-700"
-        href={routes.shopPage(shopId, page.slug)}
+        href={routes.page(data.shopId, page.slug)}
+        class="grid grid-cols-3 gap-x-8 px-5 py-5 border-t border-secondary-100"
       >
-        to Page
+        <span>{page.slug}</span>
+        <span>{page.title}</span>
+        <span>{ukrDateString(new Date(page.updatedAt))}</span>
       </a>
-    </div>
-  {/each}
-</div>
+    {/each}
+    <div use:scrollLoader={loader} />
+  </div>
+</DashboardSection>

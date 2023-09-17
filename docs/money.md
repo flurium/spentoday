@@ -4,12 +4,12 @@ Current point of percentages that members own:
 
 | Member  | Position  | Percent |
 | ------- | --------- | ------- |
-| Roman   | CEO       | 27%     |
+| Roman   | CEO       | 32%     |
 | Maria   | Developer | 14%     |
-| Dima    | Developer | 17%     |
+| Dima    | Developer | 14%     |
 | Vitaliy | Developer | 14%     |
-| Nastia  | Designer  | 14%     |
-| Vlad    | Designer  | 14%     |
+| Nastia  | Designer  | 13%     |
+| Vlad    | Designer  | 13%     |
 
 Start point of percentages that members own:
 

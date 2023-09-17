@@ -8,7 +8,7 @@
     "preview": "vite preview",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-    "lint": "prettier --plugin-search-dir . --check . && eslint .",
+    "lint": "prettier --plugin-search-dir . --check . && eslint . --fix",
     "format": "prettier --plugin-search-dir . --write ."
   },
   "devDependencies": {
@@ -34,6 +34,7 @@
   "type": "module",
   "dependencies": {
     "@fontsource/play": "^5.0.8",
+    "@formkit/auto-animate": "^0.7.0",
     "@sindresorhus/slugify": "^2.2.1",
     "remark": "^14.0.3",
     "remark-gfm": "^3.0.1",

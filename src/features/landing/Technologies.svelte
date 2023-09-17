@@ -18,15 +18,21 @@
 
   <div class="flex flex-col gap-5 mt-16">
     <div class="rounded-full bg-white grid grid-cols-[auto_1fr]">
-      <div class="rounded-full h-28 w-28 bg-brand-dark grid place-content-center">
+      <div
+        class="rounded-full h-28 w-28 bg-brand-dark grid place-content-center"
+      >
         <Star color="violet" class="h-14 w-14" />
       </div>
       <div class="text-xl h-fit place-self-center">
-        SVELTE ЗАБЕЗПЕЧУЄ ЗНАЧНО <span class="font-bold">ШВИДШЕ ЗАВАНТАЖЕННЯ</span> ВЕБ-САЙТУ
+        SVELTE ЗАБЕЗПЕЧУЄ ЗНАЧНО <span class="font-bold"
+          >ШВИДШЕ ЗАВАНТАЖЕННЯ</span
+        > ВЕБ-САЙТУ
       </div>
     </div>
     <div class="rounded-full bg-white grid grid-cols-[auto_1fr]">
-      <div class="rounded-full h-28 w-28 bg-brand-dark grid place-content-center">
+      <div
+        class="rounded-full h-28 w-28 bg-brand-dark grid place-content-center"
+      >
         <Star color="violet" class="h-14 w-14" />
       </div>
       <div class="text-xl h-fit place-self-center">
@@ -35,7 +41,9 @@
       </div>
     </div>
     <div class="rounded-full bg-white grid grid-cols-[auto_1fr]">
-      <div class="rounded-full h-28 w-28 bg-brand-dark grid place-content-center">
+      <div
+        class="rounded-full h-28 w-28 bg-brand-dark grid place-content-center"
+      >
         <Star color="violet" class="h-14 w-14" />
       </div>
       <div class="text-xl h-fit place-self-center">
