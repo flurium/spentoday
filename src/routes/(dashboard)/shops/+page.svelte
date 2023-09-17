@@ -11,12 +11,6 @@
   let shopName = ""
   $: isInvalid = shopName.trim() == ""
 
-  let activeDropdownShopId: string | null = null;
-
-  function toggleDropdown(shopId: string) {
-    activeDropdownShopId = activeDropdownShopId === shopId ? null : shopId;
-  }
-
   async function addShop() {
     const response = await call(fetch, "client", {
       route: "/v1/site/dashboard/addshop",
@@ -45,18 +39,18 @@
   }
 </script>
 
-<div class="px-32 text-center">
-  <div class="mt-20 flex justify-between items-center">
-    <span class="text-4xl font-extrabold dark:bg-gray-800 text-left pl-2">Мої сайти</span>
-    <form on:submit|preventDefault={addShop} class="flex items-center pr-5">
+<div class="px-6 mt-20 mx-auto max-w-screen-xl w-full">
+  <div class="flex justify-between items-center">
+    <h1 class="text-header text-4xl font-extrabold">Мої сайти</h1>
+    <form on:submit|preventDefault={addShop} class="flex items-center gap-4">
       <input
-        class="focus:bg-gray-50 mx-3 p-2 w-72 rounded-md border border-gray-200"
+        class="py-2 px-4 w-72 rounded-md border border-gray-200"
         bind:value={shopName}
         placeholder="Назва магазину"
       />
       <button
-        class="bg-purple-600 disabled:bg-gray-100 font-semibold px-4 py-2 text-white
-          hover:bg-purple-400 disabled:text-gray-400 rounded-md"
+        class="bg-brand-violet disabled:bg-gray-100 font-semibold px-6
+        py-2 text-white disabled:text-gray-400 rounded-md"
         type="submit"
         disabled={isInvalid}
       >
@@ -64,42 +58,24 @@
       </button>
     </form>
   </div>
-  <div class="mt-5 flex flex-wrap -m-2">
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-11">
     {#each shops as shop}
-    <!-- svelte-ignore a11y-no-static-element-interactions -->
-    <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <div
-      class="max-w-sm m-5 pb-2 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700
-      {activeDropdownShopId === shop.id ? 'bg-gray-100' : ''} static"
-      on:click={() => toggleDropdown(shop.id)}
-    >
-      {#if shop.topBanner}
-      <div class=" w-full h-56 relative {activeDropdownShopId === shop.id ? 'p-4 rounded-t-lg' : ''}">
-        <img
-          class="w-full h-full rounded-t-lg {activeDropdownShopId === shop.id ? 'brightness-50' : ''}"
-          src={shop.topBanner}
-          alt="Shop"
-        />
-
-
-        {#if activeDropdownShopId === shop.id}
-        <div class="absolute inset-0 flex justify-center items-center">
-          <a href={routes.shop(shop.id)} class="bg-purple-600 text-white px-4 py-2 rounded-lg">Управляти</a>
-        </div>
+      <a
+        class="max-w-sm border border-gray-200 rounded-lg overflow-hidden"
+        href={routes.shop(shop.id)}
+      >
+        {#if shop.topBanner}
+          <img class="w-full" src={shop.topBanner} alt={shopName} />
         {/if}
-      </div>
-      {/if}
 
-      <h5 class="mt-2 ml-4 text-base font-semibold text-gray-900 md:text-xl dark:text-white text-left">
-        {shop.name}
-      </h5>
-      <div class="flex justify-between items-center">
-        <p class="break-words whitespace-normal text-gray-500 text-15 text-left mt-1 ml-4">
-          {shop.slug}
-        </p>
-
-      </div>
-    </div>
+        <div class="pt-5 px-7 pb-5">
+          <h5 class="font-bold text-header text-xl">{shop.name}</h5>
+          <p class="break-words text-secondary-400">
+            {shop.slug}
+          </p>
+        </div>
+      </a>
     {/each}
   </div>
 </div>

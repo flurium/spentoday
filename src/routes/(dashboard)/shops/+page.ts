@@ -6,7 +6,7 @@ export type DashboardShop = {
   id: string
   name: string
   topBanner: string
-  slug: string
+  slug?: string
 }
 
 export const load: PageLoad = async ({ fetch }) => {
