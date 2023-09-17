@@ -6,7 +6,7 @@ export async function changeName(
   side: FetchSide,
   name: string
 ): Promise<"not-found" | "success" | "fail"> {
-  var response = await call(fetch, side, {
+  const response = await call(fetch, side, {
     route: "/v1/site/account/name",
     method: "POST",
     body: {

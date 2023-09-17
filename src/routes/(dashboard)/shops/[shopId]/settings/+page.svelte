@@ -13,12 +13,12 @@
   $: shopName = data.name
   let logo = data.logo
   let top = data.top
-  let name: string = ""
-  let link: string = ""
+  let name = ""
+  let link = ""
   let bannerFiles: FileList
   let logoFiles: FileList
   let topFiles: FileList
-  let shopNameInput: string = ""
+  let shopNameInput = ""
 
   $: isInvalidLink = name.trim() == "" || link.trim() == ""
   $: isInvalidName = shopNameInput.trim() == ""
@@ -139,7 +139,10 @@
   </h5>
 </div>
 
-<form on:submit|preventDefault={newName} class="max-w-lg m-auto flex flex-col gap-4 mt-2">
+<form
+  on:submit|preventDefault={newName}
+  class="max-w-lg m-auto flex flex-col gap-4 mt-2"
+>
   <input
     class="bg-gray-100 focus:bg-gray-50 px-6 py-4 rounded-md border border-gray-200"
     bind:value={shopNameInput}
@@ -155,7 +158,10 @@
   </button>
 </form>
 
-<form on:submit|preventDefault={addLink} class="max-w-lg m-auto flex flex-col gap-4 mt-2">
+<form
+  on:submit|preventDefault={addLink}
+  class="max-w-lg m-auto flex flex-col gap-4 mt-2"
+>
   <input
     class="bg-gray-100 focus:bg-gray-50 px-6 py-4 rounded-md border border-gray-200"
     bind:value={link}
@@ -182,7 +188,9 @@
       <div
         class="max-w-sm p-6 m-2 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
       >
-        <h5 class="mb-3 text-base font-semibold text-gray-900 md:text-xl dark:text-white">
+        <h5
+          class="mb-3 text-base font-semibold text-gray-900 md:text-xl dark:text-white"
+        >
           <a data-sveltekit-reload href={link.link}>{link.name}</a>
         </h5>
         <button
@@ -217,7 +225,11 @@
       <div
         class="max-w-sm p-6 m-2 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
       >
-        <img class="rounded-lg w-full" src={banner.url} alt="{banner.url} image" />
+        <img
+          class="rounded-lg w-full"
+          src={banner.url}
+          alt="{banner.url} image"
+        />
         <button
           class="inline-block rounded bg-red-600 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-danger-600 focus:bg-danger-600 focus:outline-none focus:ring-0 active:bg-danger-700"
           on:click={() => deleteBanner(banner.id)}
@@ -231,7 +243,10 @@
 </div>
 
 <img class="max-w-sm rounded-lg w-full" src={logo} alt="{logo} image" />
-<form on:submit|preventDefault={setLogo} class="max-w-lg m-auto flex flex-col gap-4 mt-2">
+<form
+  on:submit|preventDefault={setLogo}
+  class="max-w-lg m-auto flex flex-col gap-4 mt-2"
+>
   <input bind:files={logoFiles} id="logo" name="logo" type="file" />
 
   <button

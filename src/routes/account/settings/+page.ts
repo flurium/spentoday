@@ -8,13 +8,13 @@ export type UserOutput = {
 }
 
 export const load: PageLoad = async ({ fetch }) => {
-  var response = await call(fetch, "load", {
+  const response = await call(fetch, "load", {
     route: "/v1/site/account/user",
     method: "GET"
   })
   if (!response || !response.ok) throw errors.serverError()
 
-  var user = await callJson<UserOutput>(response)
+  const user = await callJson<UserOutput>(response)
   if (user == null) throw errors.jsonError()
 
   return {

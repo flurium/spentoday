@@ -3,16 +3,17 @@
   import type { PageData } from "./$types"
   import { routes } from "$lib"
   import { call, callJson } from "$lib/fetch"
-  import ScrollLoad from "$features/ScrollLoad.svelte"
   import { shopProducts, type Product } from "$lib/api"
   import { toast } from "$features/toast"
-  import autoAnimate from "@formkit/auto-animate"
   import DashboardSection from "$features/dashboard/DashboardSection.svelte"
+  import autoAnimate from "@formkit/auto-animate"
+  import { createScrollLoader, scrollLoader } from "$features/loader"
 
   export let data: PageData
   let products = data.products
+  let start = data.products.length
 
-  let newProduct: string = ""
+  let newProduct = ""
 
   async function add() {
     const name = newProduct.trim()
@@ -35,7 +36,7 @@
       const json = await callJson<Product>(response)
       if (!json) return toast.jsonError()
 
-      products = [...products, json]
+      products = [json, ...products]
       return
     }
 
@@ -50,32 +51,26 @@
     return toast.serverError()
   }
 
-  let start = data.products.length
-  let isLoading = false
+  const loader = createScrollLoader(loadMore)
 
-  async function loadProducts(): Promise<"skip" | "stop" | "continue"> {
-    if (isLoading) return "skip"
-
-    isLoading = true
-    const loadProducts = await shopProducts(fetch, "client", {
+  async function loadMore(version: number) {
+    let items = await shopProducts(fetch, "client", {
       shopId: data.shopId,
       start: start,
       count: 10
     })
-    if (!loadProducts) {
-      isLoading = false
-      return "continue"
-    }
-    if (loadProducts.length == 0) return "stop"
+    if (items == null || loader.versionChanged(version)) return true
 
-    start += loadProducts.length
-    products = [...products, ...loadProducts]
-    isLoading = false
-    return "continue"
+    items = items.filter((x) => !products.some((p) => p.id == x.id))
+    if (items.length == 0) return false
+
+    start += items.length
+    products = [...products, ...items]
+    return true
   }
 </script>
 
-<h1 class="font-bold text-3xl text-secondary-700 mb-8">Ваші товари</h1>
+<h1 class="font-bold text-3xl text-header mb-8">Ваші товари</h1>
 
 <form on:submit|preventDefault={add} class="flex gap-2">
   <input
@@ -89,8 +84,8 @@
   </button>
 </form>
 
-<DashboardSection class="mt-8" animate={true}>
-  <div class="flex flex-col gap-3">
+<DashboardSection class="mt-8">
+  <div class="flex flex-col gap-3" use:autoAnimate>
     {#each products as product, i (product.id)}
       <a
         class="flex justify-between items-center rounded-lg py-3 px-5
@@ -116,6 +111,6 @@
         {/if}
       </a>
     {/each}
-    <ScrollLoad load={loadProducts} />
+    <div use:scrollLoader={loader} />
   </div>
 </DashboardSection>

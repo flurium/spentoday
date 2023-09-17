@@ -4,7 +4,9 @@ import { error } from "@sveltejs/kit"
 export const load = (async ({ url }) => {
   const token = url.searchParams.get("token")
   if (token == null) {
-    throw error(404, { message: "Токен відсутній, перевірте правильність посилання." })
+    throw error(404, {
+      message: "Токен відсутній, перевірте правильність посилання."
+    })
   }
 
   const user = url.searchParams.get("user")

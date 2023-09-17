@@ -11,12 +11,12 @@ export type ShopDomain =
   | {
       domain: string
       status: "no-status" | "taken" | "verified"
-      verifications?: undefined
+      verification?: undefined
     }
   | {
       domain: string
       status: "not-verified"
-      verifications: DomainVerification[]
+      verification: DomainVerification
     }
 
 export async function verifyDomain(
@@ -28,11 +28,11 @@ export async function verifyDomain(
   }
 ): Promise<
   | {
-      status: "ok" | "problem" | "bad-domain" | "domain-taken"
+      status: "not-found" | "problem" | "bad-domain" | "domain-taken"
     }
   | {
+      status: "ok"
       data: ShopDomain
-      status: "not-verified"
     }
 > {
   const response = await call(fetch, side, {
@@ -44,17 +44,16 @@ export async function verifyDomain(
     }
   })
   if (!response) return { status: "problem" }
-  if (response.status == 200) return { status: "ok" }
 
-  if (response.status == 202) {
+  if (response.ok) {
     const json = await callJson<ShopDomain>(response)
     if (!json) return { status: "problem" }
-    return { data: json, status: "not-verified" }
+    return { status: "ok", data: json }
   }
-  if (response.status == 409) {
-    return { status: "domain-taken" }
-  }
-  if (response.status == 404) return { status: "bad-domain" }
+
+  if (response.status == 409) return { status: "domain-taken" }
+  if (response.status == 400) return { status: "bad-domain" }
+  if (response.status == 404) return { status: "not-found" }
   return { status: "problem" }
 }
 
@@ -84,7 +83,12 @@ export async function addDomain(
   }
 ): Promise<
   | {
-      status: "fail" | "no-permission" | "bad-domain" | "has-free-domain" | "domain-taken"
+      status:
+        | "fail"
+        | "no-permission"
+        | "bad-domain"
+        | "has-free-domain"
+        | "domain-taken"
       data?: undefined
     }
   | {
@@ -99,12 +103,12 @@ export async function addDomain(
   })
   if (!response) return { status: "fail" }
   if (response.ok) {
-    var json = await callJson<ShopDomain>(response)
+    const json = await callJson<ShopDomain>(response)
     if (!json) return { status: "fail" }
     return { data: json, status: "ok" }
   }
   if (response.status == 409) {
-    var reason = await callJson<"has-free-domain" | "domain-taken">(response)
+    const reason = await callJson<"has-free-domain" | "domain-taken">(response)
     return { status: reason ?? "fail" }
   }
   if (response.status == 400) return { status: "bad-domain" }

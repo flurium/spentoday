@@ -8,7 +8,7 @@
   export let data: PageData
   let shops = data.shops
 
-  let shopName: string = ""
+  let shopName = ""
   $: isInvalid = shopName.trim() == ""
 
   let activeDropdownShopId: string | null = null;
@@ -36,7 +36,8 @@
     if (response.status == 403) {
       return toast.push({
         title: "Досягнуто обмеження",
-        description: "Ви досягли максимальної кількості магазинів для вашого тарифу."
+        description:
+          "Ви досягли максимальної кількості магазинів для вашого тарифу."
       })
     }
 
@@ -80,6 +81,7 @@
           alt="Shop"
         />
 
+
         {#if activeDropdownShopId === shop.id}
         <div class="absolute inset-0 flex justify-center items-center">
           <a href={routes.shop(shop.id)} class="bg-purple-600 text-white px-4 py-2 rounded-lg">Управляти</a>
@@ -95,6 +97,7 @@
         <p class="break-words whitespace-normal text-gray-500 text-15 text-left mt-1 ml-4">
           {shop.slug}
         </p>
+
       </div>
     </div>
     {/each}

@@ -58,32 +58,35 @@ export function slug(node: HTMLInputElement, value: string) {
   }
 }
 
-export function slugUpdate(node: HTMLInputElement, update: (value: string) => void) {
-  const input = () => {
-    const cursor = node.selectionStart
+// export function slugUpdate(
+//   node: HTMLInputElement,
+//   update: (value: string) => void
+// ) {
+//   const input = () => {
+//     const cursor = node.selectionStart
 
-    const newValue = slugify(node.value.replace(" ", "-"), {
-      preserveTrailingDash: true
-    })
-    update(newValue)
+//     const newValue = slugify(node.value.replace(" ", "-"), {
+//       preserveTrailingDash: true
+//     })
+//     update(newValue)
 
-    node.value = newValue
-    node.setSelectionRange(cursor, cursor)
-  }
+//     node.value = newValue
+//     node.setSelectionRange(cursor, cursor)
+//   }
 
-  const change = () => {
-    const newValue = slugify(node.value)
-    node.value = newValue
-    update(newValue)
-  }
+//   const change = () => {
+//     const newValue = slugify(node.value)
+//     node.value = newValue
+//     update(newValue)
+//   }
 
-  node.addEventListener("input", input)
-  node.addEventListener("change", change)
+//   node.addEventListener("input", input)
+//   node.addEventListener("change", change)
 
-  return {
-    destroy() {
-      node.removeEventListener("input", input)
-      node.removeEventListener("change", change)
-    }
-  }
-}
+//   return {
+//     destroy() {
+//       node.removeEventListener("input", input)
+//       node.removeEventListener("change", change)
+//     }
+//   }
+// }

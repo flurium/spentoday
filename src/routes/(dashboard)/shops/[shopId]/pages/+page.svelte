@@ -4,13 +4,21 @@
   import slugify from "@sindresorhus/slugify"
   import { call, callJson } from "$lib/fetch"
   import { toast } from "$features/toast"
-  import type { Page } from "./+page"
   import { ukrDateString } from "$features/subscriptions"
-  import autoAnimate from "@formkit/auto-animate"
   import DashboardSection from "$features/dashboard/DashboardSection.svelte"
+  import autoAnimate from "@formkit/auto-animate"
+  import { createScrollLoader, scrollLoader } from "$features/loader"
+
+  type InfoPage = {
+    slug: string
+    title: string
+    updatedAt: string
+  }
 
   export let data: PageData
-  let pages = data.pages
+  let pages: InfoPage[] = []
+  let start = pages.length
+
   let newPageSlug = ""
   let newPageModal: HTMLDialogElement
   let slugValid = true
@@ -34,10 +42,10 @@
     if (!response) return toast.serverError()
 
     if (response.ok) {
-      const json = await callJson<Page>(response)
+      const json = await callJson<InfoPage>(response)
       if (!json) return toast.jsonError()
 
-      pages = [...pages, json]
+      pages = [json, ...pages]
       newPageModal.close()
       return
     }
@@ -51,6 +59,27 @@
     }
 
     return toast.serverError()
+  }
+
+  const loader = createScrollLoader(loadMore)
+
+  async function loadMore(version: number) {
+    const response = await call(fetch, "client", {
+      route: `/v1/site/dashboard/${data.shopId}/pages?start=${start}`,
+      method: "GET"
+    })
+    if (response == null || loader.versionChanged(version)) return true
+
+    let items = await callJson<InfoPage[]>(response)
+    if (!items) return true
+
+    items = items.filter((x) => !pages.some((p) => p.slug == x.slug))
+
+    if (items.length == 0) return false
+
+    start += items.length
+    pages = [...pages, ...items]
+    return true
   }
 </script>
 
@@ -100,21 +129,24 @@
   </form>
 </dialog>
 
-<DashboardSection class="mt-5" animate={true}>
+<DashboardSection class="mt-5">
   <div class="grid grid-cols-3 gap-x-8 px-5 py-3 text-secondary-400">
     <span>Посилання</span>
     <span>Заголовок</span>
     <span>Коли оновлено</span>
   </div>
 
-  {#each pages as page, i (page.slug)}
-    <a
-      href={routes.page(data.shopId, page.slug)}
-      class="grid grid-cols-3 gap-x-8 px-5 border-t border-secondary-100"
-    >
-      <span class="py-5">{page.slug}</span>
-      <span class="py-5">{page.title}</span>
-      <span class="py-5">{ukrDateString(new Date(page.updatedAt))}</span>
-    </a>
-  {/each}
+  <div use:autoAnimate>
+    {#each pages as page (page.slug)}
+      <a
+        href={routes.page(data.shopId, page.slug)}
+        class="grid grid-cols-3 gap-x-8 px-5 py-5 border-t border-secondary-100"
+      >
+        <span>{page.slug}</span>
+        <span>{page.title}</span>
+        <span>{ukrDateString(new Date(page.updatedAt))}</span>
+      </a>
+    {/each}
+    <div use:scrollLoader={loader} />
+  </div>
 </DashboardSection>

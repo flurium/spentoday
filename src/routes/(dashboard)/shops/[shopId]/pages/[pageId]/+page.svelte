@@ -13,8 +13,8 @@
   let newPageContent: string = data.content
   let newPageDescription: string = data.description
 
-  let status: string = "Збережено"
-  let timer: number = 0
+  let status = "Збережено"
+  let timer = 0
 
   function debounceChange() {
     status = "Пишеться"
@@ -28,7 +28,11 @@
     let updatedContent: string | null = null
 
     newPageSlug = slugify(newPageSlug)
-    if (data.slug != newPageSlug && isValidSlug(newPageSlug) && newPageSlug != "")
+    if (
+      data.slug != newPageSlug &&
+      isValidSlug(newPageSlug) &&
+      newPageSlug != ""
+    )
       updatedSlug = newPageSlug.slice()
     if (data.title != newPageTitle) updatedTitle = newPageTitle.slice()
     if (data.description != newPageDescription) {
@@ -111,6 +115,9 @@
   <Markdown content={newPageContent} />
 </div>
 
-<button class="px-5 py-3 rounded-md bg-red-200" on:click={() => deletePage(data.slug)}>
+<button
+  class="px-5 py-3 rounded-md bg-red-200"
+  on:click={() => deletePage(data.slug)}
+>
   Видалити
 </button>

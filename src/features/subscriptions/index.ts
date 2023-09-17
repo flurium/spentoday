@@ -43,13 +43,19 @@ export function ukrDateString(date: Date) {
 export async function querySubscriptions(
   fetch: Fetch,
   side: FetchSide,
-  shopId: string,
-  search: string | null
+  query: {
+    shopId: string
+    search: string | null
+    start: number
+  }
 ) {
-  const searchQuery = search ? `search=${search}` : ""
+  const searchQuery: string[] = []
+
+  if (query.search) searchQuery.push(`search=${query.search}`)
+  searchQuery.push(`start=${query.start}`)
 
   const response = await call(fetch, side, {
-    route: `/v1/site/subscriptions/${shopId}?${searchQuery}`,
+    route: `/v1/site/subscriptions/${query.shopId}?${searchQuery.join("&")}`,
     method: "GET"
   })
   if (response == null) return null

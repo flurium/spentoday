@@ -8,7 +8,13 @@ export function isValidSlug(slug: string): boolean {
   if (slug.length > 100) return false
 
   for (const char of slug) {
-    if (!((char >= "a" && char <= "z") || (char >= "0" && char <= "9") || char === "-")) {
+    if (
+      !(
+        (char >= "a" && char <= "z") ||
+        (char >= "0" && char <= "9") ||
+        char === "-"
+      )
+    ) {
       return false
     }
   }
