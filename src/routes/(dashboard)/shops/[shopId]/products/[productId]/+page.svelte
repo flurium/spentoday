@@ -120,6 +120,18 @@
     alert("Не можемо опублікувати продукт")
   }
 
+  async function unpublish() {
+    const result = await api.unpublishProduct(fetch, "client", data.productId)
+    if (result == "ok") {
+      data.product.isDraft = true
+      isDraft = true
+      return
+    }
+
+    if (result == "not-found") return alert("Не можемо знайти продукт")
+    alert("Не можемо опублікувати продукт")
+  }
+
   let categoryIdToChange: string | null = data.categoryId ?? null
   async function changeCategory() {
     const changed = await api.changeProductCategory(fetch, "client", {
@@ -302,17 +314,30 @@
 
   <div class="flex flex-col gap-4">
     <DashboardSection>
-      <div class="flex flex-col gap-4 max-w-3xl">
-        <label class="text-2xl font-semibold text-header" for="statusSelect">
+      <div class="flex flex-col gap-4 max-w-3xl" id="statusRadio">
+        <label class="text-2xl font-semibold text-header" for="statusRadio">
           Статус товару
         </label>
-        <select
-          class="px-6 py-3 rounded-md border text-secondary-400 border-secondary-200"
-          id="statusSelect"
-        >
-          <option value={null}>Активний</option>
-          <option>Чернетка</option>
-        </select>
+        <label>
+          <input
+            type="radio"
+            checked={!isDraft}
+            on:change={publish}
+            value="false"
+            name="productStatus"
+          />
+          Активний
+        </label>
+        <label>
+          <input
+            type="radio"
+            checked={isDraft}
+            on:change={unpublish}
+            value="true"
+            name="productStatus"
+          />
+          Чернетка
+        </label>
       </div>
     </DashboardSection>
 

@@ -125,6 +125,24 @@ export async function publishProduct(
 }
 
 //
+// UNPUBLISH PRODUCT
+
+export async function unpublishProduct(
+  fetch: Fetch,
+  side: FetchSide,
+  productId: string
+): Promise<"ok" | "fail" | "not-found"> {
+  const response = await call(fetch, side, {
+    route: `/v1/site/products/${productId}/unpublish`,
+    method: "POST"
+  })
+  if (!response) return "fail"
+  if (response.ok) return "ok"
+  if (response.status == 404) return "not-found"
+  return "fail"
+}
+
+//
 // UPLOAD PRODUCT IMAGE
 export async function uploadProductImage(
   fetch: Fetch,
