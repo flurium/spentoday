@@ -41,7 +41,7 @@
 
 <div class="px-6 mt-20 mx-auto max-w-screen-xl w-full">
   <div class="flex justify-between items-center">
-    <h1 class="text-header text-4xl font-extrabold">Мої сайти</h1>
+    <h1 class="text-text-header text-4xl font-extrabold">Мої сайти</h1>
     <form on:submit|preventDefault={addShop} class="flex items-center gap-4">
       <input
         class="py-2 px-4 w-72 rounded-md border border-gray-200"
@@ -50,7 +50,7 @@
       />
       <button
         class="bg-brand-violet disabled:bg-gray-100 font-semibold px-6
-        py-2 text-white disabled:text-gray-400 rounded-md"
+        py-2 text-white disabled:text-text-main rounded-md"
         type="submit"
         disabled={isInvalid}
       >
@@ -70,8 +70,8 @@
         {/if}
 
         <div class="pt-5 px-7 pb-5">
-          <h5 class="font-bold text-header text-xl">{shop.name}</h5>
-          <p class="break-words text-secondary-400">
+          <h5 class="font-bold text-text-header text-xl">{shop.name}</h5>
+          <p class="break-words text-text-input">
             {shop.slug}
           </p>
         </div>

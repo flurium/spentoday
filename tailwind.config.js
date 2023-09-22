@@ -16,7 +16,11 @@ export default {
           violet: "#8576E1",
           dark: colors.zinc[800]
         },
-        header: colors.zinc[700]
+        text: {
+          header: colors.zinc[700],
+          main: colors.zinc[600],
+          input: colors.zinc[400]
+        }
       },
       fontFamily: {
         sans: ["Play", ...defaultTheme.fontFamily.sans]

@@ -78,30 +78,38 @@
   }
 </script>
 
-<h3 class="text-header text-xl font-bold mb-6">Медіа</h3>
+<h3 class="text-text-header text-xl font-bold mb-6">Медіа</h3>
 
-<h4 class="text-header text-lg">Обложка сайту</h4>
-<p class="text-secondary-400 mb-5">
+<h4 class="text-text-header text-lg">Обложка сайту</h4>
+<p class="text-text-input mb-5">
   Банер, який буде з’являтися зверху головної сторінки
 </p>
 
-<FileUpload
-  title="Додайте обложку сайту"
-  id="top-banner-file-upload"
-  onUpload={uploadTopBanner}
-/>
-
-{#if topBanner != ""}
-  <img class="rounded-lg mt-5" src={topBanner} alt="Обложка сторінки" />
+{#if topBanner == ""}
+  <FileUpload
+    title="Додайте обложку сайту"
+    description="Рекомендовано: 1200 на 600 пікселів"
+    id="top-banner-file-upload"
+    onUpload={uploadTopBanner}
+  />
+{:else}
+  <FileUpload
+    title="Змінити обложку сайту"
+    description="Рекомендовано: 1200 на 600 пікселів"
+    id="top-banner-file-upload"
+    onUpload={uploadTopBanner}
+  />
+  <img class="rounded-lg mt-8" src={topBanner} alt="Обложка сторінки" />
 {/if}
 
-<h4 class="text-header text-lg mt-8">Банери</h4>
-<p class="text-secondary-400 mb-5">
+<h4 class="text-text-header text-lg mt-8">Банери</h4>
+<p class="text-text-input mb-5">
   Список банерів, що будуть з'являтися в каруселі на головній сторінці
 </p>
 
 <FileUpload
   title="Додати банер"
+  description="Рекомендовано: 1000 на 400 пікселів"
   id="banner-file-upload"
   onUpload={uploadBanner}
 />
@@ -111,7 +119,7 @@
       <img class="rounded-lg" src={banner.url} alt="{banner.url} image" />
       <button
         class="w-full py-2 rounded-lg mt-2 hover:text-white
-          border border-brand-violet text-brand-violet hover:bg-brand-violet"
+        border border-brand-violet text-brand-violet hover:bg-brand-violet"
         on:click={() => deleteBanner(banner.id)}
       >
         Видалити
@@ -120,13 +128,20 @@
   {/each}
 </div>
 
-<h4 class="text-header text-lg mt-8">Логотип</h4>
-<FileUpload
-  title="Додати логотип"
-  id="logo-file-upload"
-  onUpload={uploadLogo}
-/>
-
+<h4 class="text-text-header text-lg mt-8 mb-5">Логотип</h4>
 {#if logo != ""}
-  <img class="rounded-lg mt-5" src={logo} alt="Логотип" />
+  <FileUpload
+    title="Додати логотип"
+    description="Рекомендовано: висота 256 пікселів"
+    id="logo-file-upload"
+    onUpload={uploadLogo}
+  />
+{:else}
+  <FileUpload
+    title="Змінити логотип"
+    description="Рекомендовано: висота 256 пікселів"
+    id="logo-file-upload"
+    onUpload={uploadLogo}
+  />
+  <img class="rounded-lg mt-8" src={logo} alt="Логотип" />
 {/if}

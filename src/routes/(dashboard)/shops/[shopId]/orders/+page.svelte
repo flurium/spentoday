@@ -33,7 +33,7 @@
   }
 </script>
 
-<h1 class="font-bold text-2xl text-secondary-700 mb-8">Ваші замовлення</h1>
+<h1 class="font-bold text-2xl text-text-header mb-8">Ваші замовлення</h1>
 <DashboardSection>
   <div class="flex flex-row mb-7">
     <button
@@ -68,7 +68,7 @@
 
   <div
     class="py-3 grid grid-cols-[2fr_1fr_1fr_1fr_1fr]
-    gap-x-8 text-secondary-400 w-full text-left"
+    gap-x-8 text-text-input w-full text-left"
   >
     <span>Замовлення</span>
     <span>Дата</span>

@@ -36,7 +36,7 @@
           <select
             bind:value={selected}
             on:change={setStatus}
-            class="w-5/6 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            class="w-5/6 bg-gray-50 border border-gray-300 text-text-header text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           >
             {#if data.order.status == "Виконано"}
               <option selected value="Виконано">Виконано</option>
@@ -98,7 +98,7 @@
   <DashboardSection class="basis-3/5">
     <table class="w-full">
       <thead>
-        <tr class="text-secondary-400">
+        <tr class="text-text-input">
           <td class="py-3">Товар</td>
           <td>Вартість</td>
           <td>Кількість</td>

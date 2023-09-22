@@ -130,7 +130,7 @@
 </dialog>
 
 <DashboardSection class="mt-5">
-  <div class="grid grid-cols-3 gap-x-8 px-5 py-3 text-secondary-400">
+  <div class="grid grid-cols-3 gap-x-8 px-5 py-3 text-text-input">
     <span>Посилання</span>
     <span>Заголовок</span>
     <span>Коли оновлено</span>
