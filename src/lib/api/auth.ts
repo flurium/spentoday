@@ -95,13 +95,6 @@ export async function forgot(
   return "fail"
 }
 
-export enum ResetStatus {
-  Success,
-  EmailNotFound,
-  PasswordsMismatch,
-  Fail
-}
-
 export async function reset(
   fetch: Fetch,
   side: FetchSide,
@@ -111,7 +104,10 @@ export async function reset(
     password: string
     confirmPassword: string
   }
-): Promise<"ok" | "fail" | "email-not-found" | "passwords-mismatch"> {
+): Promise<
+  | { status: "success" | "fail" | "password-mismatch" }
+  | { data: string[]; status: "problem" }
+> {
   const response = await call(fetch, side, {
     route: "/v1/auth/reset",
     method: "POST",
@@ -122,9 +118,14 @@ export async function reset(
       confirmPassword: input.confirmPassword
     }
   })
-  if (!response) return "fail"
-  if (response.ok) return "ok"
-  if (response.status == 404) return "email-not-found"
-  if (response.status == 400) return "passwords-mismatch"
-  return "fail"
+  if (!response) return { status: "fail" }
+  if (response.ok) return { status: "success" }
+  console.log(response.status)
+  if (response.status == 500) {
+    const json = await callJson<string[]>(response)
+    if (!json) return { status: "fail" }
+    return { data: json, status: "problem" }
+  }
+  if (response.status == 400) return { status: "password-mismatch" }
+  return { status: "fail" }
 }

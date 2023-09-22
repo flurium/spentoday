@@ -17,21 +17,30 @@
       message = "Паролі не збігаються, підтвердьте свій пароль."
       return
     }
-    const status = await api.reset(fetch, "client", {
+    const result = await api.reset(fetch, "client", {
       email: data.user,
       token: data.token,
       password: password,
       confirmPassword: confirmPassword
     })
-    if (status == "ok") {
+    if (result.status == "success") {
       goto("/login")
       return
     }
-    if (status == "email-not-found") {
-      message = "Такої адреси не існує"
+
+    if (result.status == "problem") {
+      result.data.forEach((element) => {
+        if (element == "password-too-short") message = "Пароль занадто короткий"
+        if (element == "digit") message = "Пароль вимагає цифри"
+        if (element == "lower") message = "Пароль вимагає нижній реєстр"
+        if (element == "upper") message = "Пароль вимагає верхній реєстр"
+        if (element == "nonAlphanumeric")
+          message = "Пароль вимагає спеціальні знаки"
+      })
       return
     }
-    if (status == "passwords-mismatch") {
+
+    if (result.status == "password-mismatch") {
       message = "Паролі не збігаються, підтвердьте свій пароль."
       return
     }
