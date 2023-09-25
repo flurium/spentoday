@@ -10,7 +10,7 @@
   export { className as class }
 </script>
 
-<section class="bg-brand-pink flex py-8 px-8 overflow-hidden {className}">
+<section class="bg-brand-pink flex py-8 overflow-hidden {className}">
   <div class="moving flex">
     <Fondy class="mx-6" />
     <Star class="h-11 w-11 mx-4" />
@@ -38,10 +38,6 @@
 </section>
 
 <style>
-  /* :global(.moving) {
-    animation: moveImages 5s linear infinite;
-  } */
-
   .moving {
     animation: slide 15s linear infinite;
   }
