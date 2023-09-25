@@ -141,10 +141,7 @@
   </div>
   <div>
     <DashboardSection>
-      <h3 class="text-text-header text-xl font-bold sticky">
-        Наповнення сайту
-      </h3>
-      <h3 class="text-text-header">Наповнення сайту</h3>
+      <h3 class="text-text-header text-xl font-bold">Наповнення сайту</h3>
 
       <ul class="text-text-main list-inside list-disc flex flex-col gap-3 mt-4">
         <li>Назва магазину</li>

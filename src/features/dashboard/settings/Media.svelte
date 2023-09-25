@@ -129,7 +129,7 @@
 </div>
 
 <h4 class="text-text-header text-lg mt-8 mb-5">Логотип</h4>
-{#if logo != ""}
+{#if logo == ""}
   <FileUpload
     title="Додати логотип"
     description="Рекомендовано: висота 256 пікселів"
