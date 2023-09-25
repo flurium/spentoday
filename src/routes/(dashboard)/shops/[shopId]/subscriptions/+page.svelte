@@ -164,8 +164,8 @@
         </div>
       {/each}
     {/if}
-
-    <!-- <OnScroll action={load} /> -->
   </div>
+  <!-- <OnScroll action={load} /> -->
+
   <div use:scrollLoader={loader} />
 </DashboardSection>
