@@ -64,7 +64,25 @@ Run next command to watch for code changes and generate types when changes appea
 npm run check:watch
 ```
 
-### Resources to learn Svelte
+## Color variables
+
+For text:
+
+- text-header - for headers
+- text-main - for main text
+- text-input - for secondary text
+
+Example:
+
+```html
+<h3 class="text-text-header">Соціальні мережі</h3>
+<p class="text-text-input">
+  Соціальні посилання для вашого бізнесу, які часто використовуються в нижньому
+  колонтитулі теми
+</p>
+```
+
+## Resources to learn Svelte
 
 - [Svelte Docs](https://svelte.dev/docs/) for ui.
 - [SvelteKit Docs](https://kit.svelte.dev/docs/) for loading data, server-side renderin, routing.

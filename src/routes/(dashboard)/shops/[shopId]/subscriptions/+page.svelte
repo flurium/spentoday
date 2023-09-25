@@ -112,7 +112,7 @@
   // }
 </script>
 
-<h1 class="font-bold text-3xl text-header mb-8">Ваші підписники</h1>
+<h1 class="font-bold text-3xl text-text-header mb-8">Ваші підписники</h1>
 
 <form on:submit|preventDefault={addSubscriber} class="flex gap-4">
   <input
@@ -135,7 +135,7 @@
     class="rounded-md px-5 py-3 border border-secondary-100 w-full"
   />
 
-  <div class="grid grid-cols-2 gap-x-8 px-5 py-3 text-secondary-400 mt-4">
+  <div class="grid grid-cols-2 gap-x-8 px-5 py-3 text-text-input mt-4">
     <span>Пошта</span>
     <span>Коли підписалися</span>
   </div>
@@ -164,8 +164,8 @@
         </div>
       {/each}
     {/if}
-
-    <!-- <OnScroll action={load} /> -->
   </div>
+  <!-- <OnScroll action={load} /> -->
+
   <div use:scrollLoader={loader} />
 </DashboardSection>

@@ -96,12 +96,12 @@
   }
 </script>
 
-<h1 class="font-bold text-3xl text-header mb-8">Домени</h1>
+<h1 class="font-bold text-3xl text-text-header mb-8">Домени</h1>
 
 {#if hasFreeDomain == false && closeFreeDomainNotification == false}
   <button
     class="py-5 px-6 mb-8 text-sm flex justify-between items-center gap-3
-    text-header bg-brand-green bg-opacity-50 rounded-xl w-full"
+    text-text-header bg-brand-green bg-opacity-50 rounded-xl w-full"
     on:click={() => {
       closeFreeDomainNotification = true
     }}
@@ -115,7 +115,7 @@
   </button>
 {/if}
 
-<DashboardSection animate={true}>
+<DashboardSection>
   <form on:submit|preventDefault={addDomain} class="flex gap-5 mb-10">
     <input
       class="flex-1 border border-secondary-200 px-5 py-2 rounded-md"

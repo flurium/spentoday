@@ -6,13 +6,8 @@
   import Strip from "$features/landing/Strip.svelte"
   import Technologies from "$features/landing/Technologies.svelte"
   import Footer from "$features/landing/footer/Footer.svelte"
-  import Fondy from "$lib/assets/Fondy.svelte"
-  import Hyperswitch from "$lib/assets/Hyperswitch.svelte"
-  import Liqpay from "$lib/assets/Liqpay.svelte"
-  import Monobank from "$lib/assets/Monobank.svelte"
-  import Paypal from "$lib/assets/Paypal.svelte"
-  import Star from "$lib/assets/Star.svelte"
   import StartFreeStar from "$lib/assets/StartFreeStar.svelte"
+  import Partners from "$features/landing/Partners.svelte"
 </script>
 
 <svelte:head>
@@ -62,17 +57,7 @@
     </h1>
   </section>
 
-  <section class="py-8 bg-brand-pink flex justify-around mb-24">
-    <Fondy />
-    <Star />
-    <Liqpay />
-    <Star />
-    <Monobank />
-    <Star />
-    <Paypal />
-    <Star />
-    <Hyperswitch />
-  </section>
+  <Partners class="mb-24" />
 
   <Benefits />
 

@@ -120,6 +120,18 @@
     alert("Не можемо опублікувати продукт")
   }
 
+  async function unpublish() {
+    const result = await api.unpublishProduct(fetch, "client", data.productId)
+    if (result == "ok") {
+      data.product.isDraft = true
+      isDraft = true
+      return
+    }
+
+    if (result == "not-found") return alert("Не можемо знайти продукт")
+    alert("Не можемо опублікувати продукт")
+  }
+
   let categoryIdToChange: string | null = data.categoryId ?? null
   async function changeCategory() {
     const changed = await api.changeProductCategory(fetch, "client", {
@@ -137,14 +149,14 @@
       <Arrow class="-rotate-90" />
     </a>
   </div>
-  <h1 class="text-3xl font-semibold text-header">Редагувати продукт</h1>
+  <h1 class="text-3xl font-semibold text-text-header">Редагувати продукт</h1>
 </div>
 
 <span>{savingStatus}</span>
 <div class="grid grid-cols-3 gap-4 my-4">
   <div class="col-span-2">
     <DashboardSection class="mb-4">
-      <label class="text-2xl font-semibold text-header" for="nameInput">
+      <label class="text-2xl font-semibold text-text-header" for="nameInput">
         Назва
       </label>
       <input
@@ -155,7 +167,7 @@
         placeholder="Назва"
       />
 
-      <label class="text-2xl font-semibold text-header" for="descInput">
+      <label class="text-2xl font-semibold text-text-header" for="descInput">
         Опис
       </label>
       <textarea
@@ -169,7 +181,7 @@
     </DashboardSection>
 
     <DashboardSection class="my-4">
-      <label class="text-2xl font-semibold text-header" for="mediaInput">
+      <label class="text-2xl font-semibold text-text-header" for="mediaInput">
         Медіа
       </label>
       <div
@@ -196,11 +208,11 @@
           <label
             for="dropzone-file"
             class="flex items-center justify-center bg-gray-100 hover:bg-gray-50
-        border border-gray-300 border-dashed rounded cursor-pointer"
+            border border-gray-300 border-dashed rounded cursor-pointer"
           >
             <div class="flex flex-col items-center justify-center pt-5 pb-6">
               <svg
-                class="w-8 h-8 mb-4 text-gray-500"
+                class="w-8 h-8 mb-4 text-text-main"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -214,7 +226,7 @@
                   d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
                 />
               </svg>
-              <p class="mb-2 text-sm text-gray-500 font-semibold">
+              <p class="mb-2 text-sm text-text-main font-semibold">
                 Додати фото
               </p>
             </div>
@@ -232,13 +244,16 @@
 
     <DashboardSection class="my-4">
       <div class="flex flex-col gap-4 max-w-3xl">
-        <label class="text-2xl font-semibold text-header" for="categorySelect">
+        <label
+          class="text-2xl font-semibold text-text-header"
+          for="categorySelect"
+        >
           Організація товарів
         </label>
         <select
           bind:value={categoryIdToChange}
           on:change={changeCategory}
-          class="px-6 py-3 rounded-md border text-secondary-400 border-secondary-200"
+          class="px-6 py-3 rounded-md border text-text-input border-secondary-200"
           id="categorySelect"
         >
           <option value={null}>No category</option>
@@ -253,11 +268,14 @@
 
     <DashboardSection class="my-4">
       <div class="flex flex-col gap-4 max-w-3xl" id="seo">
-        <label class="text-2xl font-semibold my-3 text-header" for="seo">
+        <label class="text-2xl font-semibold my-3 text-text-header" for="seo">
           SEO
         </label>
 
-        <label class="text-1xl font-semibold text-header" for="seoSlugInput">
+        <label
+          class="text-1xl font-semibold text-text-header"
+          for="seoSlugInput"
+        >
           Slug/Посилання
         </label>
         <input
@@ -274,7 +292,10 @@
     use:slugUpdate={(val) => (seoSlug = val)}
     placeholder="Slug, приклад: product-name"
    /> -->
-        <label class="text-1xl font-semibold text-header" for="seoNameInput">
+        <label
+          class="text-1xl font-semibold text-text-header"
+          for="seoNameInput"
+        >
           Назва
         </label>
         <input
@@ -284,7 +305,10 @@
           on:keyup={debounceChange}
           placeholder="Назва"
         />
-        <label class="text-1xl font-semibold text-header" for="seoDescInput">
+        <label
+          class="text-1xl font-semibold text-text-header"
+          for="seoDescInput"
+        >
           Опис
         </label>
         <textarea
@@ -302,30 +326,46 @@
 
   <div class="flex flex-col gap-4">
     <DashboardSection>
-      <div class="flex flex-col gap-4 max-w-3xl">
-        <label class="text-2xl font-semibold text-header" for="statusSelect">
+      <div class="flex flex-col gap-4 max-w-3xl" id="statusRadio">
+        <label
+          class="text-2xl font-semibold text-text-header"
+          for="statusRadio"
+        >
           Статус товару
         </label>
-        <select
-          class="px-6 py-3 rounded-md border text-secondary-400 border-secondary-200"
-          id="statusSelect"
-        >
-          <option value={null}>Активний</option>
-          <option>Чернетка</option>
-        </select>
+        <label>
+          <input
+            type="radio"
+            checked={!isDraft}
+            on:change={publish}
+            value="false"
+            name="productStatus"
+          />
+          Активний
+        </label>
+        <label>
+          <input
+            type="radio"
+            checked={isDraft}
+            on:change={unpublish}
+            value="true"
+            name="productStatus"
+          />
+          Чернетка
+        </label>
       </div>
     </DashboardSection>
 
     <DashboardSection>
       <!-- svelte-ignore a11y-label-has-associated-control -->
-      <label class="text-2xl font-semibold text-header">
+      <label class="text-2xl font-semibold text-text-header">
         Кількість товару
       </label>
       <div
         class="grid grid-flow-row-dense grid-cols-3 grid-rows-1 mt-6 items-center gap-4"
       >
         <!-- svelte-ignore a11y-label-has-associated-control -->
-        <label class="text-1xl text-secondary-400">Залишилося</label>
+        <label class="text-1xl text-text-input">Залишилося</label>
         <div class="flex items-center justify-end col-span-2">
           <input
             class="w-1/2 px-6 py-3 rounded-md border border-secondary-200"
@@ -340,11 +380,11 @@
     </DashboardSection>
 
     <DashboardSection>
-      <h3 class="text-2xl font-semibold text-header">Вартість</h3>
+      <h3 class="text-2xl font-semibold text-text-header">Вартість</h3>
       <div
         class="grid grid-flow-row-dense grid-cols-3 grid-rows-2 my-5 py-3 items-center gap-4"
       >
-        <label class="text-1xl text-secondary-400" for="priceInput">
+        <label class="text-1xl text-text-input" for="priceInput">
           Базова ціна
         </label>
         <div class="flex items-center justify-end col-span-2" id="priceInput">
@@ -362,7 +402,7 @@
           />
         </div>
 
-        <label class="text-1xl text-secondary-400" for="promPriceInput"
+        <label class="text-1xl text-text-input" for="promPriceInput"
           >Акційна ціна</label
         >
         <div

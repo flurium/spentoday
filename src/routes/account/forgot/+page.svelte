@@ -34,7 +34,7 @@
   <h1 class="text-4xl md:text-6xl text-center m-auto font-bold">
     Forgot password
   </h1>
-  <p class="text-center text-gray-600 mt-6 max-w-3xl m-auto">
+  <p class="text-center text-text-main mt-6 max-w-3xl m-auto">
     Send you a link for password reset
   </p>
 
@@ -58,7 +58,7 @@
 
     <button
       class="bg-primary-500 disabled:bg-gray-100 font-semibold px-6 py-3 text-white
-       hover:bg-primary-400 disabled:text-gray-400 rounded-md"
+       hover:bg-primary-400 disabled:text-text-main rounded-md"
       type="submit"
       disabled={!isEmailCorrect}
     >

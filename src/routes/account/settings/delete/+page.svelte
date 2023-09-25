@@ -40,7 +40,7 @@
 
 <main class="min-h-[70vh] max-w-screen-xl m-auto px-6">
   <h1 class="text-4xl md:text-6xl text-center m-auto font-bold">Видалити</h1>
-  <p class="text-center text-gray-600 mt-6 max-w-3xl m-auto mb-10">
+  <p class="text-center text-text-main mt-6 max-w-3xl m-auto mb-10">
     Прикро що Ви лишаєте нас. Для підтвердження введіть свою електронну адресу і
     пароль.
   </p>
@@ -73,7 +73,7 @@
 
     <button
       class="bg-red-500 disabled:bg-gray-100 font-semibold px-6 py-3 text-white
-       hover:bg-red-300 disabled:text-gray-400 rounded-md"
+       hover:bg-red-300 disabled:text-text-input rounded-md"
       type="submit"
       disabled={isInvalid}
     >

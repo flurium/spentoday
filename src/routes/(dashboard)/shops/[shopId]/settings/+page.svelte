@@ -1,27 +1,19 @@
 <script lang="ts">
   import type { PageData } from "./$types"
-  import { goto } from "$app/navigation"
-  import type { Link, Banner } from "./+page"
+  import type { Link } from "$features/dashboard/settings/types"
   import { call, callJson } from "$lib/fetch"
-  import { imageSize } from "$lib"
   import { toast } from "$features/toast"
+  import DashboardSection from "$features/dashboard/DashboardSection.svelte"
+  import Media from "$features/dashboard/settings/Media.svelte"
 
   export let data: PageData
 
   $: links = data.links ?? []
-  $: banners = data.banners ?? []
-  $: shopName = data.name
-  let logo = data.logo
-  let top = data.top
   let name = ""
   let link = ""
-  let bannerFiles: FileList
-  let logoFiles: FileList
-  let topFiles: FileList
-  let shopNameInput = ""
+  let shopNameInput = data.name
 
   $: isInvalidLink = name.trim() == "" || link.trim() == ""
-  $: isInvalidName = shopNameInput.trim() == ""
 
   async function addLink() {
     const response = await call(fetch, "client", {
@@ -48,36 +40,6 @@
     return
   }
 
-  async function addBanner() {
-    const formdata = new FormData()
-    const file = bannerFiles.item(0)
-    if (file == null) return
-
-    const { width, height } = await imageSize(file)
-    if (width != 964 || height != 400) return alert("Banner must be 964x400")
-    formdata.append("file", file)
-
-    const response = await call(fetch, "client", {
-      route: `/v1/site/shopsettings/${data.shopId}/banner`,
-      method: "POST",
-      body: formdata
-    })
-    if (!response || !response.ok) return toast.serverError()
-    const banner = await callJson<Banner>(response)
-    if (!banner) return toast.jsonError()
-
-    banners = [...banners, banner]
-  }
-
-  async function deleteBanner(bannerId: string) {
-    const response = await call(fetch, "client", {
-      route: `/v1/site/shopsettings/banner/${bannerId}`,
-      method: "DELETE"
-    })
-    if (!response || !response.ok) return toast.serverError()
-    banners = banners.filter((x) => x.id != bannerId)
-  }
-
   async function newName() {
     const response = await call(fetch, "client", {
       route: `/v1/site/shopsettings/${data.shopId}/name`,
@@ -86,189 +48,108 @@
     })
 
     if (!response || !response.ok) return toast.serverError()
-    shopName = shopNameInput
     data.name = shopNameInput
-  }
-
-  async function setLogo() {
-    const formdata = new FormData()
-    const logoFile = logoFiles.item(0)
-    if (logoFile == null) return
-    formdata.append("file", logoFile)
-
-    const response = await call(fetch, "client", {
-      route: `/v1/site/shopsettings/${data.shopId}/logo`,
-      method: "POST",
-      body: formdata
-    })
-    if (!response || !response.ok) return toast.serverError()
-
-    const json = await callJson<string>(response)
-    if (!json) return toast.jsonError()
-
-    logo = json
-  }
-
-  async function setTopBanner() {
-    const formdata = new FormData()
-    formdata.append("file", topFiles[0])
-    const response = await call(fetch, "client", {
-      route: `/v1/site/shopsettings/${data.shopId}/top`,
-      method: "POST",
-      body: formdata
-    })
-    console.log(response)
-    if (!response) return alert("we can`t add it now, try later")
-
-    if (response.ok) {
-      const json = await callJson<string>(response)
-      if (!json) return alert("aaa")
-      top = json
-      return
-    }
-
-    if (response.status == 403 || response.status == 401) goto("/login")
-
-    goto("/")
   }
 </script>
 
-<div>
-  <h5>
-    {shopName}
-  </h5>
-</div>
+<h1 class="font-bold text-3xl text-text-header mb-8">Наповнення магазинy</h1>
 
-<form
-  on:submit|preventDefault={newName}
-  class="max-w-lg m-auto flex flex-col gap-4 mt-2"
->
-  <input
-    class="bg-gray-100 focus:bg-gray-50 px-6 py-4 rounded-md border border-gray-200"
-    bind:value={shopNameInput}
-    placeholder="shopName"
-  />
-  <button
-    class="bg-primary-500 disabled:bg-gray-100 font-semibold px-6 py-3 text-white
-       hover:bg-primary-400 disabled:text-gray-400 rounded-md"
-    type="submit"
-    disabled={isInvalidName}
-  >
-    Reset
-  </button>
-</form>
+<div class="grid md:grid-cols-[3fr_1fr] gap-8">
+  <div>
+    <DashboardSection>
+      <h3 class="text-text-header text-xl font-bold mb-6">Профіль</h3>
 
-<form
-  on:submit|preventDefault={addLink}
-  class="max-w-lg m-auto flex flex-col gap-4 mt-2"
->
-  <input
-    class="bg-gray-100 focus:bg-gray-50 px-6 py-4 rounded-md border border-gray-200"
-    bind:value={link}
-    placeholder="link"
-  />
-  <input
-    class="bg-gray-100 focus:bg-gray-50 px-6 py-4 rounded-md border border-gray-200"
-    bind:value={name}
-    placeholder="name"
-  />
-  <button
-    class="bg-primary-500 disabled:bg-gray-100 font-semibold px-6 py-3 text-white
-       hover:bg-primary-400 disabled:text-gray-400 rounded-md"
-    type="submit"
-    disabled={isInvalidLink}
-  >
-    Add Social Link
-  </button>
-</form>
+      <label class="text-text-input mb-2 block" for="name">
+        Назва магазину
+      </label>
+      <input
+        class="block w-full border border-secondary-200 rounded-lg px-5 py-3"
+        type="text"
+        id="name"
+        bind:value={shopNameInput}
+      />
 
-<div id="list">
-  <div class="flex flex-wrap justify-center mt-10">
-    {#each links as link}
-      <div
-        class="max-w-sm p-6 m-2 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+      <button
+        on:click={newName}
+        class="bg-brand-violet font-semibold px-6 py-3 text-white rounded-lg mt-6"
+        type="submit"
       >
-        <h5
-          class="mb-3 text-base font-semibold text-gray-900 md:text-xl dark:text-white"
-        >
-          <a data-sveltekit-reload href={link.link}>{link.name}</a>
-        </h5>
-        <button
-          class="inline-block rounded bg-red-600 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-danger-600 focus:bg-danger-600 focus:outline-none focus:ring-0 active:bg-danger-700"
-          on:click={() => deleteLink(link.id)}
-          type="submit"
-        >
-          Delete
-        </button>
-      </div>
-    {/each}
-  </div>
-</div>
+        Зберігти
+      </button>
+    </DashboardSection>
 
-<form
-  on:submit|preventDefault={addBanner}
-  class="max-w-lg m-auto flex flex-col gap-4 mt-2"
->
-  <input bind:files={bannerFiles} id="avatar" name="avatar" type="file" />
-  <button
-    class="bg-primary-500 disabled:bg-gray-100 font-semibold px-6 py-3 text-white
-       hover:bg-primary-400 disabled:text-gray-400 rounded-md"
-    type="submit"
-  >
-    Add
-  </button>
-</form>
+    <DashboardSection class="mt-8">
+      <h3 class="text-text-header text-xl font-bold">Соціальні мережі</h3>
+      <p class="text-text-input mt-2 mb-8">
+        Соціальні посилання для вашого бізнесу, які часто використовуються в
+        нижньому колонтитулі теми
+      </p>
 
-<div>
-  <div class="flex flex-wrap justify-center mt-10">
-    {#each banners as banner}
-      <div
-        class="max-w-sm p-6 m-2 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+      <form
+        on:submit|preventDefault={addLink}
+        class="grid grid-cols-1 md:grid-cols-[1fr_1fr_auto] gap-5"
       >
-        <img
-          class="rounded-lg w-full"
-          src={banner.url}
-          alt="{banner.url} image"
+        <input
+          class="border border-secondary-200 rounded-lg px-5 py-3"
+          bind:value={name}
+          placeholder="Назва"
         />
+        <input
+          class="border border-secondary-200 rounded-lg px-5 py-3"
+          bind:value={link}
+          placeholder="Посилання"
+        />
+
         <button
-          class="inline-block rounded bg-red-600 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-danger-600 focus:bg-danger-600 focus:outline-none focus:ring-0 active:bg-danger-700"
-          on:click={() => deleteBanner(banner.id)}
-          type="submit"
+          class="bg-brand-violet font-semibold px-8 py-3 text-white rounded-lg"
+          disabled={isInvalidLink}
         >
-          Delete
+          Додати
         </button>
+      </form>
+
+      <div
+        class="grid grid-cols-[auto_1fr_auto] gap-x-5 gap-y-4 mt-8 items-center"
+      >
+        <p class="text-text-input">Назва</p>
+        <p class="text-text-input">Посилання</p>
+        <p />
+
+        {#each links as link}
+          <div class="col-span-3 border-t border-secondary-100" />
+          <span>{link.name}</span>
+          <a href={link.link}>{link.link}</a>
+          <button
+            class="border border-brand-violet font-semibold px-6 py-2
+            rounded-lg text-brand-violet"
+            on:click={() => deleteLink(link.id)}
+          >
+            Видалити
+          </button>
+        {/each}
       </div>
-    {/each}
+    </DashboardSection>
+
+    <DashboardSection class="mt-8">
+      <Media
+        shopId={data.shopId}
+        banners={data.banners}
+        topBanner={data.top}
+        logo={data.logo}
+      />
+    </DashboardSection>
+  </div>
+  <div>
+    <DashboardSection>
+      <h3 class="text-text-header text-xl font-bold">Наповнення сайту</h3>
+
+      <ul class="text-text-main list-inside list-disc flex flex-col gap-3 mt-4">
+        <li>Назва магазину</li>
+        <li>Обложка сайту</li>
+        <li>Логотип</li>
+        <li>Банери</li>
+        <li>Соціальні мережі</li>
+      </ul>
+    </DashboardSection>
   </div>
 </div>
-
-<img class="max-w-sm rounded-lg w-full" src={logo} alt="{logo} image" />
-<form
-  on:submit|preventDefault={setLogo}
-  class="max-w-lg m-auto flex flex-col gap-4 mt-2"
->
-  <input bind:files={logoFiles} id="logo" name="logo" type="file" />
-
-  <button
-    class="bg-primary-500 disabled:bg-gray-100 font-semibold px-6 py-3 text-white
-       hover:bg-primary-400 disabled:text-gray-400 rounded-md"
-    type="submit"
-  >
-    set logo
-  </button>
-</form>
-
-<img class="rounded-lg" src={top} alt="{top} image" />
-<form
-  on:submit|preventDefault={setTopBanner}
-  class="max-w-lg m-auto flex flex-col gap-4 mt-2"
->
-  <input bind:files={topFiles} type="file" />
-  <button
-    class="bg-primary-500 disabled:bg-gray-100 font-semibold px-6 py-3 text-white
-       hover:bg-primary-400 disabled:text-gray-400 rounded-md"
-    type="submit"
-  >
-    set TopBanner
-  </button>
-</form>

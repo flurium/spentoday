@@ -17,21 +17,30 @@
       message = "Паролі не збігаються, підтвердьте свій пароль."
       return
     }
-    const status = await api.reset(fetch, "client", {
+    const result = await api.reset(fetch, "client", {
       email: data.user,
       token: data.token,
       password: password,
       confirmPassword: confirmPassword
     })
-    if (status == "ok") {
+    if (result.status == "success") {
       goto("/login")
       return
     }
-    if (status == "email-not-found") {
-      message = "Такої адреси не існує"
+
+    if (result.status == "problem") {
+      result.data.forEach((element) => {
+        if (element == "password-too-short") message = "Пароль занадто короткий"
+        if (element == "digit") message = "Пароль вимагає цифри"
+        if (element == "lower") message = "Пароль вимагає нижній реєстр"
+        if (element == "upper") message = "Пароль вимагає верхній реєстр"
+        if (element == "nonAlphanumeric")
+          message = "Пароль вимагає спеціальні знаки"
+      })
       return
     }
-    if (status == "passwords-mismatch") {
+
+    if (result.status == "password-mismatch") {
       message = "Паролі не збігаються, підтвердьте свій пароль."
       return
     }
@@ -43,7 +52,7 @@
   <h1 class="text-4xl md:text-6xl text-center m-auto font-bold">
     Reset Password
   </h1>
-  <p class="text-center text-gray-600 mt-6 max-w-3xl m-auto mb-10">
+  <p class="text-center text-text-main mt-6 max-w-3xl m-auto mb-10">
     Create and confirm your new password
   </p>
 
@@ -75,7 +84,7 @@
 
     <button
       class="bg-primary-500 disabled:bg-gray-100 font-semibold px-6 py-3 text-white
-         hover:bg-primary-400 disabled:text-gray-400 rounded-md"
+         hover:bg-primary-400 disabled:text-text-input rounded-md"
       type="submit"
       disabled={isInvalid}
     >

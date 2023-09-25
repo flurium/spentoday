@@ -69,7 +69,7 @@
 
 <main class="min-h-[70vh] max-w-screen-xl m-auto px-6">
   <h1 class="text-4xl md:text-6xl text-center m-auto font-bold">Register</h1>
-  <p class="text-center text-gray-600 mt-6 max-w-3xl m-auto mb-10">
+  <p class="text-center text-text-main mt-6 max-w-3xl m-auto mb-10">
     By registering you accept our Terms of Servic and Privacy Policy. And get
     closer to making money.
   </p>
@@ -115,7 +115,7 @@
 
     <button
       class="bg-primary-500 disabled:bg-gray-100 font-semibold px-6 py-3 text-white
-       hover:bg-primary-400 disabled:text-gray-400 rounded-md"
+       hover:bg-primary-400 disabled:text-text-input rounded-md"
       type="submit"
       disabled={isInvalid}
     >
