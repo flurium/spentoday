@@ -90,175 +90,156 @@
 
 <span>{status}</span>
 <DashboardSection class="my-4">
-  <form class="flex gap-8 flex-col">
-    <div class="grid grid-cols-2 gap-4 my-4">
-      <div class="">
-        <label class="text-2xl font-semibold text-text-header" for="slugInput">
-          Slug
-        </label>
-        <input
-          class="block border mt-2 mb-4 px-5 py-2 rounded-md border-secondary-200 w-full"
-          id="slugInput"
-          bind:value={newPageSlug}
-          on:keyup={debounceChange}
-          on:change={() => {
-            newPageSlug = slugify(newPageSlug)
-          }}
-          placeholder="Slug, приклад: product-name"
-        />
-        <label class="text-2xl font-semibold text-text-header" for="titleInput">
-          Заголовок
-        </label>
-        <input
-          class="block border mt-2 mb-4 px-5 py-2 rounded-md border-secondary-200 w-full"
-          id="titleInput"
-          bind:value={newPageTitle}
-          on:keyup={debounceChange}
-          placeholder="Заголовок"
-        />
-        <label class="text-2xl font-semibold text-text-header" for="descInput">
-          Опис
-        </label>
-        <textarea
-          class="block border mt-2 mb-4 px-5 py-2 rounded-md border-secondary-200 w-full"
-          id="descInput"
-          bind:value={newPageDescription}
-          on:keyup={debounceChange}
-          placeholder="Опис"
-          rows="4"
-        />
-      </div>
-      <div class="flex-col gap-4 max-w-3xl">
-        <label
-          class="text-2xl font-semibold text-text-header"
-          for="contentInput"
-        >
-          Контент
-        </label>
-        <div class="flex items-center mt-2">
-          <div
-            class="relative group rounded-md text-xs bg-blue-500 text-white p-1 m-1"
-          >
-            Заголовки
-            <div
-              class="bg-gray-800 text-white p-2 rounded-md absolute bottom-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-            >
-              <pre>
-# Заголовок першого рівня
-## Заголовок другого рівня
-### Заголовок третього рівня</pre>
-            </div>
-          </div>
-          <div
-            class="relative group rounded-md text-xs bg-orange-500 text-white p-1 m-1"
-          >
-            Виділення тексту
-            <div
-              class="bg-gray-800 text-white p-2 rounded-md absolute bottom-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-            >
-              <pre>
-*курсив* _курсив_ 
-**жирний** __ жирний __ 
-***жирний курсив*** ___жирний курсив ___ 
-~~закреслений~~</pre>
-            </div>
-          </div>
-          <div
-            class="relative group rounded-md text-xs bg-green-500 text-white p-1 m-1"
-          >
-            Списки
-            <div
-              class="bg-gray-800 text-white p-2 rounded-md absolute bottom-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-            >
-              <pre>
-Нумерований список: Маркований список:
-1. Пункт перший     - Пункт перший
-2. Пункт другий     - Пункт другий</pre>
-            </div>
-          </div>
-          <div
-            class="relative group rounded-md text-xs bg-violet-500 text-white p-1 m-1"
-          >
-            Посилання
-            <div
-              class="bg-gray-800 text-white p-2 rounded-md absolute bottom-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-            >
-              <pre>[Текст посилання](https://www.example.com)</pre>
-            </div>
-          </div>
-          <div
-            class="relative group rounded-md text-xs bg-fuchsia-500 text-white p-1 m-1"
-          >
-            Зображення
-            <div
-              class="bg-gray-800 text-white p-2 rounded-md absolute bottom-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-            >
-              <pre>![Текст опису](https://www.example.com/image.jpg)</pre>
-            </div>
-          </div>
-          <div
-            class="relative group rounded-md text-xs bg-yellow-500 text-white p-1 m-1"
-          >
-            Блоки коду
-            <div
-              class="bg-gray-800 text-white p-2 rounded-md absolute bottom-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-            >
-              <pre>
-`Рядок коду`
-```
-Блок коду
-```</pre>
-            </div>
-          </div>
-          <div
-            class="relative group rounded-md text-xs bg-rose-500 text-white p-1 m-1"
-          >
-            Цитати
-            <div
-              class="bg-gray-800 text-white p-2 rounded-md absolute bottom-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-            >
-              <pre>
-> Перший рівень цитування
->> Другий рівень цитування
->>> Третій рівень цитування</pre>
-            </div>
-          </div>
-          <div
-            class="relative group rounded-md text-xs bg-purple-500 text-white p-1 m-1"
-          >
-            Таблиці
-            <div
-              class="bg-gray-800 text-white p-2 rounded-md absolute bottom-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-            >
-              <pre>
-| Заголовок 1 | Заголовок 2 |
-| ----------- | ----------- |
-| Осередок 1  | Осередок 2  |
-| Осередок 3  | Осередок 4  |</pre>
-            </div>
-          </div>
-          <div
-            class="relative group rounded-md text-xs bg-teal-500 text-white p-1 m-1"
-          >
-            Горизонтальна лінія
-            <div
-              class="bg-gray-800 text-white p-2 rounded-md absolute bottom-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-            >
-              ---
-            </div>
-          </div>
-        </div>
-        <textarea
-          class="block border my-4 px-5 py-2 rounded-md border-secondary-200 w-full"
-          id="contentInput"
-          bind:value={newPageContent}
-          on:keyup={debounceChange}
-          placeholder="Контент, ви можете використовувати markdown"
-          rows="10"
-        />
+  <label class="text-2xl font-semibold text-text-header" for="slugInput">
+    Slug
+  </label>
+  <input
+    class="block border mt-2 mb-4 px-5 py-2 rounded-md border-secondary-200 w-full"
+    id="slugInput"
+    bind:value={newPageSlug}
+    on:keyup={debounceChange}
+    on:change={() => {
+      newPageSlug = slugify(newPageSlug)
+    }}
+    placeholder="Slug, приклад: product-name"
+  />
+  <label class="text-2xl font-semibold text-text-header" for="titleInput">
+    Заголовок
+  </label>
+  <input
+    class="block border mt-2 mb-4 px-5 py-2 rounded-md border-secondary-200 w-full"
+    id="titleInput"
+    bind:value={newPageTitle}
+    on:keyup={debounceChange}
+    placeholder="Заголовок"
+  />
+  <label class="text-2xl font-semibold text-text-header" for="descInput">
+    Опис
+  </label>
+  <textarea
+    class="block border mt-2 mb-4 px-5 py-2 rounded-md border-secondary-200 w-full"
+    id="descInput"
+    bind:value={newPageDescription}
+    on:keyup={debounceChange}
+    placeholder="Опис"
+    rows="4"
+  />
+  <label class="text-2xl font-semibold text-text-header" for="contentInput">
+    Контент
+  </label>
+  <div class="flex items-center mt-2">
+    <div class="relative group rounded-md text-xs bg-blue-500 text-white p-1">
+      Заголовки
+      <div
+        class="bg-brand-dark text-white p-3 w-max rounded-md absolute bottom-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+      >
+        # Заголовок першого рівня <br />
+        ## Заголовок другого рівня <br />
+        ### Заголовок третього рівня
       </div>
     </div>
-  </form>
+    <div
+      class="relative group rounded-md text-xs bg-orange-500 text-white p-1 m-1"
+    >
+      Виділення тексту
+      <div
+        class="bg-brand-dark text-white p-3 w-max rounded-md absolute bottom-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+      >
+        *курсив* _курсив_ <br />
+        **жирний** __ жирний __ <br />
+        ***жирний курсив*** ___жирний курсив ___ <br />
+        ~~закреслений~~
+      </div>
+    </div>
+    <div
+      class="relative group rounded-md text-xs bg-green-500 text-white p-1 m-1"
+    >
+      Списки
+      <div
+        class="bg-brand-dark text-white p-3 w-max rounded-md absolute bottom-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+      >
+        Нумерований список: Маркований список: <br />
+        1. Пункт перший - Пункт перший <br />
+        2. Пункт другий - Пункт другий <br />
+      </div>
+    </div>
+    <div
+      class="relative group rounded-md text-xs bg-violet-500 text-white p-1 m-1"
+    >
+      Посилання
+      <p
+        class="bg-brand-dark text-white p-3 w-max rounded-md absolute bottom-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+      >
+        [Текст посилання](https://www.example.com)
+      </p>
+    </div>
+    <div
+      class="relative group rounded-md text-xs bg-fuchsia-500 text-white p-1 m-1"
+    >
+      Зображення
+      <div
+        class="bg-brand-dark text-white p-3 w-max rounded-md absolute bottom-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+      >
+        <pre>![Текст опису](https://www.example.com/image.jpg)</pre>
+      </div>
+    </div>
+    <div
+      class="relative group rounded-md text-xs bg-yellow-500 text-white p-1 m-1"
+    >
+      Блоки коду
+      <div
+        class="bg-brand-dark text-white p-3 w-max rounded-md absolute bottom-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+      >
+        `Рядок коду`<br />
+        ```<br />
+        Блок коду<br />
+        ```
+      </div>
+    </div>
+    <div
+      class="relative group rounded-md text-xs bg-rose-500 text-white p-1 m-1"
+    >
+      Цитати
+      <div
+        class="bg-brand-dark text-white p-3 w-max rounded-md absolute bottom-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+      >
+        {"> Перший рівень цитування"}<br />
+        {">> Другий рівень цитування"}<br />
+        {" >>> Третій рівень цитування"}<br />
+      </div>
+    </div>
+    <div
+      class="relative group rounded-md text-xs bg-purple-500 text-white p-1 m-1"
+    >
+      Таблиці
+      <div
+        class="bg-brand-dark text-white p-3 w-max rounded-md absolute bottom-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+      >
+        | Заголовок 1 | Заголовок 2 |<br />
+        | ----------- | ----------- |<br />
+        | Осередок 1 | Осередок 2 |<br />
+        | Осередок 3 | Осередок 4 |<br />
+      </div>
+    </div>
+    <div
+      class="relative group rounded-md text-xs bg-teal-500 text-white p-1 m-1"
+    >
+      Горизонтальна лінія
+      <div
+        class="bg-brand-dark text-white p-3 w-max rounded-md absolute bottom-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+      >
+        ---
+      </div>
+    </div>
+  </div>
+  <textarea
+    class="border my-4 px-4 p-3 rounded-md border-secondary-200 w-full"
+    id="contentInput"
+    bind:value={newPageContent}
+    on:keyup={debounceChange}
+    placeholder="Контент, ви можете використовувати markdown"
+    rows="20"
+  />
 </DashboardSection>
 
 <div>
