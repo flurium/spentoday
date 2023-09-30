@@ -48,7 +48,7 @@
   }
 </script>
 
-<main class="min-h-[70vh] max-w-screen-xl m-auto px-6">
+<main class="min-h-[70vh] max-w-screen-xl m-auto p-10 my-5 w-fit border border-gray-200 rounded-lg">
   <h1 class="text-4xl md:text-6xl text-center m-auto font-bold">
     Reset Password
   </h1>
@@ -58,7 +58,7 @@
 
   <form
     on:submit|preventDefault={reset}
-    class="max-w-lg m-auto flex flex-col gap-4 mt-2"
+    class="max-w-lg m-auto flex flex-col gap-4 mt-2 "
   >
     {#if message}
       <div
@@ -69,14 +69,14 @@
     {/if}
 
     <input
-      class="bg-gray-100 focus:bg-gray-50 px-6 py-4 rounded-md border border-gray-200"
+      class="bg-transparent px-6 py-4 rounded-md border border-gray-200"
       bind:value={password}
       type="password"
       placeholder="Password"
     />
 
     <input
-      class="bg-gray-100 focus:bg-gray-50 px-6 py-4 rounded-md border border-gray-200"
+      class="bg-transparent px-6 py-4 rounded-md border border-gray-200"
       bind:value={confirmPassword}
       type="password"
       placeholder="Confirm Password"

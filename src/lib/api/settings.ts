@@ -87,9 +87,9 @@ export async function deleteAccount(
       password: password
     }
   })
-
+  console.log(response)
   if (!response) return "fail"
   if (response.status == 404) return "not-found"
-  if (response.ok) "success"
+  if (response.ok) return "success"
   return "fail"
 }
