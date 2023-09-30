@@ -15,6 +15,30 @@
   let newPageContent: string = data.content
   let newPageDescription: string = data.description
 
+  let textAreaRef: HTMLTextAreaElement
+
+  const addHeading = () => {
+    newPageContent += "# Heading\n"
+  }
+
+  function addBold() {
+    let position = textAreaRef.selectionStart
+    newPageContent = `${newPageContent.slice(
+      0,
+      position
+    )}**Bold Text**${newPageContent.slice(position)}`
+
+    position = textAreaRef.selectionStart - 2 // Устанавливаем курсор на два символа назад
+    textAreaRef.focus()
+    textAreaRef.setSelectionRange(position, position)
+  }
+
+  function setCursorPosition() {
+    const position = textAreaRef.value.length - 2 // Устанавливаем курсор на два символа назад
+    textAreaRef.focus()
+    textAreaRef.setSelectionRange(position, position)
+  }
+
   let status = "Збережено"
   let timer = 0
 
@@ -232,11 +256,18 @@
       </div>
     </div>
   </div>
+  <div class="flex items-center mt-2">
+    <button on:click={addHeading}>Add Heading</button>
+    <button on:click={addBold}>Add Bold</button>
+    <button on:click={setCursorPosition}>Add cursor</button>
+  </div>
+
   <textarea
     class="border my-4 px-4 p-3 rounded-md border-secondary-200 w-full"
     id="contentInput"
     bind:value={newPageContent}
     on:keyup={debounceChange}
+    bind:this={textAreaRef}
     placeholder="Контент, ви можете використовувати markdown"
     rows="20"
   />
