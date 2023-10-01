@@ -1,9 +1,7 @@
 <script lang="ts">
-  import { goto } from "$app/navigation"
   import AccountDeleteDialog from "$features/account/AccountDeleteDialog.svelte"
   import DashboardSection from "$features/dashboard/DashboardSection.svelte"
   import { routes, api } from "$lib"
-  import { deleteAccount } from "$lib/api"
   import { call } from "$lib/fetch"
   import type { PageData } from "./$types"
 
@@ -18,7 +16,7 @@
 
   let timer = 0
 
-  let openDeleteDialog: boolean = false
+  let openDeleteDialog = false
 
   function debounceChange() {
     clearTimeout(timer)
