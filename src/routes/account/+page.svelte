@@ -1,27 +1,27 @@
 <script lang="ts">
-  import { goto } from "$app/navigation"
+  import AccountDeleteDialog from "$features/account/AccountDeleteDialog.svelte"
+  import DashboardSection from "$features/dashboard/DashboardSection.svelte"
   import { routes, api } from "$lib"
+  import { call } from "$lib/fetch"
   import type { PageData } from "./$types"
 
   export let data: PageData
+  let name = data.name
 
-  let name = ""
-
-  let currentPassword = ""
-  let newPassword = ""
-  let confirmPassword = ""
+  let fileInput: any
 
   let message: string | null = null
   let messageName: string | null = null
-  let messagePassword: string | null = null
   let messageImage: string | null = null
 
-  $: isInvalidName = name.trim() == ""
+  let timer = 0
 
-  $: isInvalidPassword =
-    confirmPassword.trim() == "" ||
-    newPassword.trim() == "" ||
-    currentPassword.trim() == ""
+  let openDeleteDialog = false
+
+  function debounceChange() {
+    clearTimeout(timer)
+    timer = setTimeout(changeName, 1000)
+  }
 
   async function changeName() {
     const status = await api.changeName(fetch, "client", name)
@@ -29,7 +29,7 @@
     if (status == "success") {
       message = "Ім'я успішно змінено"
       messageName = ""
-      goto(routes.accountSettings)
+      data.name = name
       return
     }
 
@@ -42,46 +42,7 @@
       messageName = "Сервер не відповідає"
       return
     }
-
     messageName = "Щось пішло не так"
-  }
-
-  async function changePassword() {
-    if (newPassword != confirmPassword) {
-      messagePassword = "Паролі не співпадають"
-      return
-    }
-
-    const status = await api.changePassword(
-      fetch,
-      "client",
-      currentPassword,
-      newPassword,
-      confirmPassword
-    )
-
-    if (status == "success") {
-      message = "Пароль успішно змінений"
-      messagePassword = ""
-      goto(routes.accountSettings)
-      return
-    }
-
-    if (status == "not-found") {
-      messagePassword = "Користувач не знайдений"
-      return
-    }
-
-    if (status == "fail") {
-      messagePassword = "Сервер не відповідає"
-      return
-    }
-
-    if (status == "passwords-mismatch") {
-      messagePassword = "Паролі не співпадають"
-    }
-
-    messagePassword = "Щось пішло не так"
   }
 
   async function setUserImage(
@@ -95,7 +56,7 @@
     })
 
     if (result.status == "success") {
-      console.log(result.data)
+      data.imageUrl = result.data
       message = "Зображення профілю успішно змінене"
       return
     }
@@ -111,114 +72,187 @@
     }
     messageImage = "Щось пішло не так"
   }
+
+  async function deleteUserImage() {
+    const result = await call(fetch, "client", {
+      route: `/v1/site/account/image`,
+      method: `DELETE`
+    })
+
+    if (result == null) {
+      message = "Щось пішло не так"
+      return
+    }
+
+    if (result.ok) {
+      data.imageUrl = ""
+      message = "Зображення профілю успішно видалене"
+      return
+    }
+
+    message = "Щось пішло не так"
+  }
 </script>
 
 <svelte:head>
   <title>Налаштування</title>
 </svelte:head>
 
-<main class="min-h-[70vh] max-w-screen-xl m-auto px-6">
-  <h1 class="text-4xl md:text-6xl text-center m-auto font-bold">
-    Налаштування
-  </h1>
-  <p class="text-center text-text-main mt-6 max-w-3xl m-auto mb-10">
-    Налаштування профілю
-  </p>
+<div class="max-w-screen-xl m-auto px-6 pt-8 pb-16">
+  <button
+    on:click={() => window.history.back()}
+    class=" w-full mt-6 text-3xl inline-flex md:text-3xl text-center m-auto font-bold border-b border-gray-300"
+  >
+    <div class="m-6 mr-0 ml-0">
+      <span class="h-8 w-8 self-center font-sans">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="h-10 w-6"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M15.75 19.5L8.25 12l7.5-7.5"
+          />
+        </svg>
+      </span>
+    </div>
+    <div class="m-6 ml-0">Налаштування профілю</div>
+  </button>
 
   {#if message}
     <div
-      class="px-5 py-3 border border-green-200 bg-green-100 rounded-md text-green-800"
+      class="py-5 px-6 my-8 text-sm text-text-header bg-brand-green
+      bg-opacity-50 rounded-xl w-full"
     >
       {message}
     </div>
   {/if}
 
-  <form
-    on:submit|preventDefault={changeName}
-    class="max-w-lg m-auto flex flex-col gap-4 mt-2"
-  >
-    {#if messageName}
-      <div
-        class="px-5 py-3 border border-red-200 bg-red-100 rounded-md text-red-800"
-      >
-        {messageName}
+  <DashboardSection class="mt-7">
+    <div class="mx-auto text-center w-fit grid grid-row-2 gap-4">
+      <div class="relative inline-block">
+        <img
+          class="inline-block object-cover w-40 h-40 rounded-full bg-slate-600"
+          src={data.imageUrl}
+          alt="user-img"
+        />
+        <button
+          on:click={() => fileInput.click()}
+          class="absolute bottom-3 right-3 inline-block bg-white border-white rounded-full"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-6 relative h-6 m-1"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z"
+            />
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z"
+            />
+          </svg>
+          <input
+            bind:this={fileInput}
+            on:change={setUserImage}
+            class="hidden"
+            id="dropzone-file"
+            accept="image/*"
+            type="file"
+          />
+        </button>
       </div>
-    {/if}
+      <button
+        on:click={deleteUserImage}
+        class="w-fit mx-auto mb-1 px-3 py-1 bg-transprent text-xs font-bold text-brand-violet uppercase"
+      >
+        Видалити фото
+      </button>
+    </div>
 
-    <input
-      class="bg-gray-100 focus:bg-gray-50 px-6 py-4 rounded-md border border-gray-200"
-      bind:value={name}
-      placeholder={data.name}
-    />
+    <div class="border-b border-secondary-100 w-full my-7" />
+
+    <div class="flex flex-col gap-3">
+      {#if messageName}
+        <div
+          class="px-5 py-3 border border-red-200 bg-red-100 rounded-md text-red-800"
+        >
+          {messageName}
+        </div>
+      {/if}
+
+      <label for="name" class="text-secondary-400">Ваше Ім'я</label>
+      <input
+        id="name"
+        class="px-6 py-4 rounded-md border border-secondary-200"
+        on:change={debounceChange}
+        bind:value={name}
+        placeholder="Ваше Ім'я"
+      />
+    </div>
+
+    <div class="border-b border-secondary-100 w-full my-7" />
+
+    <p class="text-secondary-400 mb-3">E-mail</p>
+    <p>
+      {data.email}
+    </p>
+
+    <div class="border-b border-secondary-100 w-full my-7" />
+
+    <p class="text-secondary-400 mb-3">Пароль</p>
+    <div class="flex justify-between">
+      <span>**********</span>
+      <a
+        href="/account/reset"
+        class="border-b border-brand-violet font-semibold text-brand-violet"
+      >
+        Змінити
+      </a>
+    </div>
+
+    <div class="border-b border-secondary-100 w-full my-7" />
+
+    <div class="grid gap-4 grid-row-2 md:grid-cols-2">
+      <div>
+        <p class="text-xl font-bold text-secondary-700">Ваші магазини</p>
+        <p class="text-secondary-400">
+          Перегляд і доступ до магазинів, підключених до вашого Spentoday ID
+        </p>
+      </div>
+
+      <div class="border border-secondary-200 rounded-xl p-5">
+        <a
+          href={routes.dashboard}
+          class="font-bold text-brand-dark
+          border-b border-brand-dark"
+        >
+          Подивитися всі магазини
+        </a>
+      </div>
+    </div>
+
+    <div class="border-b border-secondary-100 w-full my-7" />
 
     <button
-      class="bg-primary-500 disabled:bg-gray-100 font-semibold px-6 py-3 text-white
-       hover:bg-primary-400 disabled:text-text-input rounded-md"
-      type="submit"
-      disabled={isInvalidName}
+      on:click={() => (openDeleteDialog = true)}
+      class="border-b border-brand-violet font-bold text-brand-violet"
     >
-      Change name
+      Видалити аккаунт
     </button>
-  </form>
+  </DashboardSection>
 
-  <form
-    on:submit|preventDefault={changePassword}
-    class="max-w-lg m-auto flex flex-col gap-4 mt-2"
-  >
-    {#if messagePassword}
-      <div
-        class="px-5 py-3 border border-red-200 bg-red-100 rounded-md text-red-800"
-      >
-        {messagePassword}
-      </div>
-    {/if}
-
-    <input
-      class="bg-gray-100 focus:bg-gray-50 px-6 py-4 rounded-md border border-gray-200"
-      bind:value={currentPassword}
-      type="password"
-      placeholder="Enter current password"
-    />
-
-    <input
-      class="bg-gray-100 focus:bg-gray-50 px-6 py-4 rounded-md border border-gray-200"
-      bind:value={newPassword}
-      type="password"
-      placeholder="New Password"
-    />
-
-    <input
-      class="bg-gray-100 focus:bg-gray-50 px-6 py-4 rounded-md border border-gray-200"
-      bind:value={confirmPassword}
-      type="password"
-      placeholder="Confirm Password"
-    />
-
-    <button
-      class="bg-primary-500 disabled:bg-gray-100 font-semibold px-6 py-3 text-white
-       hover:bg-primary-400 disabled:text-text-input rounded-md"
-      type="submit"
-      disabled={isInvalidPassword}
-    >
-      Change password
-    </button>
-  </form>
-  <div class="max-w-lg m-auto flex flex-col gap-4 mt-2 text-center">
-    <img src={data.imageUrl} alt="user-img" />
-    <p>Встановити зображення профілю</p>
-    <input
-      on:change={setUserImage}
-      id="dropzone-file"
-      accept="image/*"
-      type="file"
-    />
-  </div>
-
-  <div class="max-w-sm m-auto flex flex-col gap-4 mt-2">
-    <a
-      title="Хочете видалити свій аккаунт? Вже залишаєте нас?"
-      href={routes.accountDelete}
-      class="px-8 py-2 rounded-full bg-red-400 text-center">Видалити аккаунт</a
-    >
-  </div>
-</main>
+  <AccountDeleteDialog email={data.email} bind:open={openDeleteDialog} />
+</div>
