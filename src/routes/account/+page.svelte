@@ -1,5 +1,6 @@
 <script lang="ts">
   import { goto } from "$app/navigation"
+  import AccountDeleteDialog from "$features/account/AccountDeleteDialog.svelte"
   import DashboardSection from "$features/dashboard/DashboardSection.svelte"
   import { routes, api } from "$lib"
   import { deleteAccount } from "$lib/api"
@@ -14,14 +15,10 @@
   let message: string | null = null
   let messageName: string | null = null
   let messageImage: string | null = null
-  let messageDelete: string | null = null
 
   let timer = 0
 
-  let accountDeleteEmailConfirm = ""
-  let accountDeletePasswordConfirm = ""
-
-  let newPageModal: HTMLDialogElement
+  let openDeleteDialog: boolean = false
 
   function debounceChange() {
     clearTimeout(timer)
@@ -96,33 +93,6 @@
     }
 
     message = "Щось пішло не так"
-  }
-  async function deleteUserAccount() {
-    if (data.email != accountDeleteEmailConfirm) {
-      messageDelete = "Невірно введений E-mail"
-      return
-    }
-
-    const result = await deleteAccount(
-      fetch,
-      "client",
-      data.email,
-      accountDeletePasswordConfirm
-    )
-
-    if (result == "not-found") {
-      messageDelete = "Користувача не існує"
-      return
-    }
-
-    if (result == "fail") {
-      messageDelete = "невірний Пароль або E-mail"
-      return
-    }
-
-    if (result == "success") {
-      goto("/")
-    }
   }
 </script>
 
@@ -279,57 +249,12 @@
     <div class="border-b border-secondary-100 w-full my-7" />
 
     <button
-      on:click={() => newPageModal.showModal()}
+      on:click={() => (openDeleteDialog = true)}
       class="border-b border-brand-violet font-bold text-brand-violet"
     >
       Видалити аккаунт
     </button>
   </DashboardSection>
 
-  <dialog
-    bind:this={newPageModal}
-    class="p-10 bg-white text-lg rounded-md max-w-2xl"
-  >
-    <form
-      class="flex gap-8 flex-col"
-      on:submit|preventDefault={deleteUserAccount}
-    >
-      <h3>
-        Щоб видалити цей аккаунт вам треба ввести свій E-mail та Пароль від
-        цього аккаунту.
-      </h3>
-      {#if messageDelete != null}
-        <p class="border-red-800 rounded-md p-3 px-4 bg-red-50 text-red-800">
-          {messageDelete}
-        </p>
-      {/if}
-      <input
-        class="bg-transprent px-6 py-4 rounded-md border border-gray-200"
-        bind:value={accountDeleteEmailConfirm}
-        placeholder="email"
-      />
-
-      <input
-        class="bg-transprent px-6 py-4 rounded-md border border-gray-200"
-        bind:value={accountDeletePasswordConfirm}
-        placeholder="password"
-      />
-
-      <div class="gap-4 items-end">
-        <button
-          type="reset"
-          class="px-4 py-2 bg-gray-300 hover:bg-gray-200 rounded-md"
-          on:click={() => newPageModal.close()}
-        >
-          Скасувати
-        </button>
-        <button
-          class="px-4 py-2 bg-gray-800 text-white hover:bg-gray-900 rounded-md"
-          type="submit"
-        >
-          Видалити
-        </button>
-      </div>
-    </form>
-  </dialog>
+  <AccountDeleteDialog email={data.email} bind:open={openDeleteDialog} />
 </div>
