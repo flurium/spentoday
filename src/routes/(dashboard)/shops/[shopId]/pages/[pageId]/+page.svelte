@@ -401,8 +401,8 @@
         class="bg-brand-dark text-white p-3 w-max rounded-md absolute bottom-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
       >
         Нумерований список: Маркований список: <br />
-        1. Пункт перший - Пункт перший <br />
-        2. Пункт другий - Пункт другий <br />
+        1. Пункт перший &nbsp &nbsp &nbsp &nbsp - Пункт перший <br />
+        2. Пункт другий &nbsp &nbsp &nbsp &nbsp &nbsp - Пункт другий" <br />
       </div>
     </div>
     <div
@@ -458,7 +458,7 @@
         class="bg-brand-dark text-white p-3 w-max rounded-md absolute bottom-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
       >
         | Заголовок 1 | Заголовок 2 |<br />
-        | ----------- | ----------- |<br />
+        | ------------- | ------------ |<br />
         | Осередок 1 | Осередок 2 |<br />
         | Осередок 3 | Осередок 4 |<br />
       </div>
@@ -537,7 +537,7 @@
     on:input={debounceChange}
     bind:this={textAreaRef}
     placeholder="Контент, Ви можете використовувати markdown"
-    rows="20"
+    rows="12"
   />
 </DashboardSection>
 
