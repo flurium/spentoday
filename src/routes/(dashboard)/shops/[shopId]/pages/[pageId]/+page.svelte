@@ -17,26 +17,239 @@
 
   let textAreaRef: HTMLTextAreaElement
 
-  const addHeading = () => {
-    newPageContent += "# Heading\n"
+  function addHeading() {
+    let start = textAreaRef.selectionStart
+
+    textAreaRef.value = `${newPageContent.slice(0, start)}${
+      textAreaRef.selectionStart != textAreaRef.selectionEnd ? "# " : "#"
+    }${newPageContent.slice(start)}`
+
+    newPageContent = textAreaRef.value
+
+    textAreaRef.focus()
+    textAreaRef.setSelectionRange(start + 1, start + 1)
+
+    debounceChange()
+  }
+
+  function addItalic() {
+    let start = textAreaRef.selectionStart
+    let end = textAreaRef.selectionEnd
+
+    textAreaRef.value = `${newPageContent.slice(
+      0,
+      start
+    )}*${newPageContent.slice(start, end)}*${newPageContent.slice(end)}`
+
+    newPageContent = textAreaRef.value
+
+    textAreaRef.focus()
+    textAreaRef.setSelectionRange(start + 1, end + 1)
+
+    debounceChange()
   }
 
   function addBold() {
-    let position = textAreaRef.selectionStart
-    newPageContent = `${newPageContent.slice(
-      0,
-      position
-    )}**Bold Text**${newPageContent.slice(position)}`
+    let start = textAreaRef.selectionStart
+    let end = textAreaRef.selectionEnd
 
-    position = textAreaRef.selectionStart - 2 // Устанавливаем курсор на два символа назад
+    textAreaRef.value = `${newPageContent.slice(
+      0,
+      start
+    )}**${newPageContent.slice(start, end)}**${newPageContent.slice(end)}`
+
+    newPageContent = textAreaRef.value
+
     textAreaRef.focus()
-    textAreaRef.setSelectionRange(position, position)
+    textAreaRef.setSelectionRange(start + 2, end + 2)
+
+    debounceChange()
   }
 
-  function setCursorPosition() {
-    const position = textAreaRef.value.length - 2 // Устанавливаем курсор на два символа назад
+  // function addBoldItalic() {
+  //   let start = textAreaRef.selectionStart
+  //   let end = textAreaRef.selectionEnd
+
+  //   textAreaRef.value = `${newPageContent.slice(
+  //     0,
+  //     start
+  //   )}***${newPageContent.slice(start, end)}***${newPageContent.slice(end)}`
+
+  //   newPageContent = textAreaRef.value
+
+  //   textAreaRef.focus()
+  //   textAreaRef.setSelectionRange(start + 3, end + 3)
+
+  //   debounceChange()
+  // }
+
+  function addStrikethrough() {
+    let start = textAreaRef.selectionStart
+    let end = textAreaRef.selectionEnd
+
+    textAreaRef.value = `${newPageContent.slice(
+      0,
+      start
+    )}~~${newPageContent.slice(start, end)}~~${newPageContent.slice(end)}`
+
+    newPageContent = textAreaRef.value
+
     textAreaRef.focus()
-    textAreaRef.setSelectionRange(position, position)
+    textAreaRef.setSelectionRange(start + 2, end + 2)
+
+    debounceChange()
+  }
+
+  function addCode() {
+    let start = textAreaRef.selectionStart
+    let end = textAreaRef.selectionEnd
+    const selectedText = textAreaRef.value.substring(start, end)
+    let count
+
+    if (selectedText.includes("\n")) {
+      textAreaRef.value = `${newPageContent.slice(
+        0,
+        start
+      )}\`\`\`\n${newPageContent.slice(
+        start,
+        end
+      )}\n\`\`\`${newPageContent.slice(end)}`
+      count = 4
+    } else {
+      textAreaRef.value = `${newPageContent.slice(
+        0,
+        start
+      )}\`${newPageContent.slice(start, end)}\`${newPageContent.slice(end)}`
+      count = 1
+    }
+
+    newPageContent = textAreaRef.value
+
+    textAreaRef.focus()
+    textAreaRef.setSelectionRange(start + count, end + count)
+
+    debounceChange()
+  }
+
+  function addQuote() {
+    let start = textAreaRef.selectionStart
+
+    textAreaRef.value = `${newPageContent.slice(0, start)}${
+      textAreaRef.selectionStart != textAreaRef.selectionEnd ? "> " : ">"
+    }${newPageContent.slice(start)}`
+
+    newPageContent = textAreaRef.value
+
+    textAreaRef.focus()
+    textAreaRef.setSelectionRange(start + 1, start + 1)
+
+    debounceChange()
+  }
+
+  function addLine() {
+    let start = textAreaRef.selectionStart
+
+    textAreaRef.value = `${newPageContent.slice(
+      0,
+      start
+    )}---\n${newPageContent.slice(start)}`
+
+    newPageContent = textAreaRef.value
+
+    textAreaRef.focus()
+    textAreaRef.setSelectionRange(start + 4, start + 4)
+
+    debounceChange()
+  }
+
+  function addTable() {
+    let start = textAreaRef.selectionStart
+
+    textAreaRef.value = `${newPageContent.slice(
+      0,
+      start
+    )}\n| Заголовок 1 | Заголовок 2 |
+| ----------- | ----------- |
+| Осередок 1 | Осередок 2 |
+| Осередок 3 | Осередок 4 |\n${newPageContent.slice(start)}`
+
+    newPageContent = textAreaRef.value
+
+    textAreaRef.focus()
+    textAreaRef.setSelectionRange(start, start)
+
+    debounceChange()
+  }
+
+  function addNumbericList() {
+    let start = textAreaRef.selectionStart
+
+    textAreaRef.value = `${newPageContent.slice(
+      0,
+      start
+    )}\n1. Пункт перший\n2. Пункт другий\n${newPageContent.slice(start)}`
+
+    newPageContent = textAreaRef.value
+
+    textAreaRef.focus()
+    textAreaRef.setSelectionRange(start, start)
+
+    debounceChange()
+  }
+
+  function addGenericList() {
+    let start = textAreaRef.selectionStart
+
+    textAreaRef.value = `${newPageContent.slice(
+      0,
+      start
+    )}\n- Пункт перший\n- Пункт другий\n${newPageContent.slice(start)}`
+
+    newPageContent = textAreaRef.value
+
+    textAreaRef.focus()
+    textAreaRef.setSelectionRange(start, start)
+
+    debounceChange()
+  }
+
+  function addLink() {
+    let start = textAreaRef.selectionStart
+    let end = textAreaRef.selectionEnd
+
+    textAreaRef.value = `${newPageContent.slice(
+      0,
+      start
+    )}[Текст посилання](${newPageContent.slice(
+      start,
+      end
+    )})${newPageContent.slice(end)}`
+
+    newPageContent = textAreaRef.value
+
+    textAreaRef.focus()
+    textAreaRef.setSelectionRange(start + 18, end + 18)
+
+    debounceChange()
+  }
+
+  function addImage() {
+    let start = textAreaRef.selectionStart
+    let end = textAreaRef.selectionEnd
+
+    textAreaRef.value = `${newPageContent.slice(
+      0,
+      start
+    )}![Текст опису](${newPageContent.slice(start, end)})${newPageContent.slice(
+      end
+    )}`
+
+    newPageContent = textAreaRef.value
+
+    textAreaRef.focus()
+    textAreaRef.setSelectionRange(start + 15, end + 15)
+
+    debounceChange()
   }
 
   let status = "Збережено"
@@ -102,6 +315,11 @@
     goto(routes.pages(data.shopId))
   }
 </script>
+
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+/>
 
 <div class="flex gap-2 my-10 items-center">
   <div class="cursor-pointer">
@@ -257,9 +475,58 @@
     </div>
   </div>
   <div class="flex items-center mt-2">
-    <button on:click={addHeading}>Add Heading</button>
-    <button on:click={addBold}>Add Bold</button>
-    <button on:click={setCursorPosition}>Add cursor</button>
+    <button
+      class="fa fa-header border border-transparent py-2 px-2 hover:bg-secondary-200 font-semibold hover:border-secondary-400 rounded-md"
+      on:click={addHeading}
+    />
+    <button
+      class="fa fa-italic border border-transparent py-2 px-2 hover:bg-secondary-200 font-semibold hover:border-secondary-400 rounded-md"
+      on:click={addItalic}
+    />
+    <button
+      class="fa fa-bold border border-transparent py-2 px-2 hover:bg-secondary-200 font-semibold hover:border-secondary-400 rounded-md"
+      on:click={addBold}
+    />
+    <button
+      class="fa fa-strikethrough border border-transparent py-2 px-2 hover:bg-secondary-200 font-semibold hover:border-secondary-400 rounded-md"
+      on:click={addStrikethrough}
+    />
+    <i class="mx-2">|</i>
+    <button
+      class="fa fa-code border border-transparent py-2 px-2 hover:bg-secondary-200 font-semibold hover:border-secondary-400 rounded-md"
+      on:click={addCode}
+    />
+    <button
+      class="fa fa-quote-left border border-transparent py-2 px-2 hover:bg-secondary-200 font-semibold hover:border-secondary-400 rounded-md"
+      on:click={addQuote}
+    />
+    <i class="mx-2">|</i>
+    <button
+      class="fa fa-list-ul border border-transparent py-2 px-2 hover:bg-secondary-200 font-semibold hover:border-secondary-400 rounded-md"
+      on:click={addGenericList}
+    />
+    <button
+      class="fa fa-list-ol border border-transparent py-2 px-2 hover:bg-secondary-200 font-semibold hover:border-secondary-400 rounded-md"
+      on:click={addNumbericList}
+    />
+    <button
+      class="fa fa-table border border-transparent py-2 px-2 hover:bg-secondary-200 font-semibold hover:border-secondary-400 rounded-md"
+      on:click={addTable}
+    />
+    <i class="mx-2">|</i>
+    <button
+      class="fa fa-link border border-transparent py-2 px-2 hover:bg-secondary-200 font-semibold hover:border-secondary-400 rounded-md"
+      on:click={addLink}
+    />
+    <button
+      class="fa fa-picture-o border border-transparent py-2 px-2 hover:bg-secondary-200 font-semibold hover:border-secondary-400 rounded-md"
+      on:click={addImage}
+    />
+    <i class="mx-2">|</i>
+    <button
+      class="fa fa-minus border border-transparent py-2 px-2 hover:bg-secondary-200 font-semibold hover:border-secondary-400 rounded-md"
+      on:click={addLine}
+    />
   </div>
 
   <textarea
@@ -267,8 +534,9 @@
     id="contentInput"
     bind:value={newPageContent}
     on:keyup={debounceChange}
+    on:input={debounceChange}
     bind:this={textAreaRef}
-    placeholder="Контент, ви можете використовувати markdown"
+    placeholder="Контент, Ви можете використовувати markdown"
     rows="20"
   />
 </DashboardSection>
