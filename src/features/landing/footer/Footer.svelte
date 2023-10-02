@@ -91,30 +91,30 @@
       </button>
     </div>
 
-   <div class="mt-48 mb-14 md:flex justify-between grid grid-cols-2 gap-4">
-  <div>
-    <h4 class="text-3xl">Spentoday</h4>
-    <p class="mt-2 md:mt-4 whitespace-nowrap">Для успішного бізнесу</p>
+    <div class="mt-48 mb-14 md:flex justify-between grid grid-cols-2 gap-4">
+      <div>
+        <h4 class="text-3xl">Spentoday</h4>
+        <p class="mt-2 md:mt-4 whitespace-nowrap">Для успішного бізнесу</p>
+      </div>
+      <div class="col-start-1 col-span-2 border-t border-t-white pt-3" />
+      <div class="col-start-1 text-sm md:text-base md:flex md:flex-col gap-4">
+        <a href="/#faq" class="block md:inline">FAQ</a>
+        <a href="/#propositions" class="block md:inline">Що ми пропонуємо</a>
+        <a href="/#technologies" class="block md:inline">Технології</a>
+      </div>
+      <div
+        class="col-start-2 text-sm md:text-base md:flex md:flex-col gap-4 md:justify-end"
+      >
+        <p>КОНТАКТИ</p>
+        <a href="mailto:support@spentoday.com" class="hover:underline">
+          support@spentoday.com
+        </a>
+        <p>+380 66 727 49 05</p>
+      </div>
+    </div>
+    <div class="justify-between border-t border-t-white pt-3">
+      <span>Copyright 2023. Spentoday</span>
+      <span />
+    </div>
   </div>
-  <div class="col-start-1 col-span-2 border-t border-t-white pt-3"/>
-  <div class="col-start-1 text-sm md:text-base md:flex md:flex-col gap-4">
-    <a href="/#faq" class="block md:inline">FAQ</a>
-    <a href="/#propositions" class="block md:inline">Що ми пропонуємо</a>
-    <a href="/#technologies" class="block md:inline">Технології</a>
-  </div>
-  <div class="col-start-2 text-sm md:text-base md:flex md:flex-col gap-4 md:justify-end">
-    <p>КОНТАКТИ</p>
-    <a href="mailto:support@spentoday.com" class="hover:underline">
-      support@spentoday.com
-    </a>
-    <p>+380 66 727 49 05</p>
-  </div>
-</div>
-<div class="justify-between border-t border-t-white pt-3">
-  <span>Copyright 2023. Spentoday</span>
-  <span />
-</div>
-
-</div>
-
 </footer>
