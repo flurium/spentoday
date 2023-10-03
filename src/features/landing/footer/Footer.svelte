@@ -57,7 +57,7 @@
 <footer class="rounded-t-[2rem] bg-brand-violet text-white">
   <div class="px-6 max-w-screen-xl m-auto py-36">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-      <h3 class="md:col-span-2 font-bold text-5xl md:text-7xl">
+      <h3 class="md:col-span-2 font-bold text-4xl md:text-7xl">
         ЗАЛИШТЕ СВОЇ <span class="rounded-xl px-4 bg-brand-green">ПИТАННЯ,</span
         >
         МИ НАДАМО ВАМ ВІДПОВІДІ
@@ -84,30 +84,27 @@
 
       <button
         disabled={sending}
-        class="place-self-end"
+        class="place-self-center md:place-self-end"
         on:click={submitQuestion}
       >
         <SendQuestionStar />
       </button>
     </div>
 
-    <div class="mt-48 mb-14 flex justify-between">
+    <div class="mt-48 mb-14 md:flex justify-between grid grid-cols-2 gap-4">
       <div>
         <h4 class="text-3xl">Spentoday</h4>
-        <p class="mt-4">Для успішного бізнесу</p>
+        <p class="mt-2 md:mt-4 whitespace-nowrap">Для успішного бізнесу</p>
       </div>
-      <div class="flex flex-col gap-4">
-        <a href="/#faq">FAQ</a>
-        <a href="/#propositions">Що ми пропонуємо</a>
-        <a href="/#technologies">Технології</a>
-        <!-- <a href="/#price">Тарифи</a>
-        <a href="/#faq">FAQ</a> -->
+      <div class="col-start-1 col-span-2 border-t border-t-white pt-3" />
+      <div class="col-start-1 text-sm md:text-base md:flex md:flex-col gap-4">
+        <a href="/#faq" class="block md:inline">FAQ</a>
+        <a href="/#propositions" class="block md:inline">Що ми пропонуємо</a>
+        <a href="/#technologies" class="block md:inline">Технології</a>
       </div>
-      <div class="flex flex-col gap-4">
-        <a href="/#benefits">Переваги</a>
-        <a href="/#price">Тарифи</a>
-      </div>
-      <div class="flex flex-col gap-4">
+      <div
+        class="col-start-2 text-sm md:text-base md:flex md:flex-col gap-4 md:justify-end"
+      >
         <p>КОНТАКТИ</p>
         <a href="mailto:support@spentoday.com" class="hover:underline">
           support@spentoday.com
