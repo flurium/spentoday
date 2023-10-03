@@ -38,9 +38,9 @@
       <a class="text-xs md:text-base" href="/#faq">FAQ</a>
     </nav>
 
-    <nav class="basis-1/4 text-right">
+    <nav class="basis-1/2 text-right">
       <a
-        class="hidden md:inline-block px-4 py-2 md:px-8 md:py-3 rounded-full bg-brand-violet text-white text-xs md:text-base"
+        class="px-6 py-2 md:px-8 md:py-3 rounded-full bg-brand-violet text-white text-xs md:text-base"
         href="/login"
       >
         Почати
