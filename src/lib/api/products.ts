@@ -21,6 +21,7 @@ type ProductOutput = {
   id: string
   name: string
   price: number
+  discountPrice: number
   amount: number
   isDraft: boolean
   seoTitle: string
@@ -85,6 +86,7 @@ export type UpdateProductInput = {
   id: string
   name?: string
   price?: number
+  discountPrice?: number
   amount?: number
   description?: string
   isDraft?: boolean
