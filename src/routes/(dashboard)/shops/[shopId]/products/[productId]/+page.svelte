@@ -13,6 +13,8 @@
 
   let name = data.product.name
   let price = data.product.price
+  let discountPrice = data.product.discountPrice
+  let isDiscount = data.product.isDiscount
   let amount = data.product.amount
   let description: string = data.product.description
   let seoTitle: string = data.product.seoTitle
@@ -33,7 +35,10 @@
   }
 
   async function change() {
-    const input: api.UpdateProductInput = { id: data.productId }
+    const input: api.UpdateProductInput = {
+        id: data.productId,
+        isDiscount: isDiscount
+    }
 
     if (data.product.seoSlug != seoSlug) input.seoSlug = seoSlug.slice()
     if (data.product.seoTitle != seoTitle) input.seoTitle = seoTitle.slice()
@@ -42,6 +47,7 @@
     }
     if (data.product.name != name) input.name = name.slice()
     if (data.product.price != price) input.price = price
+    if (data.product.discountPrice != discountPrice) input.discountPrice = discountPrice
     if (data.product.amount != amount) input.amount = amount
     if (data.product.description != description) input.description = description
 
@@ -63,8 +69,10 @@
     if (input.seoDescription) data.product.seoDescription = input.seoDescription
     if (input.name) data.product.name
     if (input.price) data.product.price = input.price
+    if (input.discountPrice) data.product.discountPrice = input.discountPrice
     if (input.amount) data.product.amount = input.amount
     if (input.description) data.product.description = input.description
+    data.product.isDiscount = isDiscount
   }
 
   async function uploadImage(
@@ -392,7 +400,7 @@
             &#8372;
           </span>
           <input
-            class="w-1/2 px-6 py-3 rounded-r-lg border border-secondary-200"
+            class="w-full px-4 py-3 rounded-r-lg border border-secondary-200"
             bind:value={price}
             on:keyup={debounceChange}
             min="0"
@@ -413,8 +421,8 @@
             >&#8372;</span
           >
           <input
-            class="w-1/2 px-6 py-3 rounded-r-lg border border-secondary-200"
-            bind:value={price}
+            class="w-full px-4 py-3 rounded-r-lg border border-secondary-200"
+            bind:value={discountPrice}
             on:keyup={debounceChange}
             min="0"
             step="0.01"
@@ -425,9 +433,10 @@
       </div>
 
       <input
+        bind:checked={isDiscount}
         type="checkbox"
-        checked
         id="myCheckbox"
+        on:click={debounceChange}
         class="-my-1 mx-1 peer relative h-5 w-5 appearance-none rounded border
         after:absolute after:left-0 after:top-0 after:h-full after:w-full
         checked:bg-purple-400 checked:border-purple-400 hover:cursor-pointer
