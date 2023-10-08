@@ -14,4 +14,5 @@ export type ShopSettings = {
   name: string
   logo: string
   topBanner: string
+  accentColor: string
 }
