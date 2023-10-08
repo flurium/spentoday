@@ -22,6 +22,7 @@ export const load: PageLoad = async ({ fetch, params }) => {
     logo: shop.logo,
     top: shop.topBanner,
     name: shop.name,
+    accentColor: shop.accentColor,
     banners: shop.banners,
     links: shop.links
   }
