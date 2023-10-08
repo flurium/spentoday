@@ -18,11 +18,6 @@
 
   $: isInvalidLink = name.trim() == "" || link.trim() == ""
 
-   function handleColorChange(event: Event) {
-    const inputElement = event.currentTarget as HTMLInputElement;
-    accentColor = inputElement.value;
-  }
-
   async function addLink(): Promise<void> {
     const response = await call(fetch, "client", {
       route: `/v1/site/shopsettings/${data.shopId}/link`,
@@ -121,7 +116,7 @@
         <div class="grid place-content-center">
           <PlusIcon class="w-5 h-6" />
         </div>
-        <input type="color" id="accentColor" class="hidden" bind:value={accentColor} on:input={handleColorChange} />
+        <input type="color" id="accentColor" class="hidden" bind:value={accentColor} />
       </label>
   
       <button
