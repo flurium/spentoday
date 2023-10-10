@@ -5,6 +5,7 @@ import { errors } from "$lib"
 export type UserOutput = {
   name: string
   imageUrl: string
+  email: string
 }
 
 export const load: PageLoad = async ({ fetch }) => {
@@ -19,6 +20,7 @@ export const load: PageLoad = async ({ fetch }) => {
 
   return {
     name: user.name,
-    imageUrl: user.imageUrl
+    imageUrl: user.imageUrl,
+    email: user.email
   }
 }

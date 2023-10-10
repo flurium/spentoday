@@ -76,20 +76,21 @@ export async function changePassword(
 export async function deleteAccount(
   fetch: Fetch,
   side: FetchSide,
-  email: string,
-  password: string
+  input: {
+    email: string
+    password: string
+  }
 ): Promise<"not-found" | "success" | "fail"> {
   const response = await call(fetch, side, {
     route: "/v1/site/account/delete",
     method: "POST",
     body: {
-      email: email,
-      password: password
+      email: input.email,
+      password: input.password
     }
   })
-
   if (!response) return "fail"
   if (response.status == 404) return "not-found"
-  if (response.ok) "success"
+  if (response.ok) return "success"
   return "fail"
 }

@@ -3,8 +3,8 @@
   import { goto } from "$app/navigation"
   import { api, routes } from "$lib"
   import { toast } from "$features/toast"
-  import DomainInfo from "$features/domains/DomainInfo.svelte"
-  import CrossIcon from "$features/domains/CrossIcon.svelte"
+  import DomainInfo from "$features/dashboard/domains/DomainInfo.svelte"
+  import CrossIcon from "$features/dashboard/domains/CrossIcon.svelte"
   import autoAnimate from "@formkit/auto-animate"
   import DashboardSection from "$features/dashboard/DashboardSection.svelte"
 

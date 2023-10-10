@@ -26,7 +26,7 @@
   ]
 </script>
 
-<section class="px-6 max-w-screen-xl m-auto py-24 mb-32" id="faq">
+<section class="px-6 max-w-screen-xl m-auto py-24 md:mb-32" id="faq">
   <h2 class="text-4xl md:text-6xl font-bold mb-10">
     <span class="text-secondary-700"> ЗАЛИШИЛИСЯ </span>
     <span class="px-4 rounded-lg bg-brand-green text-white"> ПИТАННЯ? </span>

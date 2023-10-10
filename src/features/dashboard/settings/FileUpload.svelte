@@ -1,6 +1,7 @@
 <script lang="ts">
   import ImgIcon from "./icons/ImgIcon.svelte"
   import PlusIcon from "./icons/PlusIcon.svelte"
+  import { convertToWebP } from "./webp"
 
   export let onUpload: (file: File) => Promise<void>
   export let title: string
@@ -13,7 +14,12 @@
     const file = event.currentTarget.files?.item(0)
     if (!file) return
 
-    await onUpload(file)
+    try {
+      const webp = await convertToWebP(file)
+      await onUpload(webp)
+    } catch {
+      await onUpload(file)
+    }
   }
 </script>
 

@@ -7,6 +7,9 @@
   import { call } from "$lib/fetch"
   import { toast } from "$features/toast"
   import { goto } from "$app/navigation"
+  import DashboardSection from "$features/dashboard/DashboardSection.svelte"
+  import Arrow from "$features/landing/questions/Arrow.svelte"
+  import MarkdownEditor from "$features/MarkdownEditor.svelte"
   export let data: PageData
   let newPageSlug: string = data.slug
   let newPageTitle: string = data.title
@@ -16,7 +19,7 @@
   let status = "Збережено"
   let timer = 0
 
-  function debounceChange() {
+  export function debounceChange() {
     status = "Пишеться"
     clearTimeout(timer)
     timer = setTimeout(change, 1000)
@@ -77,42 +80,69 @@
   }
 </script>
 
-<div>
-  <span>{status}</span>
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+/>
 
-  <form class="flex gap-8 flex-col">
-    <input
-      class="bg-gray-100 focus:bg-gray-50 px-6 py-4 rounded-md border border-gray-200"
-      bind:value={newPageSlug}
-      on:keyup={debounceChange}
-      on:change={() => {
-        newPageSlug = slugify(newPageSlug)
-      }}
-      placeholder="Slug, приклад: product-name"
-    />
-    <input
-      class="bg-gray-100 focus:bg-gray-50 px-6 py-4 rounded-md border border-gray-200"
-      bind:value={newPageTitle}
-      on:keyup={debounceChange}
-      placeholder="Заголовок"
-    />
-    <textarea
-      class="bg-gray-100 focus:bg-gray-50 px-6 py-4 rounded-md border border-gray-200"
-      bind:value={newPageDescription}
-      on:keyup={debounceChange}
-      placeholder="Опис"
-    />
-    <textarea
-      class="bg-gray-100 focus:bg-gray-50 px-6 py-4 rounded-md border border-gray-200"
-      bind:value={newPageContent}
-      on:keyup={debounceChange}
-      placeholder="Контент, ви можете використовувати markdown"
-    />
-  </form>
+<div class="flex gap-2 my-10 items-center">
+  <div class="cursor-pointer">
+    <a href={routes.pages(data.shopId)}>
+      <Arrow class="-rotate-90" />
+    </a>
+  </div>
+  <h1 class="text-3xl font-semibold text-text-header">Редагувати сторінку</h1>
 </div>
 
+<span>{status}</span>
+<DashboardSection class="my-4">
+  <label class="text-2xl font-semibold text-text-header" for="slugInput">
+    Slug
+  </label>
+  <input
+    class="block border mt-2 mb-4 px-5 py-2 rounded-md border-secondary-200 w-full"
+    id="slugInput"
+    bind:value={newPageSlug}
+    on:keyup={debounceChange}
+    on:change={() => {
+      newPageSlug = slugify(newPageSlug)
+    }}
+    placeholder="Slug, приклад: product-name"
+  />
+  <label class="text-2xl font-semibold text-text-header" for="titleInput">
+    Заголовок
+  </label>
+  <input
+    class="block border mt-2 mb-4 px-5 py-2 rounded-md border-secondary-200 w-full"
+    id="titleInput"
+    bind:value={newPageTitle}
+    on:keyup={debounceChange}
+    placeholder="Заголовок"
+  />
+  <label class="text-2xl font-semibold text-text-header" for="descInput">
+    Опис
+  </label>
+  <textarea
+    class="block border mt-2 mb-4 px-5 py-2 rounded-md border-secondary-200 w-full"
+    id="descInput"
+    bind:value={newPageDescription}
+    on:keyup={debounceChange}
+    placeholder="Опис"
+    rows="4"
+  />
+  <label class="text-2xl font-semibold text-text-header" for="contentInput">
+    Контент
+  </label>
+  <MarkdownEditor
+    bind:content={newPageContent}
+    externalCallback={debounceChange}
+  />
+</DashboardSection>
+
 <div>
-  <Markdown content={newPageContent} />
+  <DashboardSection class="my-4">
+    <Markdown content={newPageContent} />
+  </DashboardSection>
 </div>
 
 <button

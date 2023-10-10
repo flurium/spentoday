@@ -5,6 +5,8 @@
   import { toast } from "$features/toast"
   import DashboardSection from "$features/dashboard/DashboardSection.svelte"
   import Media from "$features/dashboard/settings/Media.svelte"
+  import PlusIcon from "$features/dashboard/settings/icons/PlusIcon.svelte"
+  import PaletteIcon from "$features/dashboard/settings/icons/PaletteIcon.svelte"
 
   export let data: PageData
 
@@ -12,10 +14,11 @@
   let name = ""
   let link = ""
   let shopNameInput = data.name
+  let accentColor = data.accentColor
 
   $: isInvalidLink = name.trim() == "" || link.trim() == ""
 
-  async function addLink() {
+  async function addLink(): Promise<void> {
     const response = await call(fetch, "client", {
       route: `/v1/site/shopsettings/${data.shopId}/link`,
       method: "POST",
@@ -50,6 +53,17 @@
     if (!response || !response.ok) return toast.serverError()
     data.name = shopNameInput
   }
+
+  async function addAccentColor() {
+    const response = await call(fetch, "client", {
+      route: `/v1/site/shopsettings/${data.shopId}/accentColor`,
+      method: "POST",
+      body: { accentColor: accentColor }
+    })
+
+    if (!response || !response.ok) return toast.serverError()
+    data.accentColor = accentColor
+  }
 </script>
 
 <h1 class="font-bold text-3xl text-text-header mb-8">Наповнення магазинy</h1>
@@ -71,6 +85,42 @@
 
       <button
         on:click={newName}
+        class="bg-brand-violet font-semibold px-6 py-3 text-white rounded-lg mt-6"
+        type="submit"
+      >
+        Зберігти
+      </button>
+    </DashboardSection>
+
+    <DashboardSection>
+      <h3 class="text-text-header text-xl font-bold mb-6">Кольорова гама</h3>
+  
+      <h4 class="text-text-header text-lg mt-8 mb-5">Акцентний колір</h4>
+      <p class="text-text-input mt-2 mb-8">
+        Фірмовий колір, який відображається у вашому магазині, соціальних мережах тощо
+      </p>
+
+      <!-- svelte-ignore a11y-label-has-associated-control -->
+      <label class="cursor-pointer grid grid-cols-[auto_1fr_auto] gap-5">
+        <div
+          class="grid place-content-center border-2 border-secondary-200
+          rounded h-20 w-20 border-dashed"
+          style="background-color: {accentColor};"
+        >
+          <PaletteIcon class="w-5 h-5 text-text-main" />
+        </div>
+
+        <div class="flex flex-col justify-around py-3">
+          <p class="text-text-main text-lg">Додайте акцентний колір</p>
+        </div>
+        <div class="grid place-content-center">
+          <PlusIcon class="w-5 h-6" />
+        </div>
+        <input type="color" id="accentColor" class="hidden" bind:value={accentColor} />
+      </label>
+  
+      <button
+        on:click={addAccentColor}
         class="bg-brand-violet font-semibold px-6 py-3 text-white rounded-lg mt-6"
         type="submit"
       >
