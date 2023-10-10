@@ -36,8 +36,8 @@
 
   async function change() {
     const input: api.UpdateProductInput = {
-        id: data.productId,
-        isDiscount: isDiscount
+      id: data.productId,
+      isDiscount: isDiscount
     }
 
     if (data.product.seoSlug != seoSlug) input.seoSlug = seoSlug.slice()
@@ -47,7 +47,8 @@
     }
     if (data.product.name != name) input.name = name.slice()
     if (data.product.price != price) input.price = price
-    if (data.product.discountPrice != discountPrice) input.discountPrice = discountPrice
+    if (data.product.discountPrice != discountPrice)
+      input.discountPrice = discountPrice
     if (data.product.amount != amount) input.amount = amount
     if (data.product.description != description) input.description = description
 
