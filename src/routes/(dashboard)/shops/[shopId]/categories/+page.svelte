@@ -117,7 +117,6 @@
   }
 </script>
 
-<header />
 <main class="px-6 mt-20">
   <form
     on:submit|preventDefault={submit}

@@ -66,6 +66,10 @@
   }
 </script>
 
+<svelte:head>
+  <title>Налаштування магазину | Spentoday</title>
+</svelte:head>
+
 <h1 class="font-bold text-3xl text-text-header mb-8">Наповнення магазинy</h1>
 
 <div class="grid md:grid-cols-[3fr_1fr] gap-8">
@@ -94,10 +98,11 @@
 
     <DashboardSection>
       <h3 class="text-text-header text-xl font-bold mb-6">Кольорова гама</h3>
-  
+
       <h4 class="text-text-header text-lg mt-8 mb-5">Акцентний колір</h4>
       <p class="text-text-input mt-2 mb-8">
-        Фірмовий колір, який відображається у вашому магазині, соціальних мережах тощо
+        Фірмовий колір, який відображається у вашому магазині, соціальних
+        мережах тощо
       </p>
 
       <!-- svelte-ignore a11y-label-has-associated-control -->
@@ -116,9 +121,14 @@
         <div class="grid place-content-center">
           <PlusIcon class="w-5 h-6" />
         </div>
-        <input type="color" id="accentColor" class="hidden" bind:value={accentColor} />
+        <input
+          type="color"
+          id="accentColor"
+          class="hidden"
+          bind:value={accentColor}
+        />
       </label>
-  
+
       <button
         on:click={addAccentColor}
         class="bg-brand-violet font-semibold px-6 py-3 text-white rounded-lg mt-6"

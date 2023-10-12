@@ -5,6 +5,7 @@
   import { slug } from "$lib/slug"
   import DashboardSection from "$features/dashboard/DashboardSection.svelte"
   import Arrow from "$features/landing/questions/Arrow.svelte"
+  import { convertToWebP } from "$features/dashboard/settings/webp"
 
   export let data: PageData
   $: images = data.product.images
@@ -21,9 +22,6 @@
   let seoDescription: string = data.product.seoDescription
 
   let seoSlug = data.product.seoSlug
-  $: {
-    console.log(seoSlug)
-  }
 
   let savingStatus = "Збережено"
   let savingTimer = 0
@@ -91,9 +89,16 @@
       })
     }
 
+    let fileToUpload: File
+    try {
+      fileToUpload = await convertToWebP(file)
+    } catch {
+      fileToUpload = file
+    }
+
     const result = await api.uploadProductImage(fetch, "client", {
       productId: data.productId,
-      file: file
+      file: fileToUpload
     })
     if (result.status == "ok") {
       images = [result.data, ...images]
@@ -151,6 +156,10 @@
     if (!changed) return alert("AAAAA")
   }
 </script>
+
+<svelte:head>
+  <title>Продукт: {data.product.name} | Spentoday</title>
+</svelte:head>
 
 <div class="flex gap-2 my-10 items-center">
   <div class="cursor-pointer">

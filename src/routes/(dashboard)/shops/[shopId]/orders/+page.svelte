@@ -33,6 +33,10 @@
   }
 </script>
 
+<svelte:head>
+  <title>Замовлення | Spentoday</title>
+</svelte:head>
+
 <h1 class="font-bold text-2xl text-text-header mb-8">Ваші замовлення</h1>
 <DashboardSection>
   <div class="flex flex-row mb-7">

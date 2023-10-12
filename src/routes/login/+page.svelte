@@ -34,10 +34,10 @@
 </script>
 
 <svelte:head>
-  <title>Login to Spentoday</title>
+  <title>Логін | Spentoday</title>
   <meta
     name="description"
-    content="Login to Spentoday to start earning money online."
+    content="Увійдіть на Spentoday, щоб почати заробляти гроші онлайн."
   />
 </svelte:head>
 

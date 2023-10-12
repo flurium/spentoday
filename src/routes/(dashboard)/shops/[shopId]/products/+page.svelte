@@ -70,6 +70,10 @@
   }
 </script>
 
+<svelte:head>
+  <title>Продукти | Spentoday</title>
+</svelte:head>
+
 <h1 class="font-bold text-3xl text-text-header mb-8">Ваші товари</h1>
 
 <form on:submit|preventDefault={add} class="flex gap-2">

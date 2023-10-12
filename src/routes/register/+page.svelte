@@ -60,10 +60,10 @@
 </script>
 
 <svelte:head>
-  <title>Register at Spentoday</title>
+  <title>Реєстрація | Spentoday</title>
   <meta
     name="description"
-    content="Register at Spentoday to start earning money online."
+    content="Зареєструйтеся на Spentoday, щоб почати заробляти гроші онлайн."
   />
 </svelte:head>
 
