@@ -112,6 +112,10 @@
   // }
 </script>
 
+<svelte:head>
+  <title>Підписники на магазин | Spentoday</title>
+</svelte:head>
+
 <h1 class="font-bold text-3xl text-text-header mb-8">Ваші підписники</h1>
 
 <form on:submit|preventDefault={addSubscriber} class="flex gap-4">

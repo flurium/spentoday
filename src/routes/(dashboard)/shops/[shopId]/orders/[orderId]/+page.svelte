@@ -18,6 +18,10 @@
   }
 </script>
 
+<svelte:head>
+  <title>Замовлення: {data.order.id} | Spentoday</title>
+</svelte:head>
+
 <DashboardSection>
   <span class="xl text-lg font-bold">
     Замовлення <span class="text-sm">{data.order.id}</span>
