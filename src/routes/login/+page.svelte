@@ -34,7 +34,7 @@
 </script>
 
 <svelte:head>
-  <title>Login to Spentoday</title>
+  <title>Вхід до Spentoday</title>
   <meta
     name="description"
     content="Login to Spentoday to start earning money online."
@@ -42,10 +42,10 @@
 </svelte:head>
 
 <main class="min-h-[70vh] max-w-screen-xl m-auto pt-20 px-6">
-  <h1 class="text-4xl md:text-6xl text-center m-auto font-bold">Login</h1>
+  <h1 class="text-4xl md:text-6xl text-center m-auto font-bold">Вхід</h1>
   <p class="text-center text-text-main mt-6 max-w-3xl m-auto">
-    By login you accept our Terms of Servic and Privacy Policy. And get closer
-    to making money.
+    Увійшовши в систему, Ви приймаєте наші Умови обслуговування та Політику
+    конфіденційності. І станете на крок ближче до заробітку грошей.
   </p>
 
   {#if message}
@@ -56,45 +56,50 @@
 
   <form
     on:submit|preventDefault={login}
-    class="max-w-lg m-auto flex flex-col gap-4 mt-12"
+    class="max-w-lg m-auto flex flex-col gap-4 mt-12 items-center"
   >
     <input
-      class="bg-gray-100 focus:bg-gray-50 px-6 py-4 rounded-md border border-gray-200"
+      class="block border my-2 px-5 py-4 rounded-md border-secondary-200 w-full"
       bind:value={email}
       type="email"
-      placeholder="Email address..."
+      placeholder="Електронна пошта"
     />
 
     <input
-      class="bg-gray-100 focus:bg-gray-50 px-6 py-4 rounded-md border border-gray-200"
+      class="block border mt-2 mb-0 px-5 py-4 rounded-md border-secondary-200 w-full"
       bind:value={password}
       type="password"
-      placeholder="Password"
+      placeholder="Пароль"
     />
 
+    <a
+      href={routes.accountForgot}
+      class="underline decoration-primary-200 hover:decoration-primary-300 decoration-2
+      my-6 block text-center text-md"
+    >
+      Забули пароль?
+    </a>
+
     <button
-      class="bg-primary-500 disabled:bg-gray-100 font-semibold px-6 py-3 text-white
-       hover:bg-primary-400 disabled:text-text-main rounded-md"
+      class="bg-brand-green disabled:bg-gray-100 font-semibold px-10 py-3 text-white
+       hover:bg-primary-400 disabled:text-text-main rounded-full w-fit text-center"
       type="submit"
       disabled={password.trim() == "" || !isEmailCorrect}
     >
-      Login
+      ПОЧАТИ
     </button>
   </form>
 
-  <a
-    href={routes.register}
-    class="underline decoration-primary-200 hover:decoration-primary-300 decoration-2
-      mt-8 block text-center"
+  <div
+    class="text-lg decoration-primary-200 hover:decoration-primary-300 decoration-2 mt-8 block text-center"
   >
-    Don't have an account? Register.
-  </a>
-
-  <a
-    href={routes.accountForgot}
-    class="underline decoration-primary-200 hover:decoration-primary-300 decoration-2
-      mt-8 block text-center"
-  >
-    Forgot Password
-  </a>
+    Немає облікового запису?
+    <a
+      class="underline
+      mt-8 text-green-600"
+      href={routes.register}
+    >
+      Зареєструватися!
+    </a>
+  </div>
 </main>

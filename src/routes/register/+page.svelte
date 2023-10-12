@@ -60,18 +60,18 @@
 </script>
 
 <svelte:head>
-  <title>Register at Spentoday</title>
+  <title>Реєстрація в Spentoday</title>
   <meta
     name="description"
     content="Register at Spentoday to start earning money online."
   />
 </svelte:head>
 
-<main class="min-h-[70vh] max-w-screen-xl m-auto px-6">
-  <h1 class="text-4xl md:text-6xl text-center m-auto font-bold">Register</h1>
+<main class="min-h-[70vh] max-w-screen-xl m-auto pt-20 px-6">
+  <h1 class="text-4xl md:text-6xl text-center m-auto font-bold">Реєстрація</h1>
   <p class="text-center text-text-main mt-6 max-w-3xl m-auto mb-10">
-    By registering you accept our Terms of Servic and Privacy Policy. And get
-    closer to making money.
+    Реєструючись, Ви приймаєте наші Умови обслуговування та Політику
+    конфіденційності. І станете на крок ближче до заробітку грошей.
   </p>
 
   <form
@@ -87,47 +87,52 @@
     {/if}
 
     <input
-      class="bg-gray-100 focus:bg-gray-50 px-6 py-4 rounded-md border border-gray-200"
+      class="block border my-2 px-5 py-4 rounded-md border-secondary-200 w-full"
       bind:value={name}
-      placeholder="Your name"
+      placeholder="Ваше ім'я"
     />
 
     <input
-      class="bg-gray-100 focus:bg-gray-50 px-6 py-4 rounded-md border border-gray-200"
+      class="block border my-2 px-5 py-4 rounded-md border-secondary-200 w-full"
       bind:value={email}
       type="email"
-      placeholder="Email address..."
+      placeholder="Електронна пошта"
     />
 
     <input
-      class="bg-gray-100 focus:bg-gray-50 px-6 py-4 rounded-md border border-gray-200"
+      class="block border my-2 px-5 py-4 rounded-md border-secondary-200 w-full"
       bind:value={password}
       type="password"
-      placeholder="Password"
+      placeholder="Пароль"
     />
 
     <input
-      class="bg-gray-100 focus:bg-gray-50 px-6 py-4 rounded-md border border-gray-200"
+      class="block border mt-2 mb-3 px-5 py-4 rounded-md border-secondary-200 w-full"
       bind:value={confirmPassword}
       type="password"
-      placeholder="Confirm Password"
+      placeholder="Підтвердити пароль"
     />
 
     <button
-      class="bg-primary-500 disabled:bg-gray-100 font-semibold px-6 py-3 text-white
-       hover:bg-primary-400 disabled:text-text-input rounded-md"
+      class="bg-brand-green disabled:bg-gray-100 font-semibold px-10 py-3 text-white
+       hover:bg-primary-400 disabled:text-text-main rounded-full w-fit mx-auto text-center"
       type="submit"
       disabled={isInvalid}
     >
-      Register
+      ПОЧАТИ
     </button>
   </form>
 
-  <a
-    href={routes.login}
-    class="underline decoration-primary-100 hover:decoration-primary-300 decoration-2
-    mt-8 block text-center"
+  <div
+    class="text-lg decoration-primary-200 hover:decoration-primary-300 decoration-2 my-6 block text-center"
   >
-    Already have an account? Login.
-  </a>
+    Вже маєте аккаунт?
+    <a
+      class="underline
+      mt-8 text-green-600"
+      href={routes.login}
+    >
+      Увійти!
+    </a>
+  </div>
 </main>
