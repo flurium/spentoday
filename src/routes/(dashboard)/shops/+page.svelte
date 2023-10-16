@@ -63,10 +63,10 @@
     </form>
   </div>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-11">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-11 gap-6">
     {#each shops as shop}
       <a
-        class="max-w-sm border border-gray-200 rounded-lg overflow-hidden"
+        class="border border-gray-200 rounded-lg overflow-hidden"
         href={routes.shop(shop.id)}
       >
         {#if shop.topBanner}
@@ -76,7 +76,7 @@
         <div class="pt-5 px-7 pb-5">
           <h5 class="font-bold text-text-header text-xl">{shop.name}</h5>
           <p class="break-words text-text-input">
-            {shop.slug}
+            {shop.slug ?? ""}
           </p>
         </div>
       </a>
