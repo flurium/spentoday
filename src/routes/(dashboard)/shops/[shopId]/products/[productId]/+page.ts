@@ -3,12 +3,17 @@ import { api, errors } from "$lib"
 
 export const load = (async ({ fetch, params }) => {
   const output = await api.oneProduct(fetch, "load", params.productId)
+
   if (!output) throw errors.serverError()
 
+  let category = output.categories.filter((x)=> x.id == output.categoryId)[0]
+
   return {
+    shopId:params.shopId,
     product: output.product,
     categories: output.categories,
-    categoryId: output.categoryId,
+    category: category,
+    maxLevel: output.maxLevel,
     productId: params.productId
   }
 }) satisfies PageLoad

@@ -6,12 +6,17 @@
   import DashboardSection from "$features/dashboard/DashboardSection.svelte"
   import Arrow from "$features/landing/questions/Arrow.svelte"
   import { convertToWebP } from "$features/dashboard/settings/webp"
+  import { call, callJson } from "$lib/fetch"
+  import autoAnimate from "@formkit/auto-animate"
 
   export let data: PageData
+  
+  let modal: HTMLDialogElement
   $: images = data.product.images
   $: categories = data.categories
+  $: currentCategory = data.category
   let isDraft = data.product.isDraft
-
+  let search = ""
   let name = data.product.name
   let price = data.product.price
   let discountPrice = data.product.discountPrice
@@ -20,9 +25,8 @@
   let description: string = data.product.description
   let seoTitle: string = data.product.seoTitle
   let seoDescription: string = data.product.seoDescription
-
   let seoSlug = data.product.seoSlug
-
+  
   let savingStatus = "Збережено"
   let savingTimer = 0
 
@@ -146,14 +150,22 @@
     alert("Не можемо опублікувати продукт")
   }
 
-  let categoryIdToChange: string | null = data.categoryId ?? null
-  async function changeCategory() {
-    const changed = await api.changeProductCategory(fetch, "client", {
-      productId: data.productId,
-      categoryId: categoryIdToChange
-    })
+  async function searchCategory() {
+    categories = data.categories.filter((x)=> x.name.toLowerCase().includes(search.toLowerCase()))
+   if(search =="")categories = data.categories
+  }
 
-    if (!changed) return alert("AAAAA")
+  async function setCategory(categoryId:string) {
+    const response = await call(fetch, "load", {
+    route: `/v1/site/products/categories`,
+    method: "PATCH",
+    body:{
+      productId:data.productId,
+      categoryId:categoryId
+    }
+  })
+  if (!response) return 
+  currentCategory =  categories.filter((x)=> x.id == categoryId)[0]
   }
 </script>
 
@@ -268,21 +280,82 @@
         >
           Організація товарів
         </label>
-        <select
-          bind:value={categoryIdToChange}
-          on:change={changeCategory}
-          class="px-6 py-3 rounded-md border text-text-input border-secondary-200"
-          id="categorySelect"
+        
+        <div class="flex justify-between">
+        <div class="text-sm text-secondary-400">
+          Шукайте та встановлюйте категорії для продукту
+        </div>
+        <button
+        on:click={() => modal.showModal()}
+        class="w-fit"
         >
-          <option value={null}>No category</option>
-          {#each categories as category}
-            <option value={category.id}>
-              {category.name}
-            </option>
-          {/each}
-        </select>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="purple-700" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-auto">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+        </svg>
+        </button>
+
+      </div>
       </div>
     </DashboardSection>
+
+    <dialog bind:this={modal} class="p-10 w-1/2 bg-white rounded-md">
+      <div class="flex justify-between">
+        <div class="text-2xl font-semibold text-text-header">
+          Категорії
+        </div>
+        <button
+        on:click={()=>modal.close()}
+        type="submit"
+        >
+       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-auto">
+         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>        
+      </button>
+      </div>
+ 
+      <div class="my-4">
+        <div class="flex border rounded-xl ps-5">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 m-auto text-gray-500">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+              </svg>
+              <input
+              class="py-1 px-4 my-auto w-full"
+              on:keyup={searchCategory}
+              bind:value={search}
+              placeholder="Пошук..."/>          
+        </div>
+
+        <div class="grid grid-flow-row" use:autoAnimate>
+       {#if currentCategory != undefined}
+          <div class="text-secondary font-medium py-2 border-b border-gray-300">
+          Current category: {currentCategory.name}
+          </div>
+        {/if}
+        {#if search == ""}
+        {#each categories as category}
+            <button
+            style="margin-left: {0.75 * category.level-1}rem"
+            class="p-2 text-sm text-secondary-800 border-b border-gray-300 font-medium text-left bg-white hover:bg-gray-100"
+            on:click={()=>setCategory(category.id)}
+            > 
+              {category.name}
+            </button>
+        {/each}
+        {:else}
+        {#each categories as category}
+        <button
+        class="p-2 text-sm border-b border-gray-300 font-medium text-left bg-white hover:bg-gray-100"
+        on:click={()=>setCategory(category.id)}
+        > 
+          {category.name}
+        </button>
+        {/each}
+
+        {/if}
+        </div>
+
+      </div>
+    </dialog>
 
     <DashboardSection class="my-4">
       <div class="flex flex-col gap-4 max-w-3xl" id="seo">
