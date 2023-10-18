@@ -327,15 +327,15 @@
 
         <div class="grid grid-flow-row" use:autoAnimate>
        {#if currentCategory != undefined}
-          <div class="text-secondary font-medium py-2 border-b border-gray-300">
-          Current category: {currentCategory.name}
+          <div class="text-secondary font-medium py-2 border-b border-gray-400">
+          Поточна категорія: {currentCategory.name}
           </div>
         {/if}
         {#if search == ""}
         {#each categories as category}
             <button
             style="margin-left: {0.75 * category.level-1}rem"
-            class="p-2 text-sm text-secondary-800 border-b border-gray-300 font-medium text-left bg-white hover:bg-gray-100"
+            class="p-2 text-sm text-secondary-800 border-b border-gray-400 font-medium text-left bg-white hover:bg-gray-100"
             on:click={()=>setCategory(category.id)}
             > 
               {category.name}
@@ -344,7 +344,7 @@
         {:else}
         {#each categories as category}
         <button
-        class="p-2 text-sm border-b border-gray-300 font-medium text-left bg-white hover:bg-gray-100"
+        class="p-2 text-sm border-b border-gray-400 font-medium text-left bg-white hover:bg-gray-100"
         on:click={()=>setCategory(category.id)}
         > 
           {category.name}
