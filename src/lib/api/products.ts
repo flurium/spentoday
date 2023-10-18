@@ -7,6 +7,7 @@ import type { Fetch, FetchSide } from "$lib/fetch"
 export type OneProductOutput = {
   product: ProductOutput
   categories: CategoryOutput[]
+  maxLevel: number
   categoryId?: string
 }
 
@@ -32,9 +33,10 @@ type ProductOutput = {
   images: ImageOutput[]
 }
 
-type CategoryOutput = {
+export type CategoryOutput = {
   id: string
   name: string
+  level: number
 }
 
 export async function oneProduct(
