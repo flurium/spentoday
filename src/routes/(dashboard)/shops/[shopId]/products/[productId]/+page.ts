@@ -6,10 +6,10 @@ export const load = (async ({ fetch, params }) => {
 
   if (!output) throw errors.serverError()
 
-  let category = output.categories.filter((x)=> x.id == output.categoryId)[0]
+  const category = output.categories.filter((x) => x.id == output.categoryId)[0]
 
   return {
-    shopId:params.shopId,
+    shopId: params.shopId,
     product: output.product,
     categories: output.categories,
     category: category,
