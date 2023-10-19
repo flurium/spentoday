@@ -487,8 +487,9 @@
         <div class="flex items-center justify-end col-span-2">
           <input
             class="w-1/2 px-6 py-3 rounded-md border border-secondary-200"
+            on:input={debounceChange}
             bind:value={amount}
-            on:keyup={debounceChange}
+            on:change={debounceChange}
             min="0"
             type="number"
             placeholder="Кількість"
@@ -512,7 +513,8 @@
           <input
             class="w-full px-4 py-3 rounded-r-lg border border-secondary-200"
             bind:value={price}
-            on:keyup={debounceChange}
+            on:input={debounceChange}
+            on:change={debounceChange}
             min="0"
             step="0.01"
             type="number"
@@ -533,7 +535,8 @@
           <input
             class="w-full px-4 py-3 rounded-r-lg border border-secondary-200"
             bind:value={discountPrice}
-            on:keyup={debounceChange}
+            on:change={debounceChange}
+            on:input={debounceChange}
             min="0"
             step="0.01"
             type="number"
