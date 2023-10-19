@@ -41,7 +41,7 @@
     <nav class="basis-1/2 md:basis-1/4 text-right">
       <a
         class="px-6 py-2 md:px-8 md:py-3 rounded-full bg-brand-violet text-white text-xs md:text-base"
-        href="/login"
+        href="/shops"
       >
         Почати
       </a>
