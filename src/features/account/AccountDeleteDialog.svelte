@@ -6,6 +6,7 @@
   export let email: string
 
   $: {
+    console.log(open)
     if (dialog) {
       if (open) {
         dialog.showModal()
@@ -70,7 +71,7 @@
       <button
         type="reset"
         class="px-4 py-2 bg-brand-dark text-white rounded-md"
-        on:click={() => dialog.close()}
+        on:click={() => (open = false)}
       >
         Скасувати
       </button>
