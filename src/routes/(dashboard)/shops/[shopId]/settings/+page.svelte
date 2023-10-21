@@ -162,7 +162,7 @@
       </p>
       <div class="relative mt-2 ">
          <textarea 
-          class="border p-8 rounded w-full" rows="4"
+          class="border px-5 py-2 rounded w-full" rows="4"
           bind:value={slogan}
           on:input={() => slogan = slogan.slice(0, 80)}></textarea>
           <p class="absolute right-2 bottom-2 m-3 text-gray-600 text-sm">
