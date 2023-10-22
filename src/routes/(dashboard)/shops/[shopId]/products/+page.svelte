@@ -93,7 +93,7 @@
     {#each products as product, i (product.id)}
       <a
         class="flex justify-between items-center rounded-lg py-3 px-5
-      {i < products.length - 1 ? 'border-b border-b-secondary-100' : ''}"
+        {i < products.length - 1 ? 'border-b border-b-secondary-100' : ''}"
         href={routes.product(data.shopId, product.id)}
       >
         <span>

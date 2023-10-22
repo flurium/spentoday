@@ -219,10 +219,8 @@
   <ul class="mt-10">
     {#each categories as category}
       <li
-
-      style="margin-left: {(category.level - 1)}rem"
-      class="p-2 text-sm flex justify-between text-secondary-800 border-b border-secondary-200 font-medium text-left bg-white"
-
+        style="margin-left: {category.level - 1}rem"
+        class="p-2 text-sm flex justify-between text-secondary-800 border-b border-secondary-200 font-medium text-left bg-white"
       >
         <h3 class="my-auto">{category.name}</h3>
 
@@ -343,41 +341,39 @@
 
           <div class="grid grid-flow-row" use:autoAnimate>
             <button
-                  class="p-2 text-sm text-secondary-800 border-b  border-secondary-200 font-medium text-left bg-white hover:bg-gray-100"
-                  on:click={() =>{ 
-                  editCategoryParentId = null
-                  parentName = "Top level category"}}
-                >
-                  Top level category
-                </button>
+              class="p-2 text-sm text-secondary-800 border-b border-secondary-200 font-medium text-left bg-white hover:bg-gray-100"
+              on:click={() => {
+                editCategoryParentId = null
+                parentName = "Top level category"
+              }}
+            >
+              Top level category
+            </button>
 
             {#if search == ""}
               {#each editCategories as parentCategory}
                 <button
                   style="margin-left: {0.75 * parentCategory.level - 1}rem"
-
                   class="p-2 text-sm text-secondary-800 border-b border-secondary-200 font-medium text-left bg-white hover:bg-gray-100"
-                  on:click={() =>{ 
-                  editCategoryParentId = parentCategory.id
-                  parentName = parentCategory.name}}
-
+                  on:click={() => {
+                    editCategoryParentId = parentCategory.id
+                    parentName = parentCategory.name
+                  }}
                 >
                   {parentCategory.name}
                 </button>
               {/each}
             {:else}
               {#each editCategories as parentCategory}
-
-                  <button
-                    class="p-2 text-sm border-b  border-secondary-200 font-medium text-left bg-white hover:bg-gray-100"
-                    on:click={() => { 
-                      editCategoryParentId = parentCategory.id
-                      parentName = parentCategory.name
-                      }}
-                  >
-                    {parentCategory.name}
-                  </button>
-
+                <button
+                  class="p-2 text-sm border-b border-secondary-200 font-medium text-left bg-white hover:bg-gray-100"
+                  on:click={() => {
+                    editCategoryParentId = parentCategory.id
+                    parentName = parentCategory.name
+                  }}
+                >
+                  {parentCategory.name}
+                </button>
               {/each}
             {/if}
           </div>
