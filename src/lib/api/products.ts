@@ -35,6 +35,7 @@ type ProductOutput = {
 
 export type CategoryOutput = {
   id: string
+  parentId: string
   name: string
   level: number
 }
