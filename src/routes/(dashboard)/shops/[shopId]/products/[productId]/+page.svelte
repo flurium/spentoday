@@ -6,8 +6,17 @@
   import DashboardSection from "$features/dashboard/DashboardSection.svelte"
   import Arrow from "$features/landing/questions/Arrow.svelte"
   import { convertToWebP } from "$features/dashboard/settings/webp"
-  import { call, callJson } from "$lib/fetch"
+  import { call } from "$lib/fetch"
   import autoAnimate from "@formkit/auto-animate"
+  import PropertyEdit from "$features/dashboard/products/PropertyEdit.svelte"
+  import {
+    deleteProductImage,
+    publishProduct,
+    unpublishProduct,
+    updateProduct,
+    uploadProductImage,
+    type UpdateProductInput
+  } from "$features/dashboard/products/api"
 
   export let data: PageData
 
@@ -37,7 +46,7 @@
   }
 
   async function change() {
-    const input: api.UpdateProductInput = {
+    const input: UpdateProductInput = {
       id: data.productId,
       isDiscount: isDiscount
     }
@@ -60,7 +69,7 @@
     }
 
     savingStatus = "Зберігається..."
-    const updated = await api.updateProduct(fetch, "client", input)
+    const updated = await updateProduct(fetch, "client", input)
     if (!updated) {
       savingStatus = "Не зберіглося"
       return
@@ -100,7 +109,7 @@
       fileToUpload = file
     }
 
-    const result = await api.uploadProductImage(fetch, "client", {
+    const result = await uploadProductImage(fetch, "client", {
       productId: data.productId,
       file: fileToUpload
     })
@@ -121,13 +130,13 @@
   }
 
   async function deleteImage(imageId: string) {
-    const deleted = await api.deleteProductImage(fetch, "client", imageId)
+    const deleted = await deleteProductImage(fetch, "client", imageId)
     if (!deleted) return alert("Не можемо видалити зображення!")
     images = images.filter((x) => x.id != imageId)
   }
 
   async function publish() {
-    const result = await api.publishProduct(fetch, "client", data.productId)
+    const result = await publishProduct(fetch, "client", data.productId)
     if (result == "ok") {
       data.product.isDraft = false
       isDraft = false
@@ -139,7 +148,7 @@
   }
 
   async function unpublish() {
-    const result = await api.unpublishProduct(fetch, "client", data.productId)
+    const result = await unpublishProduct(fetch, "client", data.productId)
     if (result == "ok") {
       data.product.isDraft = true
       isDraft = true
@@ -211,6 +220,12 @@
         rows="10"
       />
     </DashboardSection>
+
+    <PropertyEdit
+      class="mb-4"
+      properties={data.properties}
+      productId={data.productId}
+    />
 
     <DashboardSection class="my-4">
       <label class="text-2xl font-semibold text-text-header" for="mediaInput">
