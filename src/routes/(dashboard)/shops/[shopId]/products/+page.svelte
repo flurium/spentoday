@@ -3,15 +3,15 @@
   import type { PageData } from "./$types"
   import { routes } from "$lib"
   import { call, callJson } from "$lib/fetch"
-  import { shopProducts, type Product } from "$lib/api"
   import { toast } from "$features/toast"
   import DashboardSection from "$features/dashboard/DashboardSection.svelte"
   import autoAnimate from "@formkit/auto-animate"
   import { createScrollLoader, scrollLoader } from "$features/loader"
+  import { shopProducts, type Product } from "$features/dashboard/products/api"
 
   export let data: PageData
-  let products = data.products
-  let start = data.products.length
+  let products: Product[] = []
+  let start = 0
 
   let newProduct = ""
 
