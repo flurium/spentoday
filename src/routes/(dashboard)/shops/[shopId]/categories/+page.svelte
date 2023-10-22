@@ -219,8 +219,10 @@
   <ul class="mt-10">
     {#each categories as category}
       <li
-        style="margin-left: {category.level - 1}rem"
-        class="p-2 text-sm flex justify-between text-secondary-800 border-b border-gray-400 font-medium text-left bg-white hover:bg-gray-100"
+
+      style="margin-left: {(category.level - 1)}rem"
+      class="p-2 text-sm flex justify-between text-secondary-800 border-b border-secondary-200 font-medium text-left bg-white"
+
       >
         <h3 class="my-auto">{category.name}</h3>
 
@@ -280,7 +282,7 @@
 
       <dialog bind:this={modal} class="p-10 w-1/2 bg-white rounded-md">
         <div class="flex justify-between">
-          <div class="text-2xl font-semibold text-text-header">Категорії</div>
+          <div class="text-2xl font-semibold text-text-header">Редагування</div>
           <button on:click={() => modal.close()} type="submit">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -316,7 +318,7 @@
           Підтвердити
         </button>
         <div class="my-4">
-          <div class="flex border rounded-xl ps-5">
+          <div class="flex border border-secondary-200 rounded-xl ps-5">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -341,38 +343,41 @@
 
           <div class="grid grid-flow-row" use:autoAnimate>
             <button
-              class="p-2 text-sm text-secondary-800 border-b border-gray-400 font-medium text-left bg-white hover:bg-gray-100"
-              on:click={() => {
-                editCategoryParentId = null
-                parentName = "Top level category"
-              }}
-            >
-              Top level category
-            </button>
+                  class="p-2 text-sm text-secondary-800 border-b  border-secondary-200 font-medium text-left bg-white hover:bg-gray-100"
+                  on:click={() =>{ 
+                  editCategoryParentId = null
+                  parentName = "Top level category"}}
+                >
+                  Top level category
+                </button>
+
             {#if search == ""}
               {#each editCategories as parentCategory}
                 <button
                   style="margin-left: {0.75 * parentCategory.level - 1}rem"
-                  class="p-2 text-sm text-secondary-800 border-b border-gray-400 font-medium text-left bg-white hover:bg-gray-100"
-                  on:click={() => {
-                    editCategoryParentId = parentCategory.id
-                    parentName = parentCategory.name
-                  }}
+
+                  class="p-2 text-sm text-secondary-800 border-b border-secondary-200 font-medium text-left bg-white hover:bg-gray-100"
+                  on:click={() =>{ 
+                  editCategoryParentId = parentCategory.id
+                  parentName = parentCategory.name}}
+
                 >
                   {parentCategory.name}
                 </button>
               {/each}
             {:else}
               {#each editCategories as parentCategory}
-                <button
-                  class="p-2 text-sm border-b border-gray-400 font-medium text-left bg-white hover:bg-gray-100"
-                  on:click={() => {
-                    editCategoryParentId = parentCategory.id
-                    parentName = parentCategory.name
-                  }}
-                >
-                  {parentCategory.name}
-                </button>
+
+                  <button
+                    class="p-2 text-sm border-b  border-secondary-200 font-medium text-left bg-white hover:bg-gray-100"
+                    on:click={() => { 
+                      editCategoryParentId = parentCategory.id
+                      parentName = parentCategory.name
+                      }}
+                  >
+                    {parentCategory.name}
+                  </button>
+
               {/each}
             {/if}
           </div>
