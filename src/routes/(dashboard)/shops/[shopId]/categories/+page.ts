@@ -1,12 +1,7 @@
 import type { PageLoad } from "./$types"
 import { call, callJson } from "$lib/fetch"
 import { errors } from "$lib"
-
-export type ShopCategory = {
-  id: string
-  name: string
-  parentId: string | null
-}
+import type { CategoryOutput } from "$lib/api/products"
 
 export const load = (async ({ fetch, params }) => {
   const shopId = params.shopId
@@ -17,7 +12,7 @@ export const load = (async ({ fetch, params }) => {
   })
   if (!response || !response.ok) throw errors.serverError()
 
-  const data = await callJson<ShopCategory[]>(response)
+  const data = await callJson<CategoryOutput[]>(response)
   if (!data) throw errors.jsonError()
 
   return {

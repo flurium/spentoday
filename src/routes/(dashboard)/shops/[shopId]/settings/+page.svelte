@@ -20,8 +20,6 @@
 
   $: isInvalidLink = name.trim() == "" || link.trim() == ""
 
-  
-
   async function addLink(): Promise<void> {
     const response = await call(fetch, "client", {
       route: `/v1/site/shopsettings/${data.shopId}/link`,
@@ -68,7 +66,7 @@
     if (!response || !response.ok) return toast.serverError()
     data.accentColor = accentColor
   }
-  
+
   async function addSlogan() {
     const response = await call(fetch, "client", {
       route: `/v1/site/shopsettings/${data.shopId}/slogan`,
@@ -79,7 +77,6 @@
     if (!response || !response.ok) return toast.serverError()
     data.slogan = slogan
   }
-
 </script>
 
 <svelte:head>
@@ -155,22 +152,25 @@
     </DashboardSection>
 
     <DashboardSection class="mt-8">
-       <h3 class="text-text-header text-xl font-bold">Гасло</h3>
-       <p class="text-text-input mt-2 mb-8">
-        Гасло бренду, яке часто використовується разом із вашим логотипом.<br>
-        Кожна нова строка - це окрема секція, яка буде відокремлюватися "/" з обох сторін.
+      <h3 class="text-text-header text-xl font-bold">Гасло</h3>
+      <p class="text-text-input mt-2 mb-8">
+        Гасло бренду, яке часто використовується разом із вашим логотипом.<br />
+        Кожна нова строка - це окрема секція, яка буде відокремлюватися "/" з обох
+        сторін.
       </p>
-      <div class="relative mt-2 ">
-         <textarea 
-          class="border px-5 py-2 rounded w-full" rows="4"
+      <div class="relative mt-2">
+        <textarea
+          class="border px-5 py-2 rounded w-full"
+          rows="4"
           bind:value={slogan}
-          on:input={() => slogan = slogan.slice(0, 80)}></textarea>
-          <p class="absolute right-2 bottom-2 m-3 text-gray-600 text-sm">
-            {slogan.length}/{maxCharacters}
-          </p>
-       </div>
+          on:input={() => (slogan = slogan.slice(0, 80))}
+        />
+        <p class="absolute right-2 bottom-2 m-3 text-gray-600 text-sm">
+          {slogan.length}/{maxCharacters}
+        </p>
+      </div>
 
-       <button
+      <button
         on:click={addSlogan}
         class="bg-brand-violet font-semibold px-6 py-3 text-white rounded-lg mt-6"
         type="submit"

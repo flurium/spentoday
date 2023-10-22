@@ -10,8 +10,8 @@
   export let properties: Property[]
   export let productId: string
 
-  let name: string = ""
-  let value: string = ""
+  let name = ""
+  let value = ""
 
   async function addProperty() {
     name = name.trim()
