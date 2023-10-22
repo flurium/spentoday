@@ -68,8 +68,6 @@
         ...categories.slice(index + 1)
       ]
     }
-    
-    editCategoryParentId = null
     categoryInput = ""
     parentInput = null
   }
