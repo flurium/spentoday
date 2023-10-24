@@ -1,6 +1,6 @@
 <script lang="ts">
   import { goto } from "$app/navigation"
-  import { api } from "$lib"
+  import { api, routes } from "$lib"
   import { z } from "zod"
 
   const emailSchema = z.string().email()
@@ -14,7 +14,7 @@
   async function forgot() {
     const status = await api.forgot(fetch, "client", email)
     if (status == "ok") {
-      goto("/dashboard")
+      goto(routes.login)
       return
     }
     if (status == "email-not-found") {
@@ -26,16 +26,16 @@
 </script>
 
 <svelte:head>
-  <title>Forgot password</title>
+  <title>Забули пароль?</title>
   <meta name="description" content="Forgot Password" />
 </svelte:head>
 
 <main class="min-h-[70vh] max-w-screen-xl m-auto pt-20 px-6">
   <h1 class="text-4xl md:text-6xl text-center m-auto font-bold">
-    Forgot password
+    Забули пароль?
   </h1>
   <p class="text-center text-text-main mt-6 max-w-3xl m-auto">
-    Send you a link for password reset
+    Надішлемо вам посилання для скидання пароля
   </p>
 
   <form
@@ -50,19 +50,19 @@
       </div>
     {/if}
     <input
-      class="bg-gray-100 focus:bg-gray-50 px-6 py-4 rounded-md border border-gray-200"
+      class="block border mt-2 mb-3 px-5 py-4 rounded-md border-secondary-200 w-full"
       bind:value={email}
       type="email"
-      placeholder="Email address..."
+      placeholder="Електронна пошта"
     />
 
     <button
-      class="bg-primary-500 disabled:bg-gray-100 font-semibold px-6 py-3 text-white
-       hover:bg-primary-400 disabled:text-text-main rounded-md"
+      class="bg-brand-green disabled:bg-gray-100 font-semibold px-10 py-3 text-white
+       hover:bg-primary-400 disabled:text-text-main rounded-full w-fit mx-auto"
       type="submit"
       disabled={!isEmailCorrect}
     >
-      Send
+      Відправити
     </button>
   </form>
 </main>

@@ -41,7 +41,7 @@
     <nav class="basis-1/2 md:basis-1/4 text-right">
       <a
         class="px-6 py-2 md:px-8 md:py-3 rounded-full bg-brand-violet text-white text-xs md:text-base"
-        href="/login"
+        href="/shops"
       >
         Почати
       </a>
@@ -166,7 +166,7 @@
         <p
           class="text-lg col-start-1 col-span-3 row-start-4 md:col-start-2 md:col-span-1 text-left"
         >
-          Ми запрошуємо вас випробувати всі можливості платформи абсолютно
+          Ми запрошуємо Вас випробувати всі можливості платформи абсолютно
           безкоштовно на 14 днів. Почніть свій шлях до успіху вже сьогодні!
         </p>
 

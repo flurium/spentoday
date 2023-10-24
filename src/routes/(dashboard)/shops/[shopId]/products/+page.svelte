@@ -3,15 +3,15 @@
   import type { PageData } from "./$types"
   import { routes } from "$lib"
   import { call, callJson } from "$lib/fetch"
-  import { shopProducts, type Product } from "$lib/api"
   import { toast } from "$features/toast"
   import DashboardSection from "$features/dashboard/DashboardSection.svelte"
   import autoAnimate from "@formkit/auto-animate"
   import { createScrollLoader, scrollLoader } from "$features/loader"
+  import { shopProducts, type Product } from "$features/dashboard/products/api"
 
   export let data: PageData
-  let products = data.products
-  let start = data.products.length
+  let products: Product[] = []
+  let start = 0
 
   let newProduct = ""
 
@@ -70,6 +70,10 @@
   }
 </script>
 
+<svelte:head>
+  <title>Продукти | Spentoday</title>
+</svelte:head>
+
 <h1 class="font-bold text-3xl text-text-header mb-8">Ваші товари</h1>
 
 <form on:submit|preventDefault={add} class="flex gap-2">
@@ -89,7 +93,7 @@
     {#each products as product, i (product.id)}
       <a
         class="flex justify-between items-center rounded-lg py-3 px-5
-      {i < products.length - 1 ? 'border-b border-b-secondary-100' : ''}"
+        {i < products.length - 1 ? 'border-b border-b-secondary-100' : ''}"
         href={routes.product(data.shopId, product.id)}
       >
         <span>

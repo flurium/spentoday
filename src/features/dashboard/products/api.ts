@@ -1,41 +1,6 @@
 import { call, callJson } from "$lib/fetch"
 import type { Fetch, FetchSide } from "$lib/fetch"
-
-//
-// GET ONE PRODUCT TO EDIT
-
-export type OneProductOutput = {
-  product: ProductOutput
-  categories: CategoryOutput[]
-  categoryId?: string
-}
-
-export type ImageOutput = {
-  id: string
-  key: string
-  bucket: string
-  provider: string
-}
-
-type ProductOutput = {
-  id: string
-  name: string
-  price: number
-  discountPrice: number
-  isDiscount: boolean
-  amount: number
-  isDraft: boolean
-  seoTitle: string
-  seoDescription: string
-  seoSlug: string
-  description: string
-  images: ImageOutput[]
-}
-
-type CategoryOutput = {
-  id: string
-  name: string
-}
+import type { ImageOutput, OneProductOutput } from "./types"
 
 export async function oneProduct(
   fetch: Fetch,

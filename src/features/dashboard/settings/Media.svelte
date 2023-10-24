@@ -12,10 +12,10 @@
 
   async function uploadBanner(file: File) {
     const { width, height } = await imageSize(file)
-    if (width != 964 || height != 400) {
+    if (width != 600 || height != 250) {
       return toast.push({
         title: "Не корректний розмір",
-        description: "Баннер повинен мати розмір 964 на 400 пікселів"
+        description: "Баннер повинен мати розмір 600 на 250 пікселів"
       })
     }
 
@@ -46,6 +46,15 @@
   async function uploadTopBanner(file: File) {
     const form = new FormData()
     form.append("file", file)
+
+    const { width, height } = await imageSize(file)
+    if (width != 1200 || height != 600) {
+      toast.push({
+        title: "Не корректний розмір",
+        description: "Обложка має бути 1200 на 600 пікселів"
+      })
+      return
+    }
 
     const response = await call(fetch, "client", {
       route: `/v1/site/shopsettings/${shopId}/top`,
@@ -88,14 +97,14 @@
 {#if topBanner == ""}
   <FileUpload
     title="Додайте обложку сайту"
-    description="Рекомендовано: 1200 на 600 пікселів"
+    description="Зображення має бути 1200 на 600 пікселів"
     id="top-banner-file-upload"
     onUpload={uploadTopBanner}
   />
 {:else}
   <FileUpload
     title="Змінити обложку сайту"
-    description="Рекомендовано: 1200 на 600 пікселів"
+    description="Зображення має бути 1200 на 600 пікселів"
     id="top-banner-file-upload"
     onUpload={uploadTopBanner}
   />
@@ -109,7 +118,7 @@
 
 <FileUpload
   title="Додати банер"
-  description="Рекомендовано: 1000 на 400 пікселів"
+  description="Зображення має бути 600 на 250 пікселів"
   id="banner-file-upload"
   onUpload={uploadBanner}
 />

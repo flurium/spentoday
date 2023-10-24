@@ -1,14 +1,15 @@
 <script lang="ts">
   import AccountDeleteDialog from "$features/account/AccountDeleteDialog.svelte"
   import DashboardSection from "$features/dashboard/DashboardSection.svelte"
-  import { routes, api } from "$lib"
+  import { toast } from "$features/toast"
+  import { routes, api, imageSize } from "$lib"
   import { call } from "$lib/fetch"
   import type { PageData } from "./$types"
 
   export let data: PageData
   let name = data.name
 
-  let fileInput: any
+  let fileInput: HTMLInputElement
 
   let message: string | null = null
   let messageName: string | null = null
@@ -49,7 +50,16 @@
     event: Event & { currentTarget: EventTarget & HTMLInputElement }
   ) {
     const file = event.currentTarget.files?.item(0)
-    if (!file) return alert("Can't upload")
+    if (!file) return
+
+    const { width, height } = await imageSize(file)
+    if (width != height) {
+      toast.push({
+        title: "Квадратне зображення",
+        description: "Зображення профілю має бути квадратом"
+      })
+      return
+    }
 
     const result = await api.uploadUserImage(fetch, "client", {
       file: file
@@ -176,7 +186,8 @@
       </div>
       <button
         on:click={deleteUserImage}
-        class="w-fit mx-auto mb-1 px-3 py-1 bg-transprent text-xs font-bold text-brand-violet uppercase"
+        class="w-fit mx-auto mb-1 px-3 py-1 bg-transprent text-xs
+        font-bold text-brand-violet uppercase"
       >
         Видалити фото
       </button>

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { goto } from "$app/navigation"
-  import { api } from "$lib"
+  import { api, routes } from "$lib"
   import type { PageData } from "./$types"
 
   export let data: PageData
@@ -24,7 +24,7 @@
       confirmPassword: confirmPassword
     })
     if (result.status == "success") {
-      goto("/login")
+      goto(routes.login)
       return
     }
 
@@ -48,14 +48,17 @@
   }
 </script>
 
-<main
-  class="min-h-[70vh] max-w-screen-xl m-auto p-10 my-5 w-fit border border-gray-200 rounded-lg"
->
+<svelte:head>
+  <title>Відновлення пароля</title>
+  <meta name="description" content="Reset password" />
+</svelte:head>
+
+<main class="min-h-[70vh] max-w-screen-xl m-auto p-10 my-5 w-fit">
   <h1 class="text-4xl md:text-6xl text-center m-auto font-bold">
-    Reset Password
+    Відновлення пароля
   </h1>
   <p class="text-center text-text-main mt-6 max-w-3xl m-auto mb-10">
-    Create and confirm your new password
+    Створіть і підтвердьте новий пароль
   </p>
 
   <form
@@ -71,26 +74,26 @@
     {/if}
 
     <input
-      class="bg-transparent px-6 py-4 rounded-md border border-gray-200"
+      class="block border mt-2 mb-3 px-5 py-4 rounded-md border-secondary-200 w-full"
       bind:value={password}
       type="password"
-      placeholder="Password"
+      placeholder="Пароль"
     />
 
     <input
-      class="bg-transparent px-6 py-4 rounded-md border border-gray-200"
+      class="block border mt-2 mb-3 px-5 py-4 rounded-md border-secondary-200 w-full"
       bind:value={confirmPassword}
       type="password"
-      placeholder="Confirm Password"
+      placeholder="Підтвердити пароль"
     />
 
     <button
-      class="bg-primary-500 disabled:bg-gray-100 font-semibold px-6 py-3 text-white
-         hover:bg-primary-400 disabled:text-text-input rounded-md"
+      class="bg-brand-green disabled:bg-gray-100 font-semibold px-10 py-3 text-white
+       hover:bg-primary-400 disabled:text-text-main rounded-full w-fit mx-auto"
       type="submit"
       disabled={isInvalid}
     >
-      Ok
+      Відновити доступ
     </button>
   </form>
 </main>

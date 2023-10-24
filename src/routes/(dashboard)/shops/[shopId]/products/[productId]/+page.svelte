@@ -5,12 +5,27 @@
   import { slug } from "$lib/slug"
   import DashboardSection from "$features/dashboard/DashboardSection.svelte"
   import Arrow from "$features/landing/questions/Arrow.svelte"
+  import { convertToWebP } from "$features/dashboard/settings/webp"
+  import { call } from "$lib/fetch"
+  import autoAnimate from "@formkit/auto-animate"
+  import PropertyEdit from "$features/dashboard/products/PropertyEdit.svelte"
+  import {
+    deleteProductImage,
+    publishProduct,
+    unpublishProduct,
+    updateProduct,
+    uploadProductImage,
+    type UpdateProductInput
+  } from "$features/dashboard/products/api"
 
   export let data: PageData
-  $: images = data.product.images
-  $: categories = data.categories
-  let isDraft = data.product.isDraft
 
+  let modal: HTMLDialogElement
+  let images = data.product.images
+  let categories = data.categories
+  let currentCategory = data.category
+  let isDraft = data.product.isDraft
+  let search = ""
   let name = data.product.name
   let price = data.product.price
   let discountPrice = data.product.discountPrice
@@ -19,11 +34,7 @@
   let description: string = data.product.description
   let seoTitle: string = data.product.seoTitle
   let seoDescription: string = data.product.seoDescription
-
   let seoSlug = data.product.seoSlug
-  $: {
-    console.log(seoSlug)
-  }
 
   let savingStatus = "Збережено"
   let savingTimer = 0
@@ -35,7 +46,7 @@
   }
 
   async function change() {
-    const input: api.UpdateProductInput = {
+    const input: UpdateProductInput = {
       id: data.productId,
       isDiscount: isDiscount
     }
@@ -58,7 +69,7 @@
     }
 
     savingStatus = "Зберігається..."
-    const updated = await api.updateProduct(fetch, "client", input)
+    const updated = await updateProduct(fetch, "client", input)
     if (!updated) {
       savingStatus = "Не зберіглося"
       return
@@ -91,9 +102,16 @@
       })
     }
 
-    const result = await api.uploadProductImage(fetch, "client", {
+    let fileToUpload: File
+    try {
+      fileToUpload = await convertToWebP(file)
+    } catch {
+      fileToUpload = file
+    }
+
+    const result = await uploadProductImage(fetch, "client", {
       productId: data.productId,
-      file: file
+      file: fileToUpload
     })
     if (result.status == "ok") {
       images = [result.data, ...images]
@@ -112,13 +130,13 @@
   }
 
   async function deleteImage(imageId: string) {
-    const deleted = await api.deleteProductImage(fetch, "client", imageId)
+    const deleted = await deleteProductImage(fetch, "client", imageId)
     if (!deleted) return alert("Не можемо видалити зображення!")
     images = images.filter((x) => x.id != imageId)
   }
 
   async function publish() {
-    const result = await api.publishProduct(fetch, "client", data.productId)
+    const result = await publishProduct(fetch, "client", data.productId)
     if (result == "ok") {
       data.product.isDraft = false
       isDraft = false
@@ -130,7 +148,7 @@
   }
 
   async function unpublish() {
-    const result = await api.unpublishProduct(fetch, "client", data.productId)
+    const result = await unpublishProduct(fetch, "client", data.productId)
     if (result == "ok") {
       data.product.isDraft = true
       isDraft = true
@@ -141,16 +159,30 @@
     alert("Не можемо опублікувати продукт")
   }
 
-  let categoryIdToChange: string | null = data.categoryId ?? null
-  async function changeCategory() {
-    const changed = await api.changeProductCategory(fetch, "client", {
-      productId: data.productId,
-      categoryId: categoryIdToChange
-    })
+  async function searchCategory() {
+    categories = data.categories.filter((x) =>
+      x.name.toLowerCase().includes(search.toLowerCase())
+    )
+    if (search == "") categories = data.categories
+  }
 
-    if (!changed) return alert("AAAAA")
+  async function setCategory(categoryId: string) {
+    const response = await call(fetch, "load", {
+      route: `/v1/site/products/categories`,
+      method: "PATCH",
+      body: {
+        productId: data.productId,
+        categoryId: categoryId
+      }
+    })
+    if (!response) return
+    currentCategory = categories.filter((x) => x.id == categoryId)[0]
   }
 </script>
+
+<svelte:head>
+  <title>Продукт: {data.product.name} | Spentoday</title>
+</svelte:head>
 
 <div class="flex gap-2 my-10 items-center">
   <div class="cursor-pointer">
@@ -188,6 +220,12 @@
         rows="10"
       />
     </DashboardSection>
+
+    <PropertyEdit
+      class="mb-4"
+      properties={data.properties}
+      productId={data.productId}
+    />
 
     <DashboardSection class="my-4">
       <label class="text-2xl font-semibold text-text-header" for="mediaInput">
@@ -259,21 +297,107 @@
         >
           Організація товарів
         </label>
-        <select
-          bind:value={categoryIdToChange}
-          on:change={changeCategory}
-          class="px-6 py-3 rounded-md border text-text-input border-secondary-200"
-          id="categorySelect"
-        >
-          <option value={null}>No category</option>
-          {#each categories as category}
-            <option value={category.id}>
-              {category.name}
-            </option>
-          {/each}
-        </select>
+
+        <div class="flex justify-between">
+          <div class="text-sm text-secondary-400">
+            Шукайте та встановлюйте категорії для продукту
+          </div>
+          <button on:click={() => modal.showModal()} class="w-fit">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="purple-700"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-6 h-auto"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 4.5v15m7.5-7.5h-15"
+              />
+            </svg>
+          </button>
+        </div>
       </div>
     </DashboardSection>
+
+    <dialog bind:this={modal} class="p-10 w-1/2 bg-white rounded-md">
+      <div class="flex justify-between">
+        <div class="text-2xl font-semibold text-text-header">Категорії</div>
+        <button on:click={() => modal.close()} type="submit">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-5 h-auto"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+      </div>
+
+      <div class="my-4">
+        <div class="flex border rounded-xl ps-5">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-6 h-6 m-auto text-gray-500"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+            />
+          </svg>
+          <input
+            class="py-1 px-4 my-auto w-full"
+            on:keyup={searchCategory}
+            bind:value={search}
+            placeholder="Пошук..."
+          />
+        </div>
+
+        <div class="grid grid-flow-row" use:autoAnimate>
+          {#if currentCategory != undefined}
+            <div
+              class="text-secondary font-medium py-2 border-b border-gray-400"
+            >
+              Поточна категорія: {currentCategory.name}
+            </div>
+          {/if}
+          {#if search == ""}
+            {#each categories as category}
+              <button
+                style="margin-left: {0.75 * category.level - 1}rem"
+                class="p-2 text-sm text-secondary-800 border-b border-gray-400 font-medium text-left bg-white hover:bg-gray-100"
+                on:click={() => setCategory(category.id)}
+              >
+                {category.name}
+              </button>
+            {/each}
+          {:else}
+            {#each categories as category}
+              <button
+                class="p-2 text-sm border-b border-gray-400 font-medium text-left bg-white hover:bg-gray-100"
+                on:click={() => setCategory(category.id)}
+              >
+                {category.name}
+              </button>
+            {/each}
+          {/if}
+        </div>
+      </div>
+    </dialog>
 
     <DashboardSection class="my-4">
       <div class="flex flex-col gap-4 max-w-3xl" id="seo">
@@ -378,8 +502,9 @@
         <div class="flex items-center justify-end col-span-2">
           <input
             class="w-1/2 px-6 py-3 rounded-md border border-secondary-200"
+            on:input={debounceChange}
             bind:value={amount}
-            on:keyup={debounceChange}
+            on:change={debounceChange}
             min="0"
             type="number"
             placeholder="Кількість"
@@ -403,7 +528,8 @@
           <input
             class="w-full px-4 py-3 rounded-r-lg border border-secondary-200"
             bind:value={price}
-            on:keyup={debounceChange}
+            on:input={debounceChange}
+            on:change={debounceChange}
             min="0"
             step="0.01"
             type="number"
@@ -424,7 +550,8 @@
           <input
             class="w-full px-4 py-3 rounded-r-lg border border-secondary-200"
             bind:value={discountPrice}
-            on:keyup={debounceChange}
+            on:change={debounceChange}
+            on:input={debounceChange}
             min="0"
             step="0.01"
             type="number"

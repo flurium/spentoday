@@ -6,13 +6,13 @@
       class="rounded-full aspect-square m-6 p-14 bg-brand-pink
         grid place-content-center text-center"
     >
-      Ми пропонуємо безпеку вашим клієнтам та захист даних
+      Ми пропонуємо безпеку Вашим клієнтам та захист даних
     </div>
     <div
       class="rounded-full aspect-square mx-6 md:mx-0 p-14 border border-white border-dashed
         grid place-content-center text-center"
     >
-      Запускайте свій магазин легко та швидко: наші інструменти допоможуть вам
+      Запускайте свій магазин легко та швидко: наші інструменти допоможуть Вам
     </div>
     <div
       class="rounded-full aspect-square m-6 p-14 bg-brand-green

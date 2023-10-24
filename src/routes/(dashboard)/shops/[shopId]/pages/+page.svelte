@@ -83,6 +83,10 @@
   }
 </script>
 
+<svelte:head>
+  <title>Інформаційні сторінки | Spentoday</title>
+</svelte:head>
+
 <button
   class="px-4 py-2 bg-gray-800 text-white hover:bg-gray-900 rounded-md"
   on:click={() => newPageModal.showModal()}>Створити нову</button

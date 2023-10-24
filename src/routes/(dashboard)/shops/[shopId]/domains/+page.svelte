@@ -11,10 +11,6 @@
   export let data: PageData
   let domains = data.domains
 
-  $: {
-    console.log(domains)
-  }
-
   $: hasFreeDomain =
     domains.findIndex((x) => x.domain.endsWith("spentoday.com")) != -1
   let closeFreeDomainNotification = false
@@ -95,6 +91,10 @@
     toast.push({ title: "Домен не підтверджено" })
   }
 </script>
+
+<svelte:head>
+  <title>Домени | Spentoday</title>
+</svelte:head>
 
 <h1 class="font-bold text-3xl text-text-header mb-8">Домени</h1>
 

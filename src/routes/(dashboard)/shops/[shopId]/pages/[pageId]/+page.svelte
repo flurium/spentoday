@@ -80,10 +80,9 @@
   }
 </script>
 
-<link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-/>
+<svelte:head>
+  <title>Сторінка: {data.title} | Spentoday</title>
+</svelte:head>
 
 <div class="flex gap-2 my-10 items-center">
   <div class="cursor-pointer">

@@ -1,5 +1,4 @@
 export * from "./domains"
-export * from "./products"
 export * from "./settings"
 export * from "./orders"
 export * from "./auth"
