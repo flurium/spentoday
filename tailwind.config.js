@@ -23,7 +23,7 @@ export default {
         }
       },
       fontFamily: {
-        sans: ["Play", ...defaultTheme.fontFamily.sans]
+        sans: ["Owen Pro", ...defaultTheme.fontFamily.sans]
       }
     }
   },
