@@ -135,9 +135,9 @@
 
   <Technologies />
 
-  <Propositions />
-
   <Strip />
+
+  <Propositions />
 
   <section class="bg-brand-violet py-32">
     <div class="px-4 md:px-6">

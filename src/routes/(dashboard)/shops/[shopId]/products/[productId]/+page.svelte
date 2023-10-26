@@ -8,7 +8,7 @@
   import { convertToWebP } from "$features/dashboard/settings/webp"
   import { call } from "$lib/fetch"
   import autoAnimate from "@formkit/auto-animate"
-  import PropertyEdit from "$features/dashboard/products/PropertyEdit.svelte"
+  import PropertyEdit from "$features/dashboard/products/PropertyEditList.svelte"
   import {
     deleteProductImage,
     publishProduct,
@@ -194,7 +194,7 @@
 </div>
 
 <span>{savingStatus}</span>
-<div class="grid grid-cols-3 gap-4 my-4">
+<div class="grid grid-cols-1 xl:grid-cols-3 gap-4 my-4">
   <div class="col-span-2">
     <DashboardSection class="mb-4">
       <label class="text-2xl font-semibold text-text-header" for="nameInput">

@@ -1,107 +1,81 @@
 <script lang="ts">
-  import { toast } from "$features/toast"
-  import { call, callJson } from "$lib/fetch"
-  import DashboardSection from "../DashboardSection.svelte"
+  import { call } from "$lib/fetch"
+  import MenuIcon from "./MenuIcon.svelte"
   import type { Property } from "./types"
 
-  let className: string
-  export { className as class }
+  export let property: Property
+  export let onDelete: (id: string) => void
 
-  export let properties: Property[]
-  export let productId: string
+  let isEdit = false
+  let key = property.key
+  let value = property.value
 
-  let name = ""
-  let value = ""
-
-  async function addProperty() {
-    name = name.trim()
-    value = value.trim()
-    if (name === "" || value === "") return
-
+  async function changeProperty() {
     const res = await call(fetch, "client", {
       route: "/v1/site/properties",
-      method: "POST",
+      method: "PUT",
       body: {
-        productId: productId,
-        key: name,
+        id: property.id,
+        key: key,
         value: value
       }
     })
-    if (res == null || !res.ok) {
-      toast.serverError()
-      return
-    }
+    if (res == null || !res.ok) return
 
-    const data = await callJson<Property>(res)
-    if (data == null) {
-      toast.jsonError()
-      return
-    }
-
-    properties = [...properties, data]
-    name = ""
-    value = ""
+    property.key = key
+    property.value = value
+    isEdit = false
   }
 
-  async function deleteProperty(id: string) {
+  async function deleteProperty() {
     const res = await call(fetch, "client", {
-      route: `/v1/site/properties/${id}`,
+      route: `/v1/site/properties/${property.id}`,
       method: "DELETE"
     })
     if (res == null || !res.ok) return
-    properties = properties.filter((x) => x.id != id)
+
+    onDelete(property.id)
   }
 </script>
 
-<DashboardSection class={className}>
-  <h3 class="text-text-header text-xl font-bold">Характеристики</h3>
-  <p class="text-text-input mt-2 mb-8">
-    Характеристики - це основні властивості та особливості вашого продукту або
-    послуги, які надають користувачам уявлення про його якість та переваги
-  </p>
-
-  <form
-    on:submit|preventDefault={addProperty}
-    class="grid grid-cols-1 md:grid-cols-[1fr_1fr_auto] gap-5"
-  >
+{#if isEdit}
+  <div class="col-span-3 flex flex-col gap-4">
     <input
-      class="border border-secondary-200 rounded-lg px-5 py-3"
-      bind:value={name}
+      class="border border-secondary-200 rounded-lg px-5 py-3 block w-full"
       placeholder="Назва"
+      bind:value={key}
     />
     <input
-      class="border border-secondary-200 rounded-lg px-5 py-3"
-      bind:value
+      class="border border-secondary-200 rounded-lg px-5 py-3 block w-full"
       placeholder="Значення"
+      bind:value
     />
 
-    <button
-      class="bg-brand-violet font-semibold px-8 py-3 text-white rounded-lg"
-    >
-      Додати
-    </button>
-  </form>
-
-  {#if properties.length > 0}
-    <div
-      class="grid grid-cols-[auto_1fr_auto] gap-x-5 gap-y-4 mt-8 items-center"
-    >
-      <p class="text-text-input">Назва</p>
-      <p class="text-text-input">Значення</p>
-      <p />
-
-      {#each properties as property}
-        <div class="col-span-3 border-t border-secondary-100" />
-        <span>{property.key}</span>
-        <span>{property.value}</span>
-        <button
-          class="border border-brand-violet font-semibold px-6 py-2
-          rounded-lg text-brand-violet"
-          on:click={() => deleteProperty(property.id)}
-        >
-          Видалити
-        </button>
-      {/each}
+    <div class="flex gap-4">
+      <button
+        class="font-semibold px-8 py-3 border border-brand-pink
+        rounded-lg text-brand-pink w-full"
+        on:click={deleteProperty}
+      >
+        Видалити
+      </button>
+      <button
+        class="bg-brand-violet font-semibold px-8 py-3 text-white
+        rounded-lg w-full"
+        on:click={changeProperty}
+      >
+        Змінити
+      </button>
     </div>
-  {/if}
-</DashboardSection>
+  </div>
+{:else}
+  <span>{property.key}</span>
+  <span>{property.value}</span>
+  <button
+    class="h-10 w-10 rounded-lg hover:bg-secondary-100
+    grid place-content-center"
+    on:click={() => (isEdit = !isEdit)}
+  >
+    <MenuIcon />
+  </button>
+{/if}

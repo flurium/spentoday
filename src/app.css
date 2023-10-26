@@ -35,4 +35,11 @@
       url("/fonts/owen-pro-semi-bold.woff2") format("woff2");
     font-weight: 600;
   }
+  @font-face {
+    font-family: "Owen Pro";
+    src: url("/fonts/owen-pro-medium.otf"),
+      url("/fonts/owen-pro-medium.woff") format("woff"),
+      url("/fonts/owen-pro-medium.woff2") format("woff2");
+    font-weight: 500;
+  }
 }
