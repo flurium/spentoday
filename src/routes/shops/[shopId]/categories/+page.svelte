@@ -3,6 +3,7 @@
   import { call, callJson } from "$lib/fetch"
   import autoAnimate from "@formkit/auto-animate"
   import type { Category } from "./+page"
+  import ClickableCategories from "$features/dashboard/categories/ClickableCategories.svelte"
 
   export let data: PageData
 
@@ -314,68 +315,42 @@
         >
           Підтвердити
         </button>
-        <div class="my-4">
-          <div class="flex border border-secondary-200 rounded-xl ps-5">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="w-6 h-6 m-auto text-gray-500"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-              />
-            </svg>
-            <input
-              class="py-1 px-4 my-auto w-full"
-              on:keyup={searchCategory}
-              bind:value={search}
-              placeholder="Пошук..."
+
+        <div
+          class="flex items-center border border-secondary-200
+          rounded-md overflow-hidden ps-3 mt-4 mb-2"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-6 h-6 text-gray-500"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
             />
-          </div>
+          </svg>
+          <input
+            class="py-2 px-3 flex-1"
+            on:keyup={searchCategory}
+            bind:value={search}
+            placeholder="Пошук..."
+          />
+        </div>
 
-          <div class="grid grid-flow-row" use:autoAnimate>
-            <button
-              class="p-2 text-sm text-secondary-800 border-b border-secondary-200 font-medium text-left bg-white hover:bg-gray-100"
-              on:click={() => {
-                editCategoryParentId = null
-                parentName = "Top level category"
-              }}
-            >
-              Top level category
-            </button>
-
-            {#if search == ""}
-              {#each editCategories as parentCategory}
-                <button
-                  style="margin-left: {0.75 * parentCategory.level - 1}rem"
-                  class="p-2 text-sm text-secondary-800 border-b border-secondary-200 font-medium text-left bg-white hover:bg-gray-100"
-                  on:click={() => {
-                    editCategoryParentId = parentCategory.id
-                    parentName = parentCategory.name
-                  }}
-                >
-                  {parentCategory.name}
-                </button>
-              {/each}
-            {:else}
-              {#each editCategories as parentCategory}
-                <button
-                  class="p-2 text-sm border-b border-secondary-200 font-medium text-left bg-white hover:bg-gray-100"
-                  on:click={() => {
-                    editCategoryParentId = parentCategory.id
-                    parentName = parentCategory.name
-                  }}
-                >
-                  {parentCategory.name}
-                </button>
-              {/each}
-            {/if}
-          </div>
+        <div class="flex flex-col" use:autoAnimate>
+          <ClickableCategories
+            isTree={search == ""}
+            categories={editCategories}
+            onClick={(x) => {
+              editCategoryParentId = x.id
+              parentName = x.name
+            }}
+          />
         </div>
       </dialog>
     {/each}

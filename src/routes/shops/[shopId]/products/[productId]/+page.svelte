@@ -18,6 +18,7 @@
     type UpdateProductInput
   } from "$features/dashboard/products/api"
   import { onMount } from "svelte"
+  import ClickableCategories from "$features/dashboard/categories/ClickableCategories.svelte"
 
   export let data: PageData
 
@@ -384,28 +385,11 @@
           </p>
         {/if}
 
-        {#if search == ""}
-          {#each categories as category}
-            <button
-              style="margin-left: {category.level - 1}rem"
-              class="p-3 border-b border-secondary-100
-              text-left hover:bg-secondary-100"
-              on:click={() => setCategory(category.id)}
-            >
-              {category.name}
-            </button>
-          {/each}
-        {:else}
-          {#each categories as category}
-            <button
-              class="p-3 border-b border-secondary-100
-              text-left hover:bg-secondary-100"
-              on:click={() => setCategory(category.id)}
-            >
-              {category.name}
-            </button>
-          {/each}
-        {/if}
+        <ClickableCategories
+          isTree={search == ""}
+          onClick={(x) => setCategory(x.id)}
+          {categories}
+        />
       </div>
     </dialog>
 
