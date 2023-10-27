@@ -13,27 +13,39 @@
 <section class="bg-brand-pink flex py-8 overflow-hidden {className}">
   <div class="moving flex">
     <Fondy class="mx-6" />
-    <Star class="h-11 w-11 mx-4" />
+    <Star class="h-11 w-11 mx-5" />
     <Liqpay class="mx-6" />
-    <Star class="h-11 w-11 mx-4" />
+    <Star class="h-11 w-11 mx-5" />
     <Monobank class="mx-6" />
-    <Star class="h-11 w-11 mx-4" />
+    <Star class="h-11 w-11 mx-5" />
     <Paypal class="mx-6" />
-    <Star class="h-11 w-11 mx-4" />
+    <Star class="h-11 w-11 mx-5" />
     <Hyperswitch class="mx-6" />
-    <Star class="h-11 w-11 mx-4" />
+    <Star class="h-11 w-11 mx-5" />
   </div>
   <div class="moving flex">
     <Fondy class="mx-6" />
-    <Star class="h-11 w-11 mx-4" />
+    <Star class="h-11 w-11 mx-5" />
     <Liqpay class="mx-6" />
-    <Star class="h-11 w-11 mx-4" />
+    <Star class="h-11 w-11 mx-5" />
     <Monobank class="mx-6" />
-    <Star class="h-11 w-11 mx-4" />
+    <Star class="h-11 w-11 mx-5" />
     <Paypal class="mx-6" />
-    <Star class="h-11 w-11 mx-4" />
+    <Star class="h-11 w-11 mx-5" />
     <Hyperswitch class="mx-6" />
-    <Star class="h-11 w-11 mx-4" />
+    <Star class="h-11 w-11 mx-5" />
+  </div>
+  <div class="moving flex">
+    <Fondy class="mx-6" />
+    <Star class="h-11 w-11 mx-5" />
+    <Liqpay class="mx-6" />
+    <Star class="h-11 w-11 mx-5" />
+    <Monobank class="mx-6" />
+    <Star class="h-11 w-11 mx-5" />
+    <Paypal class="mx-6" />
+    <Star class="h-11 w-11 mx-5" />
+    <Hyperswitch class="mx-6" />
+    <Star class="h-11 w-11 mx-5" />
   </div>
 </section>
 
