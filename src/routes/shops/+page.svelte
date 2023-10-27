@@ -44,7 +44,7 @@
   <title>Ваші магазини | Spentoday</title>
 </svelte:head>
 
-<DashboardLayout accountImage="">
+<DashboardLayout accountImage={data.account.img}>
   <div class="px-6 mt-20 mx-auto max-w-screen-xl w-full">
     <div class="flex justify-between items-center">
       <h1 class="text-text-header text-4xl font-extrabold">Мої сайти</h1>

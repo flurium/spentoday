@@ -18,7 +18,7 @@
   ]
 </script>
 
-<DashboardLayout accountImage="">
+<DashboardLayout accountImage={data.accountImage}>
   <div class="grid grid-cols-[minmax(auto,_16rem)_1fr] flex-1">
     <nav class="flex flex-col gap-2 p-8 bg-secondary-50">
       {#each sidebar as section}
