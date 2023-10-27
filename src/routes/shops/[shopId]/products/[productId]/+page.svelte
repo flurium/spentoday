@@ -179,10 +179,6 @@
     if (!response) return
     currentCategory = categories.filter((x) => x.id == categoryId)[0]
   }
-
-  onMount(() => {
-    modal.showModal()
-  })
 </script>
 
 <svelte:head>
