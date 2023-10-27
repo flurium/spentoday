@@ -4,19 +4,20 @@
   >
     <div
       class="rounded-full aspect-square m-6 p-14 bg-brand-pink
-        grid place-content-center text-center"
+        grid place-content-center text-center text-brand-dark"
     >
       Ми пропонуємо безпеку Вашим клієнтам та захист даних
     </div>
     <div
-      class="rounded-full aspect-square mx-6 md:mx-0 p-14 border border-white border-dashed
-        grid place-content-center text-center"
+      class="rounded-full aspect-square mx-6 md:mx-0 p-14 border-white
+      border-dashed border-[3px] grid place-content-center text-center
+      hover:bg-white hover:text-brand-violet transition-colors duration-500"
     >
       Запускайте свій магазин легко та швидко: наші інструменти допоможуть Вам
     </div>
     <div
       class="rounded-full aspect-square m-6 p-14 bg-brand-green
-        grid place-content-center text-center"
+        grid place-content-center text-center text-brand-dark"
     >
       Ми надаємо не тільки платформу, але й підтримку для досягнення цілей
     </div>

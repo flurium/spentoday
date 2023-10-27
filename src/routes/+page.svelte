@@ -148,9 +148,9 @@
         <h2
           class="text-3xl md:text-6xl lg:text-8xl font-bold row-start-1 col-span-3"
         >
-          <span class="px-2 md:px-4 bg-brand-pink text-white rounded-xl"
-            >ЗРОБІТЬ КРОК</span
-          >
+          <span class="px-2 md:px-4 bg-brand-pink text-white rounded-xl">
+            ЗРОБІТЬ КРОК
+          </span>
         </h2>
         <h2
           class="text-3xl md:text-6xl lg:text-8xl font-bold row-start-2 col-span-3"
