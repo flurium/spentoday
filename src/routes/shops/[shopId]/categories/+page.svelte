@@ -1,9 +1,8 @@
 <script lang="ts">
   import type { PageData } from "./$types"
   import { call, callJson } from "$lib/fetch"
-  import type { CategoryOutput } from "$features/dashboard/categories"
   import autoAnimate from "@formkit/auto-animate"
-
+  import type { Category } from "./+page"
   export let data: PageData
   let categories = data.categories
   let editCategories = data.categories
@@ -41,7 +40,7 @@
     if (id == null) return (message = "Щось не так")
 
     if (parentInput == null) {
-      let newCategory: CategoryOutput = {
+      let newCategory: Category = {
         id: id,
         level: 1,
         parentId: "",
@@ -55,7 +54,7 @@
 
     const parentCategory = categories[index]
 
-    let newCategory: CategoryOutput = {
+    let newCategory: Category = {
       id: id,
       level: parentCategory.level + 1,
       parentId: parentCategory.id,
@@ -97,7 +96,7 @@
     if (!response) {
       message = "Не можемо змінити."
     } else if (response.ok) {
-      const json = await callJson<CategoryOutput[]>(response)
+      const json = await callJson<Category[]>(response)
       if (!json) {
         message = "Щось не так"
         return
@@ -125,7 +124,7 @@
     if (!response) {
       message = "Не можемо видалити."
     } else if (response.ok) {
-      const json = await callJson<CategoryOutput[]>(response)
+      const json = await callJson<Category[]>(response)
       if (!json) {
         message = "Щось не так"
         return
@@ -153,7 +152,7 @@
     )
   }
   function selectCategories(id: string) {
-    let temp: CategoryOutput[] = []
+    let temp: Category[] = []
     let isChildren = false
     let lvl = 0
 
@@ -173,7 +172,7 @@
 
     editCategories = temp
   }
-  async function toEdit(category: CategoryOutput) {
+  async function toEdit(category: Category) {
     let parent = categories.find((x) => x.id == category.parentId)
     if (parent != undefined) {
       parentName = parent.name

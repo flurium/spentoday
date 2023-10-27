@@ -6,7 +6,7 @@ export const load = (async ({ fetch, params }) => {
   const output = await oneProduct(fetch, "load", params.productId)
   if (!output) throw errors.serverError()
 
-  const category = output.categories.filter((x) => x.id == output.categoryId)[0]
+  const category = output.categories.find((x) => x.id == output.categoryId)
 
   return {
     shopId: params.shopId,

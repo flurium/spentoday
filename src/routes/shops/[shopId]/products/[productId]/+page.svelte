@@ -319,6 +319,12 @@
             </svg>
           </button>
         </div>
+        {#if currentCategory != undefined}
+          <div class="py-2 px-4 text-sm text-white bg-brand-violet border-none rounded-3xl w-fit">
+           {currentCategory.name}
+          </div>
+        {/if}
+        
       </div>
     </DashboardSection>
 
@@ -501,7 +507,7 @@
         <label class="text-1xl text-text-input">Залишилося</label>
         <div class="flex items-center justify-end col-span-2">
           <input
-            class="w-1/2 px-6 py-3 rounded-md border border-secondary-200"
+            class="w-full px-6 py-3 rounded-md border border-secondary-200"
             on:input={debounceChange}
             bind:value={amount}
             on:change={debounceChange}
