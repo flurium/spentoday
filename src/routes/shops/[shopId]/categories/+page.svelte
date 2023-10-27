@@ -1,11 +1,12 @@
 <script lang="ts">
   import type { PageData } from "./$types"
   import { call, callJson } from "$lib/fetch"
-  import type { CategoryOutput } from "$lib/api"
+  import type { CategoryOutput } from "$features/dashboard/categories"
   import autoAnimate from "@formkit/auto-animate"
+
   export let data: PageData
-  $: categories = data.categories
-  $: editCategories = data.categories
+  let categories = data.categories
+  let editCategories = data.categories
   let modal: HTMLDialogElement
   let editCategoryParentId: string | null = null
   let editCategoryName = ""
