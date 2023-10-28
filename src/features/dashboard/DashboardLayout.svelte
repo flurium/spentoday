@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Logo from "$lib/assets/Logo.svelte"
   import Star from "$lib/assets/Star.svelte"
 
   export let accountImage: string | null
@@ -6,7 +7,7 @@
 
 <div class="flex flex-col min-h-screen text-text-main">
   <header class="bg-secondary-50 flex justify-between items-center py-4 px-6">
-    <a href="/shops">Spentoday</a>
+    <a href="/shops"> <Logo class="h-8 w-8" /></a>
 
     <a href="/account" class="h-10 w-10 rounded-full overflow-hidden">
       {#if accountImage}
