@@ -8,8 +8,8 @@ Current point of percentages that members own:
 | Mariia  | Developer | 18%     |
 | Dima    | Developer | 19%     |
 | Vitalii | Developer | 18%     |
-| Nastia  | Designer  | 7%      |
-| Vlad    | Designer  | 3%      |
+| Nastia  | Designer  | 6%      |
+| Vlad    | Designer  | 4%      |
 
 Start point of percentages that members own:
 
