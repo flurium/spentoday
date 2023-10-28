@@ -8,6 +8,7 @@
   import Footer from "$features/landing/footer/Footer.svelte"
   import StartFreeStar from "$lib/assets/StartFreeStar.svelte"
   import Partners from "$features/landing/Partners.svelte"
+    import AboutUs from "$features/landing/AboutUs.svelte"
 
   let isMenuOpen = false
 
@@ -33,6 +34,7 @@
     </nav>
 
     <nav class="hidden md:flex flex-1 justify-center gap-5">
+      <a class="text-xs md:text-base" href="/#aboutUs">Про нас</a>
       <a class="text-xs md:text-base" href="/#benefits">Переваги</a>
       <a class="text-xs md:text-base" href="/#price">Ціна</a>
       <a class="text-xs md:text-base" href="/#faq">FAQ</a>
@@ -96,6 +98,9 @@
             </button>
           </div>
           <div class="text-5xl bold absolute bottom-8">
+            <a class="block pb-6" on:click={toggleMenu} href="/#aboutUs">
+              Про нас
+            </a>
             <a class="block pb-6" on:click={toggleMenu} href="/login">
               Почати
             </a>
@@ -132,6 +137,8 @@
   />
 
   <Benefits />
+
+  <AboutUs />
 
   <Technologies />
 
