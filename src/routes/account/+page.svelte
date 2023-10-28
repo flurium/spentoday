@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { goto } from "$app/navigation"
   import AccountDeleteDialog from "$features/account/AccountDeleteDialog.svelte"
   import DashboardSection from "$features/dashboard/DashboardSection.svelte"
   import { toast } from "$features/toast"
@@ -101,6 +102,14 @@
     }
 
     message = "Щось пішло не так"
+  }
+
+  async function logout() {
+    const res = await call(fetch, "client", {
+      route: "/v1/auth/logout",
+      method: "POST"
+    })
+    goto(routes.login)
   }
 </script>
 
@@ -257,12 +266,21 @@
 
     <div class="border-b border-secondary-100 w-full my-7" />
 
-    <button
-      on:click={() => (openDeleteDialog = true)}
-      class="border-b border-brand-violet font-bold text-brand-violet"
-    >
-      Видалити аккаунт
-    </button>
+    <div class="flex justify-between">
+      <button
+        on:click={() => (openDeleteDialog = true)}
+        class="border-b border-brand-pink font-bold text-brand-pink"
+      >
+        Видалити аккаунт
+      </button>
+
+      <button
+        on:click={logout}
+        class="border-b border-brand-violet font-bold text-brand-violet"
+      >
+        Вийти з аккаунту
+      </button>
+    </div>
   </DashboardSection>
 
   <AccountDeleteDialog email={data.email} bind:open={openDeleteDialog} />
