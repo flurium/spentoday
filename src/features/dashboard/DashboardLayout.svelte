@@ -41,6 +41,7 @@
       {#each bar as section}
         <a
           href={section.link}
+          on:click={() => (isMenuOpen = !isMenuOpen)}
           class="font-medium py-2 px-4 hover:bg-white rounded-lg"
         >
           {section.name}
