@@ -109,7 +109,7 @@
       </button>
     </DashboardSection>
 
-    <DashboardSection>
+    <DashboardSection class="mt-8">
       <h3 class="text-text-header text-xl font-bold mb-6">Кольорова гама</h3>
 
       <h4 class="text-text-header text-lg mt-8 mb-5">Акцентний колір</h4>
