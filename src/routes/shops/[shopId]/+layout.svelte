@@ -18,9 +18,12 @@
   ]
 </script>
 
-<DashboardLayout accountImage={data.accountImage}>
+<DashboardLayout accountImage={data.accountImage} bar={sidebar}>
   <div class="grid grid-cols-[minmax(auto,_16rem)_1fr] flex-1">
-    <nav class="flex flex-col gap-2 p-8 bg-secondary-50">
+    <nav
+      class="flex flex-col gap-2 p-8 bg-secondary-50 z-[-1] md:z-10 md:static absolute w-full md:w-auto md:opacity-100 opacity-0
+    top-[-400px] transition-all ease-in duration-500"
+    >
       {#each sidebar as section}
         <a
           href={section.link}
