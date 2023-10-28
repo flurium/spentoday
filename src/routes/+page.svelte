@@ -8,6 +8,7 @@
   import Footer from "$features/landing/footer/Footer.svelte"
   import StartFreeStar from "$lib/assets/StartFreeStar.svelte"
   import Partners from "$features/landing/Partners.svelte"
+  import Logo from "$lib/assets/Logo.svelte"
 
   let isMenuOpen = false
 
@@ -27,9 +28,12 @@
 <header class="px-5 py-8 bg-secondary-100">
   <div class="flex justify-between items-center max-w-screen-xl m-auto">
     <nav class="basis-1/4">
-      <a class="text-brand-violet font-bold text-lg md:text-2xl" href="/"
-        >Spentoday</a
-      >
+      <a class="flex gap-4 items-center" href="/">
+        <Logo class="h-8 w-8" />
+        <span class="font-medium text-2xl text-brand-violet hidden md:inline">
+          Spentoday
+        </span>
+      </a>
     </nav>
 
     <nav class="hidden md:flex flex-1 justify-center gap-5">
@@ -135,9 +139,9 @@
 
   <Technologies />
 
-  <Propositions />
-
   <Strip />
+
+  <Propositions />
 
   <section class="bg-brand-violet py-32">
     <div class="px-4 md:px-6">
@@ -148,9 +152,9 @@
         <h2
           class="text-3xl md:text-6xl lg:text-8xl font-bold row-start-1 col-span-3"
         >
-          <span class="px-2 md:px-4 bg-brand-pink text-white rounded-xl"
-            >ЗРОБІТЬ КРОК</span
-          >
+          <span class="px-2 md:px-4 bg-brand-pink text-white rounded-xl">
+            ЗРОБІТЬ КРОК
+          </span>
         </h2>
         <h2
           class="text-3xl md:text-6xl lg:text-8xl font-bold row-start-2 col-span-3"

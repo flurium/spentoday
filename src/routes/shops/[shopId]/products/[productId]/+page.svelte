@@ -8,7 +8,7 @@
   import { convertToWebP } from "$features/dashboard/settings/webp"
   import { call } from "$lib/fetch"
   import autoAnimate from "@formkit/auto-animate"
-  import PropertyEdit from "$features/dashboard/products/PropertyEdit.svelte"
+  import PropertyEdit from "$features/dashboard/products/PropertyEditList.svelte"
   import {
     deleteProductImage,
     publishProduct,
@@ -17,6 +17,8 @@
     uploadProductImage,
     type UpdateProductInput
   } from "$features/dashboard/products/api"
+  import { onMount } from "svelte"
+  import ClickableCategories from "$features/dashboard/categories/ClickableCategories.svelte"
 
   export let data: PageData
 
@@ -194,7 +196,7 @@
 </div>
 
 <span>{savingStatus}</span>
-<div class="grid grid-cols-3 gap-4 my-4">
+<div class="grid grid-cols-1 xl:grid-cols-3 gap-4 my-4">
   <div class="col-span-2">
     <DashboardSection class="mb-4">
       <label class="text-2xl font-semibold text-text-header" for="nameInput">
@@ -319,12 +321,19 @@
             </svg>
           </button>
         </div>
+        {#if currentCategory != undefined}
+          <div
+            class="py-2 px-4 text-sm text-white bg-brand-violet border-none rounded-3xl w-fit"
+          >
+            {currentCategory.name}
+          </div>
+        {/if}
       </div>
     </DashboardSection>
 
     <dialog bind:this={modal} class="p-10 w-1/2 bg-white rounded-md">
       <div class="flex justify-between">
-        <div class="text-2xl font-semibold text-text-header">Категорії</div>
+        <h3 class="text-2xl font-semibold text-text-header">Категорії</h3>
         <button on:click={() => modal.close()} type="submit">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -343,59 +352,44 @@
         </button>
       </div>
 
-      <div class="my-4">
-        <div class="flex border rounded-xl ps-5">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="w-6 h-6 m-auto text-gray-500"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-            />
-          </svg>
-          <input
-            class="py-1 px-4 my-auto w-full"
-            on:keyup={searchCategory}
-            bind:value={search}
-            placeholder="Пошук..."
+      <div
+        class="flex items-center border border-secondary-200
+        rounded-md overflow-hidden ps-3 mt-4 mb-2"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="w-6 h-6 text-gray-500"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
           />
-        </div>
+        </svg>
+        <input
+          class="py-2 px-3 flex-1"
+          on:keyup={searchCategory}
+          bind:value={search}
+          placeholder="Пошук..."
+        />
+      </div>
 
-        <div class="grid grid-flow-row" use:autoAnimate>
-          {#if currentCategory != undefined}
-            <div
-              class="text-secondary font-medium py-2 border-b border-gray-400"
-            >
-              Поточна категорія: {currentCategory.name}
-            </div>
-          {/if}
-          {#if search == ""}
-            {#each categories as category}
-              <button
-                style="margin-left: {0.75 * category.level - 1}rem"
-                class="p-2 text-sm text-secondary-800 border-b border-gray-400 font-medium text-left bg-white hover:bg-gray-100"
-                on:click={() => setCategory(category.id)}
-              >
-                {category.name}
-              </button>
-            {/each}
-          {:else}
-            {#each categories as category}
-              <button
-                class="p-2 text-sm border-b border-gray-400 font-medium text-left bg-white hover:bg-gray-100"
-                on:click={() => setCategory(category.id)}
-              >
-                {category.name}
-              </button>
-            {/each}
-          {/if}
-        </div>
+      <div class="flex flex-col" use:autoAnimate>
+        {#if currentCategory != undefined}
+          <p class="font-medium py-3 border-b border-secondary-100">
+            Поточна категорія: {currentCategory.name}
+          </p>
+        {/if}
+
+        <ClickableCategories
+          isTree={search == ""}
+          onClick={(x) => setCategory(x.id)}
+          {categories}
+        />
       </div>
     </dialog>
 
@@ -501,7 +495,7 @@
         <label class="text-1xl text-text-input">Залишилося</label>
         <div class="flex items-center justify-end col-span-2">
           <input
-            class="w-1/2 px-6 py-3 rounded-md border border-secondary-200"
+            class="w-full px-6 py-3 rounded-md border border-secondary-200"
             on:input={debounceChange}
             bind:value={amount}
             on:change={debounceChange}

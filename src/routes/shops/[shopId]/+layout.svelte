@@ -2,6 +2,7 @@
   import type { LayoutData } from "./$types"
   import { page } from "$app/stores"
   import { routes } from "$lib"
+  import DashboardLayout from "$features/dashboard/DashboardLayout.svelte"
 
   export let data: LayoutData
 
@@ -17,20 +18,22 @@
   ]
 </script>
 
-<div class="grid grid-cols-[minmax(auto,_16rem)_1fr] flex-1">
-  <nav class="flex flex-col gap-2 p-8 bg-secondary-50">
-    {#each sidebar as section}
-      <a
-        href={section.link}
-        class="font-bold text-text-main py-2 px-4 hover:bg-white rounded-lg
+<DashboardLayout accountImage={data.accountImage}>
+  <div class="grid grid-cols-[minmax(auto,_16rem)_1fr] flex-1">
+    <nav class="flex flex-col gap-2 p-8 bg-secondary-50">
+      {#each sidebar as section}
+        <a
+          href={section.link}
+          class="font-medium py-2 px-4 hover:bg-white rounded-lg
         {$page.url.pathname == section.link ? 'bg-white' : ''}"
-      >
-        {section.name}
-      </a>
-    {/each}
-  </nav>
+        >
+          {section.name}
+        </a>
+      {/each}
+    </nav>
 
-  <div class="p-8">
-    <slot />
+    <div class="p-8">
+      <slot />
+    </div>
   </div>
-</div>
+</DashboardLayout>

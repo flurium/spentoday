@@ -1,3 +1,5 @@
+import type { CategoryOutput } from "$features/dashboard/categories"
+
 export type Property = {
   id: string
   key: string
@@ -32,10 +34,4 @@ type ProductOutput = {
   seoSlug: string
   description: string
   images: ImageOutput[]
-}
-
-export type CategoryOutput = {
-  id: string
-  name: string
-  level: number
 }

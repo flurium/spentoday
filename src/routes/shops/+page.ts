@@ -16,8 +16,11 @@ export const load: PageLoad = async ({ fetch }) => {
   })
   if (!response || !response.ok) throw serverError()
 
-  const shops = await callJson<DashboardShop[]>(response)
-  if (shops == null) throw jsonError()
+  const data = await callJson<{
+    shops: DashboardShop[]
+    accountImage: string | null
+  }>(response)
+  if (data == null) throw jsonError()
 
-  return { shops }
+  return { shops: data.shops, account: { img: data.accountImage } }
 }

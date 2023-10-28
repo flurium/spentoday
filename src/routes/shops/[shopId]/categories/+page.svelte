@@ -1,11 +1,14 @@
 <script lang="ts">
   import type { PageData } from "./$types"
   import { call, callJson } from "$lib/fetch"
-  import type { CategoryOutput } from "$lib/api"
   import autoAnimate from "@formkit/auto-animate"
+  import type { Category } from "./+page"
+  import ClickableCategories from "$features/dashboard/categories/ClickableCategories.svelte"
+
   export let data: PageData
-  $: categories = data.categories
-  $: editCategories = data.categories
+
+  let categories = data.categories
+  let editCategories = data.categories
   let modal: HTMLDialogElement
   let editCategoryParentId: string | null = null
   let editCategoryName = ""
@@ -22,7 +25,6 @@
       message = "Ім'я категорії не можу бути пустим."
       return
     }
-
     const response = await call(fetch, "client", {
       route: "/v1/site/categories",
       method: "POST",
@@ -40,7 +42,7 @@
     if (id == null) return (message = "Щось не так")
 
     if (parentInput == null) {
-      let newCategory: CategoryOutput = {
+      let newCategory: Category = {
         id: id,
         level: 1,
         parentId: "",
@@ -54,7 +56,7 @@
 
     const parentCategory = categories[index]
 
-    let newCategory: CategoryOutput = {
+    let newCategory: Category = {
       id: id,
       level: parentCategory.level + 1,
       parentId: parentCategory.id,
@@ -96,7 +98,7 @@
     if (!response) {
       message = "Не можемо змінити."
     } else if (response.ok) {
-      const json = await callJson<CategoryOutput[]>(response)
+      const json = await callJson<Category[]>(response)
       if (!json) {
         message = "Щось не так"
         return
@@ -124,7 +126,7 @@
     if (!response) {
       message = "Не можемо видалити."
     } else if (response.ok) {
-      const json = await callJson<CategoryOutput[]>(response)
+      const json = await callJson<Category[]>(response)
       if (!json) {
         message = "Щось не так"
         return
@@ -152,7 +154,7 @@
     )
   }
   function selectCategories(id: string) {
-    let temp: CategoryOutput[] = []
+    let temp: Category[] = []
     let isChildren = false
     let lvl = 0
 
@@ -172,7 +174,7 @@
 
     editCategories = temp
   }
-  async function toEdit(category: CategoryOutput) {
+  async function toEdit(category: Category) {
     let parent = categories.find((x) => x.id == category.parentId)
     if (parent != undefined) {
       parentName = parent.name
@@ -190,28 +192,25 @@
 </script>
 
 <main class="px-6 mt-20">
-  <form on:submit|preventDefault={add} class="w-full 2xl:flex">
+  <form on:submit|preventDefault={add} class="flex flex-col md:flex-row gap-4">
     <input
-      class="w-full border border-secondary-200 px-5 py-2 rounded-md lg:flex-1 lg:w-1/2"
+      class="w-full border border-secondary-200 px-6 py-2 rounded-md flex-1"
       bind:value={categoryInput}
-      placeholder="Назва категорії: Toys"
+      placeholder="Назва категорії: Іграшки"
     />
 
     <select
       id="parent"
       bind:value={parentInput}
-      class="w-full border border-secondary-200 px-5 py-2 rounded-md lg:flex-2 lg:w-1/4"
+      class="border border-secondary-200 px-6 py-2 rounded-md"
     >
-      <option selected value={null}>Top level category</option>
+      <option selected value={null}>Без категорії</option>
       {#each categories as category (category.id)}
         <option value={category.id}>{category.name}</option>
       {/each}
     </select>
 
-    <button
-      class="w-full px-[1.85rem] py-2 font-semibold bg-gray-900 text-white rounded-md lg:w-1/5"
-      type="submit"
-    >
+    <button class="px-6 py-2 bg-brand-dark text-white rounded-md" type="submit">
       Додати
     </button>
   </form>
@@ -220,11 +219,12 @@
     {#each categories as category}
       <li
         style="margin-left: {category.level - 1}rem"
-        class="p-2 text-sm flex justify-between text-secondary-800 border-b border-secondary-200 font-medium text-left bg-white"
+        class="px-2 py-3 items-center flex justify-between
+        border-b border-secondary-200"
       >
-        <h3 class="my-auto">{category.name}</h3>
+        <p>{category.name}</p>
 
-        <div class="me-5">
+        <div>
           <button
             id="dropdownButton{category.id}"
             on:click={() => {
@@ -233,7 +233,7 @@
               if (drop.style.display == "none") drop.style.display = "block"
               else drop.style.display = "none"
             }}
-            class="inline-block text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg text-sm p-1.5"
+            class="inline-block text-gray-500 hover:bg-gray-100 rounded-lg text-sm p-2"
             type="button"
           >
             <svg
@@ -315,68 +315,42 @@
         >
           Підтвердити
         </button>
-        <div class="my-4">
-          <div class="flex border border-secondary-200 rounded-xl ps-5">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="w-6 h-6 m-auto text-gray-500"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-              />
-            </svg>
-            <input
-              class="py-1 px-4 my-auto w-full"
-              on:keyup={searchCategory}
-              bind:value={search}
-              placeholder="Пошук..."
+
+        <div
+          class="flex items-center border border-secondary-200
+          rounded-md overflow-hidden ps-3 mt-4 mb-2"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-6 h-6 text-gray-500"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
             />
-          </div>
+          </svg>
+          <input
+            class="py-2 px-3 flex-1"
+            on:keyup={searchCategory}
+            bind:value={search}
+            placeholder="Пошук..."
+          />
+        </div>
 
-          <div class="grid grid-flow-row" use:autoAnimate>
-            <button
-              class="p-2 text-sm text-secondary-800 border-b border-secondary-200 font-medium text-left bg-white hover:bg-gray-100"
-              on:click={() => {
-                editCategoryParentId = null
-                parentName = "Top level category"
-              }}
-            >
-              Top level category
-            </button>
-
-            {#if search == ""}
-              {#each editCategories as parentCategory}
-                <button
-                  style="margin-left: {0.75 * parentCategory.level - 1}rem"
-                  class="p-2 text-sm text-secondary-800 border-b border-secondary-200 font-medium text-left bg-white hover:bg-gray-100"
-                  on:click={() => {
-                    editCategoryParentId = parentCategory.id
-                    parentName = parentCategory.name
-                  }}
-                >
-                  {parentCategory.name}
-                </button>
-              {/each}
-            {:else}
-              {#each editCategories as parentCategory}
-                <button
-                  class="p-2 text-sm border-b border-secondary-200 font-medium text-left bg-white hover:bg-gray-100"
-                  on:click={() => {
-                    editCategoryParentId = parentCategory.id
-                    parentName = parentCategory.name
-                  }}
-                >
-                  {parentCategory.name}
-                </button>
-              {/each}
-            {/if}
-          </div>
+        <div class="flex flex-col" use:autoAnimate>
+          <ClickableCategories
+            isTree={search == ""}
+            categories={editCategories}
+            onClick={(x) => {
+              editCategoryParentId = x.id
+              parentName = x.name
+            }}
+          />
         </div>
       </dialog>
     {/each}
