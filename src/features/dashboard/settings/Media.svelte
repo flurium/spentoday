@@ -122,7 +122,7 @@
   id="banner-file-upload"
   onUpload={uploadBanner}
 />
-<div class="grid grid-cols-2 gap-8 mt-8">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
   {#each banners as banner}
     <div>
       <img class="rounded-lg" src={banner.url} alt="{banner.url} image" />

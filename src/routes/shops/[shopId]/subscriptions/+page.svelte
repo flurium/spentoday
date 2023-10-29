@@ -80,36 +80,12 @@
 
     start = res.length
     subscriptions = res.map(toSubscription)
-
-    console.log("reset end", start, subscriptions)
   }
 
   function debounceSearch() {
     clearTimeout(timer)
     timer = setTimeout(async () => await loader.reset(resetFilter), 300)
   }
-
-  // async function load(): Promise<"stop" | "continue"> {
-  //   if (true) return "stop"
-  //   // if (loadReset) return "continue"
-
-  //   // const items = await querySubscriptions(fetch, "client", {
-  //   //   shopId: data.shopId,
-  //   //   search: searchInput,
-  //   //   start: start
-  //   // })
-  //   // console.log(items)
-  //   // if (items == null) return "continue"
-  //   // if (items.length == 0) {
-  //   //   loadReset = true
-  //   //   return "continue"
-  //   // }
-  //   // // console.log(items)
-  //   // start += items.length
-  //   // subscriptions = [...subscriptions, ...items.map(toSubscription)]
-  //   // loadReset = false
-  //   // return "continue"
-  // }
 </script>
 
 <svelte:head>
@@ -118,7 +94,10 @@
 
 <h1 class="font-bold text-3xl text-text-header mb-8">Ваші підписники</h1>
 
-<form on:submit|preventDefault={addSubscriber} class="flex gap-4">
+<form
+  on:submit|preventDefault={addSubscriber}
+  class="flex flex-col md:flex-row gap-4"
+>
   <input
     bind:value={emailInput}
     type="email"
@@ -139,25 +118,27 @@
     class="rounded-md px-5 py-3 border border-secondary-100 w-full"
   />
 
-  <div class="grid grid-cols-2 gap-x-8 px-5 py-3 text-text-input mt-4">
+  <div
+    class="grid grid-cols-1 md:grid-cols-2 gap-x-8 px-3
+    md:px-5 py-3 text-text-input mt-4"
+  >
     <span>Пошта</span>
     <span>Коли підписалися</span>
   </div>
 
   <div use:autoAnimate>
     {#if subscriptions.length == 0}
-      <p class="p-5 border-t border-secondary-100">Немає підписок</p>
+      <p class="p-3 md:p-5 border-t border-secondary-100">Немає підписок</p>
     {:else}
       {#each subscriptions as subscription}
         <div
-          class="grid grid-cols-2 gap-x-8 px-5 border-t border-secondary-100"
+          class="grid grid-cols-1 md:grid-cols-2 gap-x-8 px-3 md:px-5
+          border-t border-secondary-100"
         >
-          <!-- <div
-          class="flex justify-between items-center py-3
-          {i != subscriptions.length - 1 ? 'border-b border-b-secondary-100' : ''}"
-        > -->
-          <span class="py-5">{subscription.email}</span>
-          <span class="py-5">{ukrDateString(subscription.date)}</span>
+          <span class="pt-3 md:py-5">{subscription.email}</span>
+          <span class="pb-3 pt-2 md:py-5"
+            >{ukrDateString(subscription.date)}</span
+          >
           <!-- <button
             class=" px-3 py-1 rounded-full bg-red-200"
             on:click={() => unsubscribe(subscription.id)}
@@ -169,7 +150,6 @@
       {/each}
     {/if}
   </div>
-  <!-- <OnScroll action={load} /> -->
 
   <div use:scrollLoader={loader} />
 </DashboardSection>

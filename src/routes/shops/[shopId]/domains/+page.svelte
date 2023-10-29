@@ -116,7 +116,10 @@
 {/if}
 
 <DashboardSection>
-  <form on:submit|preventDefault={addDomain} class="flex gap-5 mb-10">
+  <form
+    on:submit|preventDefault={addDomain}
+    class="flex flex-col md:flex-row gap-5 mb-10"
+  >
     <input
       class="flex-1 border border-secondary-200 px-5 py-2 rounded-md"
       bind:value={domainInput}

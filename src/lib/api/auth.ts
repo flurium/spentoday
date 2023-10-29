@@ -69,7 +69,7 @@ export async function register(
 
   if (!response) return { status: "fail" }
   if (response.ok) return { status: "success" }
-  console.log(response.status)
+
   if (response.status == 500) {
     const json = await callJson<string[]>(response)
     if (!json) return { status: "fail" }
@@ -120,7 +120,6 @@ export async function reset(
   })
   if (!response) return { status: "fail" }
   if (response.ok) return { status: "success" }
-  console.log(response.status)
   if (response.status == 500) {
     const json = await callJson<string[]>(response)
     if (!json) return { status: "fail" }

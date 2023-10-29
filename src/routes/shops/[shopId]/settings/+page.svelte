@@ -85,7 +85,7 @@
 
 <h1 class="font-bold text-3xl text-text-header mb-8">Наповнення магазинy</h1>
 
-<div class="grid md:grid-cols-[3fr_1fr] gap-8">
+<div class="grid grid-cols-1 md:grid-cols-[3fr_1fr] gap-8">
   <div>
     <DashboardSection>
       <h3 class="text-text-header text-xl font-bold mb-6">Профіль</h3>
@@ -210,14 +210,15 @@
       </form>
 
       <div
-        class="grid grid-cols-[auto_1fr_auto] gap-x-5 gap-y-4 mt-8 items-center"
+        class="grid grid-cols-1 md:grid-cols-[auto_1fr_auto]
+        gap-x-5 gap-y-4 mt-8 items-center"
       >
         <p class="text-text-input">Назва</p>
         <p class="text-text-input">Посилання</p>
         <p />
 
         {#each links as link}
-          <div class="col-span-3 border-t border-secondary-100" />
+          <div class="md:col-span-3 border-t border-secondary-100" />
           <span>{link.name}</span>
           <a href={link.link}>{link.link}</a>
           <button
@@ -240,7 +241,7 @@
       />
     </DashboardSection>
   </div>
-  <div>
+  <div class="hidden md:block">
     <DashboardSection>
       <h3 class="text-text-header text-xl font-bold">Наповнення сайту</h3>
 

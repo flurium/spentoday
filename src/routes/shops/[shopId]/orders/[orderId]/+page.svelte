@@ -16,90 +16,59 @@
     })
     if (!response) return toast.serverError()
   }
+
+  const statuses = ["Виконано", "Готується", "Скасовано"]
 </script>
 
 <svelte:head>
   <title>Замовлення: {data.order.id} | Spentoday</title>
 </svelte:head>
 
-<DashboardSection>
-  <span class="xl text-lg font-bold">
-    Замовлення <span class="text-sm">{data.order.id}</span>
-  </span>
+<h1 class="text-3xl font-semibold text-text-header mb-8">
+  Редагувати замовлення
+</h1>
 
-  <div class="flex flex-row h-full mt-4">
-    <div class="basis-1/2 h-full grid grid-row gap-5">
-      <span class="text-lg font-bold">Основні</span>
-      <div>
-        <span class="text-sm font-bold max-w-lg">Дата Створення:</span><br />
-        {ukrDateString(new Date(data.order.date))}
-      </div>
-      <div class="row-span-3">
-        <div>
-          <span class="text-sm font-bold max-w-lg">Статус:</span><br />
-          <select
-            bind:value={selected}
-            on:change={setStatus}
-            class="w-5/6 bg-gray-50 border border-gray-300 text-text-header text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          >
-            {#if data.order.status == "Виконано"}
-              <option selected value="Виконано">Виконано</option>
-              <option value="Готується">Готується</option>
-              <option value="Скасовано">Скасовано</option>
-            {:else if data.order.status == "Готується"}
-              <option selected value="Готується">Готується</option>
-              <option value="Виконано">Виконано</option>
-              <option value="Скасовано">Скасовано</option>
-            {:else}
-              <option selected value="Скасовано">Скасовано</option>
-              <option value="Виконано">Виконано</option>
-              <option value="Готується">Готується</option>
-            {/if}
-          </select>
-        </div>
-      </div>
-      <div>
-        <span class="text-sm font-bold max-w-lg">Замовник:</span><br />
-        {data.order.fullName}
-      </div>
+<DashboardSection>
+  <h1 class="text-lg font-medium text-text-header mb-8">
+    Замовлення #{data.order.id}
+  </h1>
+  <div class="grid gap-4 md:gap-8 grid-cols-1 md:grid-cols-2">
+    <div>
+      <p class="text-text-input mb-2">Дата Створення:</p>
+      <p>{ukrDateString(new Date(data.order.date))}</p>
+
+      <p class="text-text-input mt-5 mb-2">Статус:</p>
+      <select
+        bind:value={selected}
+        on:change={setStatus}
+        class="border px-5 py-3 rounded-md border-secondary-200 w-full bg-inherit"
+      >
+        {#each statuses as status}
+          <option selected={status == data.order.status} value="Виконано">
+            {status}
+          </option>
+        {/each}
+      </select>
+
+      <p class="text-text-input mt-5 mb-2">Замовник:</p>
+      {data.order.fullName}
     </div>
 
-    <div class="basis-1/2 grid grid-cols-2 gap-4">
-      <span class="text-lg font-bold max-w-lg">Платіж</span>
-      <span class="text-lg font-bold">Доставка</span>
+    <div>
+      <p class="text-text-input mb-2">Адреса:</p>
+      <p>{data.order.adress}</p>
 
-      <div class="text-sm">
-        {data.order.fullName} <br />
-        {data.order.adress}
-      </div>
+      <p class="text-text-input mt-5 mb-2">Email:</p>
+      {data.order.email}
 
-      <div class="text-sm">
-        {data.order.fullName} <br />
-        {data.order.adress}
-      </div>
-
-      <div>
-        <span class="text-sm font-bold max-w-lg">Email:</span><br />
-        {data.order.email}
-      </div>
-
-      <div />
-
-      <div>
-        <span class="text-sm font-bold max-w-lg">Телефон:</span><br />
-        {data.order.phone}
-      </div>
-
-      <div>
-        <span class="text-sm font-bold max-w-lg">Телефон:</span><br />
-        {data.order.phone}
-      </div>
+      <p class="text-text-input mt-5 mb-2">Телефон:</p>
+      {data.order.phone}
     </div>
   </div>
 </DashboardSection>
 
-<div class="flex flex-row gap-4 mt-4">
-  <DashboardSection class="basis-3/5">
+<div class="flex flex-col md:flex-row gap-4 mt-4">
+  <DashboardSection class="md:basis-3/5">
     <table class="w-full">
       <thead>
         <tr class="text-text-input">
@@ -123,8 +92,10 @@
     </table>
   </DashboardSection>
 
-  <DashboardSection class="basis-2/5">
-    <span class="text-lg font-bold">Примітки до замовлення</span><br />
+  <DashboardSection class="md:basis-2/5">
+    <p class="text-text-header font-medium text-lg mb-2">
+      Примітки до замовлення
+    </p>
     {data.order.comment}
   </DashboardSection>
 </div>

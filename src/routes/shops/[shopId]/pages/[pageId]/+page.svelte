@@ -1,7 +1,6 @@
 <script lang="ts">
   import slugify from "@sindresorhus/slugify"
   import type { PageData } from "./$types"
-
   import { isValidSlug, routes } from "$lib"
   import Markdown from "$features/Markdown.svelte"
   import { call } from "$lib/fetch"
@@ -10,6 +9,7 @@
   import DashboardSection from "$features/dashboard/DashboardSection.svelte"
   import Arrow from "$features/landing/questions/Arrow.svelte"
   import MarkdownEditor from "$features/MarkdownEditor.svelte"
+
   export let data: PageData
   let newPageSlug: string = data.slug
   let newPageTitle: string = data.title
