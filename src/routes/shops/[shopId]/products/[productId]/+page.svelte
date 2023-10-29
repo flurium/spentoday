@@ -234,7 +234,7 @@
         Медіа
       </label>
       <div
-        class="grid grid-cols-4 gap-2 my-4 items-center justify-center"
+        class="grid grid-cols-2 md:grid-cols-4 gap-2 my-4 items-center justify-center"
         id="mediaInput"
       >
         {#each images as image (image.id)}
@@ -331,7 +331,7 @@
       </div>
     </DashboardSection>
 
-    <dialog bind:this={modal} class="p-10 w-1/2 bg-white rounded-md">
+    <dialog bind:this={modal} class="p-10 w-full max-w-4xl bg-white rounded-md">
       <div class="flex justify-between">
         <h3 class="text-2xl font-semibold text-text-header">Категорії</h3>
         <button on:click={() => modal.close()} type="submit">
@@ -489,7 +489,7 @@
         Кількість товару
       </label>
       <div
-        class="grid grid-flow-row-dense grid-cols-3 grid-rows-1 mt-6 items-center gap-4"
+        class="grid grid-cols-1 grid-flow-row-dense md:grid-cols-3 mt-6 items-center gap-4"
       >
         <!-- svelte-ignore a11y-label-has-associated-control -->
         <label class="text-1xl text-text-input">Залишилося</label>
@@ -510,12 +510,15 @@
     <DashboardSection>
       <h3 class="text-2xl font-semibold text-text-header">Вартість</h3>
       <div
-        class="grid grid-flow-row-dense grid-cols-3 grid-rows-2 my-5 py-3 items-center gap-4"
+        class="grid grid-cols-1 grid-flow-row-dense md:grid-cols-3 my-5 py-3 items-center gap-4"
       >
         <label class="text-1xl text-text-input" for="priceInput">
           Базова ціна
         </label>
-        <div class="flex items-center justify-end col-span-2" id="priceInput">
+        <div
+          class="flex items-center justify-end md:col-span-2"
+          id="priceInput"
+        >
           <span class="h-12 inline-block py-3 px-3 bg-gray-200 rounded-l-md">
             &#8372;
           </span>
@@ -535,7 +538,7 @@
           >Акційна ціна</label
         >
         <div
-          class="flex items-center justify-end col-span-2"
+          class="flex items-center justify-end md:col-span-2"
           id="promPriceInput"
         >
           <span class="h-12 inline-block py-3 px-3 bg-gray-200 rounded-l-md"
