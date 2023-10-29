@@ -10,14 +10,16 @@
   let categories = data.categories
   let editCategories = data.categories
   let modal: HTMLDialogElement
+  let modalAdd: HTMLDialogElement
   let editCategoryParentId: string | null = null
   let editCategoryName = ""
   let editId = ""
   let categoryInput = ""
-  let parentInput: string | null = null
+  let parentId: string | null = null
   let message = ""
   let search = ""
   let parentName = ""
+  let parentNameAdd = ""
 
   async function add() {
     const name = categoryInput.trim()
@@ -31,7 +33,7 @@
       body: {
         name: name,
         shopId: data.shopId,
-        parentId: parentInput
+        parentId: parentId
       }
     })
     if (!response || !response.ok) {
@@ -41,7 +43,7 @@
     const id = await callJson<string>(response)
     if (id == null) return (message = "Щось не так")
 
-    if (parentInput == null) {
+    if (parentId == null) {
       let newCategory: Category = {
         id: id,
         level: 1,
@@ -52,7 +54,7 @@
       return
     }
 
-    const index = categories.findIndex((x) => x.id == parentInput)
+    const index = categories.findIndex((x) => x.id == parentId)
 
     const parentCategory = categories[index]
 
@@ -71,7 +73,9 @@
       ]
     }
     categoryInput = ""
-    parentInput = null
+    parentNameAdd = ""
+    parentId = null
+    search = ""
   }
 
   async function edit(id: string) {
@@ -132,7 +136,7 @@
         return
       }
       categories = json
-
+      editCategories = json
       let drop = document.getElementById(`dropdown${id}`)
       if (drop == null) return
       else drop.style.display = "none"
@@ -192,28 +196,111 @@
 </script>
 
 <main class="px-6 mt-20">
-  <form on:submit|preventDefault={add} class="flex flex-col md:flex-row gap-4">
+  <div class="flex flex-col md:flex-row gap-4">
     <input
       class="w-full border border-secondary-200 px-6 py-2 rounded-md flex-1"
       bind:value={categoryInput}
       placeholder="Назва категорії: Іграшки"
     />
-
-    <select
-      id="parent"
-      bind:value={parentInput}
-      class="border border-secondary-200 px-6 py-2 rounded-md"
+    <button
+    class="px-6 py-2 bg-brand-dark text-white rounded-md"
+      on:click={()=>modalAdd.showModal()}
     >
-      <option selected value={null}>Без категорії</option>
-      {#each categories as category (category.id)}
-        <option value={category.id}>{category.name}</option>
-      {/each}
-    </select>
-
-    <button class="px-6 py-2 bg-brand-dark text-white rounded-md" type="submit">
-      Додати
+    {#if parentNameAdd != ""}
+    {parentNameAdd}
+    {:else}
+    Батьківська категорія
+    {/if}
     </button>
-  </form>
+    <dialog bind:this={modalAdd} class="p-10 w-full sm:w-1/2 bg-white rounded-md">
+      <div class="flex justify-between">
+        <div class="text-sm sm:text-2xl font-semibold text-text-header"> Батьківська категорія</div>
+        <button on:click={() => modalAdd.close()} type="submit">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-5 h-auto"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+      </div>
+     
+      {#if parentNameAdd != ""}
+        <div class="text-secondary font-medium py-2">
+          Поточна батьківська категорія: {parentNameAdd}
+        </div>
+      {/if}
+
+      <div
+        class="flex items-center border border-secondary-200
+        rounded-md overflow-hidden ps-3 mt-4 mb-2"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="w-6 h-6 text-gray-500"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+          />
+        </svg>
+        <input
+          class="py-2 px-3 flex-1"
+          on:keyup={searchCategory}
+          bind:value={search}
+          placeholder="Пошук..."
+        />
+      </div>
+
+      <div class="flex flex-col" use:autoAnimate>
+        {#if search == ""}
+        <button
+        class="p-3 border-b border-secondary-100
+        text-left hover:bg-secondary-100"
+        on:click={() => {
+          parentId = null
+          parentNameAdd = ""
+        }}
+        >
+        Без батьківської категорії
+        </button>
+
+        {/if}
+        <ClickableCategories
+          isTree={search == ""}
+          categories={editCategories}
+          onClick={(x) => {
+            parentId = x.id
+            parentNameAdd = x.name
+          }}
+        />
+      </div>
+    </dialog>
+
+    <button
+      on:click={() => {
+        modalAdd.close()
+        add()
+        }}
+      class="px-6 py-2 bg-brand-dark text-white rounded-md"
+      type="submit"
+    >
+         Додати
+    </button>
+  </div>
 
   <ul class="mt-10">
     {#each categories as category}
@@ -252,7 +339,7 @@
           <div
             id="dropdown{category.id}"
             style="display:none;"
-            class="z-50 absolute text-base list-none bg-white divide-gray-100 rounded-lg shadow dark:bg-gray-700"
+            class="z-50 absolute -ms-20 text-base list-none bg-white divide-gray-100 rounded-lg shadow"
           >
             <ul class="p-4">
               <li>
