@@ -88,33 +88,33 @@
     externalCallback()
   }
 
-  function addCode() {
-    let start = textAreaRef.selectionStart
-    let end = textAreaRef.selectionEnd
-    const selectedText = textAreaRef.value.substring(start, end)
-    let count
+  // function addCode() {
+  //   let start = textAreaRef.selectionStart
+  //   let end = textAreaRef.selectionEnd
+  //   const selectedText = textAreaRef.value.substring(start, end)
+  //   let count
 
-    if (selectedText.includes("\n")) {
-      textAreaRef.value = `${content.slice(0, start)}\`\`\`\n${content.slice(
-        start,
-        end
-      )}\n\`\`\`${content.slice(end)}`
-      count = 4
-    } else {
-      textAreaRef.value = `${content.slice(0, start)}\`${content.slice(
-        start,
-        end
-      )}\`${content.slice(end)}`
-      count = 1
-    }
+  //   if (selectedText.includes("\n")) {
+  //     textAreaRef.value = `${content.slice(0, start)}\`\`\`\n${content.slice(
+  //       start,
+  //       end
+  //     )}\n\`\`\`${content.slice(end)}`
+  //     count = 4
+  //   } else {
+  //     textAreaRef.value = `${content.slice(0, start)}\`${content.slice(
+  //       start,
+  //       end
+  //     )}\`${content.slice(end)}`
+  //     count = 1
+  //   }
 
-    content = textAreaRef.value
+  //   content = textAreaRef.value
 
-    textAreaRef.focus()
-    textAreaRef.setSelectionRange(start + count, end + count)
+  //   textAreaRef.focus()
+  //   textAreaRef.setSelectionRange(start + count, end + count)
 
-    externalCallback()
-  }
+  //   externalCallback()
+  // }
 
   function addQuote() {
     let start = textAreaRef.selectionStart
@@ -228,6 +228,20 @@
 
     externalCallback()
   }
+
+  const actions = [
+    { icon: "fa-header", click: addHeading },
+    { icon: "fa-italic", click: addItalic },
+    { icon: "fa-bold", click: addBold },
+    { icon: "fa-strikethrough", click: addStrikethrough },
+    { icon: "fa-quote-left", click: addQuote },
+    { icon: "fa-list-ul ", click: addGenericList },
+    { icon: "fa-list-ol", click: addNumbericList },
+    { icon: "fa-table", click: addTable },
+    { icon: "fa-link", click: addLink },
+    { icon: "fa-picture-o", click: addImage },
+    { icon: "fa-minus", click: addLine }
+  ]
 </script>
 
 <link
@@ -235,7 +249,7 @@
   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
 />
 
-<div class="flex items-center mt-2">
+<div class="hidden md:flex items-center mt-2">
   <div class="relative group rounded-md text-xs bg-blue-500 text-white p-1">
     Заголовки
     <div
@@ -336,59 +350,20 @@
     </div>
   </div>
 </div>
-<div class="flex items-center mt-2">
-  <button
-    class="fa fa-header border border-transparent py-2 px-2 hover:bg-secondary-200 font-semibold hover:border-secondary-400 rounded-md"
-    on:click={addHeading}
-  />
-  <button
-    class="fa fa-italic border border-transparent py-2 px-2 hover:bg-secondary-200 font-semibold hover:border-secondary-400 rounded-md"
-    on:click={addItalic}
-  />
-  <button
-    class="fa fa-bold border border-transparent py-2 px-2 hover:bg-secondary-200 font-semibold hover:border-secondary-400 rounded-md"
-    on:click={addBold}
-  />
-  <button
-    class="fa fa-strikethrough border border-transparent py-2 px-2 hover:bg-secondary-200 font-semibold hover:border-secondary-400 rounded-md"
-    on:click={addStrikethrough}
-  />
-  <i class="mx-2">|</i>
-  <button
+
+<div class="flex gap-2 flex-wrap items-center mt-2">
+  {#each actions as action}
+    <button
+      class="fa {action.icon} border p-3 hover:bg-secondary-100
+      font-semibold rounded-md border-secondary-200"
+      on:click={action.click}
+    />
+  {/each}
+
+  <!-- <button
     class="fa fa-code border border-transparent py-2 px-2 hover:bg-secondary-200 font-semibold hover:border-secondary-400 rounded-md"
     on:click={addCode}
-  />
-  <button
-    class="fa fa-quote-left border border-transparent py-2 px-2 hover:bg-secondary-200 font-semibold hover:border-secondary-400 rounded-md"
-    on:click={addQuote}
-  />
-  <i class="mx-2">|</i>
-  <button
-    class="fa fa-list-ul border border-transparent py-2 px-2 hover:bg-secondary-200 font-semibold hover:border-secondary-400 rounded-md"
-    on:click={addGenericList}
-  />
-  <button
-    class="fa fa-list-ol border border-transparent py-2 px-2 hover:bg-secondary-200 font-semibold hover:border-secondary-400 rounded-md"
-    on:click={addNumbericList}
-  />
-  <button
-    class="fa fa-table border border-transparent py-2 px-2 hover:bg-secondary-200 font-semibold hover:border-secondary-400 rounded-md"
-    on:click={addTable}
-  />
-  <i class="mx-2">|</i>
-  <button
-    class="fa fa-link border border-transparent py-2 px-2 hover:bg-secondary-200 font-semibold hover:border-secondary-400 rounded-md"
-    on:click={addLink}
-  />
-  <button
-    class="fa fa-picture-o border border-transparent py-2 px-2 hover:bg-secondary-200 font-semibold hover:border-secondary-400 rounded-md"
-    on:click={addImage}
-  />
-  <i class="mx-2">|</i>
-  <button
-    class="fa fa-minus border border-transparent py-2 px-2 hover:bg-secondary-200 font-semibold hover:border-secondary-400 rounded-md"
-    on:click={addLine}
-  />
+  /> -->
 </div>
 
 <textarea
