@@ -105,7 +105,7 @@
   }
 
   async function logout() {
-    const res = await call(fetch, "client", {
+    await call(fetch, "client", {
       route: "/v1/auth/logout",
       method: "POST"
     })

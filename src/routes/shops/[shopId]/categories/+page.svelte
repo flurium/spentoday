@@ -2,8 +2,11 @@
   import type { PageData } from "./$types"
   import { call, callJson } from "$lib/fetch"
   import autoAnimate from "@formkit/auto-animate"
-  import type { Category } from "./+page"
+
   import ClickableCategories from "$features/dashboard/categories/ClickableCategories.svelte"
+  import type { Category } from "$features/dashboard/categories"
+  import AddCategoryForm from "$features/dashboard/categories/AddCategoryForm.svelte"
+  import CategoriesList from "$features/dashboard/categories/CategoriesList.svelte"
 
   export let data: PageData
 
@@ -13,66 +16,9 @@
   let editCategoryParentId: string | null = null
   let editCategoryName = ""
   let editId = ""
-  let categoryInput = ""
-  let parentInput: string | null = null
   let message = ""
   let search = ""
   let parentName = ""
-
-  async function add() {
-    const name = categoryInput.trim()
-    if (name == "") {
-      message = "Ім'я категорії не можу бути пустим."
-      return
-    }
-    const response = await call(fetch, "client", {
-      route: "/v1/site/categories",
-      method: "POST",
-      body: {
-        name: name,
-        shopId: data.shopId,
-        parentId: parentInput
-      }
-    })
-    if (!response || !response.ok) {
-      message = "Щось не так"
-      return
-    }
-    const id = await callJson<string>(response)
-    if (id == null) return (message = "Щось не так")
-
-    if (parentInput == null) {
-      let newCategory: Category = {
-        id: id,
-        level: 1,
-        parentId: "",
-        name: name
-      }
-      categories = [...categories, newCategory]
-      return
-    }
-
-    const index = categories.findIndex((x) => x.id == parentInput)
-
-    const parentCategory = categories[index]
-
-    let newCategory: Category = {
-      id: id,
-      level: parentCategory.level + 1,
-      parentId: parentCategory.id,
-      name: name
-    }
-
-    if (index !== -1) {
-      categories = [
-        ...categories.slice(0, index + 1),
-        newCategory,
-        ...categories.slice(index + 1)
-      ]
-    }
-    categoryInput = ""
-    parentInput = null
-  }
 
   async function edit(id: string) {
     const category = categories.find((x) => x.id == id)
@@ -132,7 +78,7 @@
         return
       }
       categories = json
-
+      editCategories = json
       let drop = document.getElementById(`dropdown${id}`)
       if (drop == null) return
       else drop.style.display = "none"
@@ -189,170 +135,128 @@
     if (drop == null) return
     drop.style.display = "none"
   }
+
+  function addCategory(id: string, name: string, parentId: string | null) {
+    if (parentId == null) {
+      categories = [
+        ...categories,
+        {
+          id,
+          level: 1,
+          parentId: "",
+          name
+        }
+      ]
+      return
+    }
+
+    const index = categories.findIndex((x) => x.id == parentId)
+    const parentCategory = categories[index]
+
+    let newCategory: Category = {
+      id: id,
+      level: parentCategory.level + 1,
+      parentId: parentCategory.id,
+      name: name
+    }
+
+    if (index !== -1) {
+      categories = [
+        ...categories.slice(0, index + 1),
+        newCategory,
+        ...categories.slice(index + 1)
+      ]
+    }
+  }
 </script>
 
-<main class="px-6 mt-20">
-  <form on:submit|preventDefault={add} class="flex flex-col md:flex-row gap-4">
-    <input
-      class="w-full border border-secondary-200 px-6 py-2 rounded-md flex-1"
-      bind:value={categoryInput}
-      placeholder="Назва категорії: Іграшки"
-    />
+<h1 class="font-bold text-3xl text-text-header mb-8">Категорії</h1>
 
-    <select
-      id="parent"
-      bind:value={parentInput}
-      class="border border-secondary-200 px-6 py-2 rounded-md"
-    >
-      <option selected value={null}>Без категорії</option>
-      {#each categories as category (category.id)}
-        <option value={category.id}>{category.name}</option>
-      {/each}
-    </select>
+<AddCategoryForm
+  shopId={data.shopId}
+  pushCategoryToList={addCategory}
+  {categories}
+/>
 
-    <button class="px-6 py-2 bg-brand-dark text-white rounded-md" type="submit">
-      Додати
-    </button>
-  </form>
+<CategoriesList {categories} edit={toEdit} {remove} />
 
-  <ul class="mt-10">
-    {#each categories as category}
-      <li
-        style="margin-left: {category.level - 1}rem"
-        class="px-2 py-3 items-center flex justify-between
-        border-b border-secondary-200"
+<dialog bind:this={modal} class="p-10 w-full max-w-4xl bg-white rounded-md">
+  <div class="flex justify-between mb-4">
+    <div class="text-2xl font-semibold text-text-header">Редагування</div>
+    <button on:click={() => modal.close()}>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="w-5 h-auto"
       >
-        <p>{category.name}</p>
-
-        <div>
-          <button
-            id="dropdownButton{category.id}"
-            on:click={() => {
-              let drop = document.getElementById(`dropdown${category.id}`)
-              if (drop == null) return
-              if (drop.style.display == "none") drop.style.display = "block"
-              else drop.style.display = "none"
-            }}
-            class="inline-block text-gray-500 hover:bg-gray-100 rounded-lg text-sm p-2"
-            type="button"
-          >
-            <svg
-              class="w-3 h-3"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
-              viewBox="0 0 16 3"
-            >
-              <path
-                d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"
-              />
-            </svg>
-          </button>
-
-          <div
-            id="dropdown{category.id}"
-            style="display:none;"
-            class="z-50 absolute text-base list-none bg-white divide-gray-100 rounded-lg shadow dark:bg-gray-700"
-          >
-            <ul class="p-4">
-              <li>
-                <button
-                  class="hover:text-secondary-500"
-                  on:click={() => {
-                    toEdit(category)
-                  }}
-                >
-                  Редагувати
-                </button>
-              </li>
-              <li>
-                <button
-                  class="text-red-500 hover:text-red-300"
-                  on:click={() => remove(category.id)}
-                >
-                  Видалити
-                </button>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </li>
-
-      <dialog bind:this={modal} class="p-10 w-1/2 bg-white rounded-md">
-        <div class="flex justify-between">
-          <div class="text-2xl font-semibold text-text-header">Редагування</div>
-          <button on:click={() => modal.close()} type="submit">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="w-5 h-auto"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
-        </div>
-        <input
-          class="py-1 px-4 my-auto border rounded-xl w-full"
-          bind:value={editCategoryName}
-          placeholder="Назва категорії"
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M6 18L18 6M6 6l12 12"
         />
-        {#if parentName != undefined}
-          <div class="text-secondary font-medium py-2">
-            Поточна батьківська категорія: {parentName}
-          </div>
-        {/if}
-        <button
-          on:click={() => edit(editId)}
-          class="py-1 px-4 w-full font-semibold hover:bg-gray-900 bg-gray-800 text-white rounded-md"
-          type="submit"
-        >
-          Підтвердити
-        </button>
+      </svg>
+    </button>
+  </div>
 
-        <div
-          class="flex items-center border border-secondary-200
+  <input
+    class="px-5 py-2 my-auto border rounded-md w-full"
+    bind:value={editCategoryName}
+    placeholder="Назва категорії"
+  />
+
+  {#if parentName == ""}
+    <p class="py-4">Без батьківської категорії</p>
+  {:else}
+    <p class="py-4">
+      Батьківська категорія: {parentName}
+    </p>
+  {/if}
+
+  <button
+    on:click={() => edit(editId)}
+    class="py-2 px-4 w-full bg-brand-green text-white rounded-md"
+    type="submit"
+  >
+    Підтвердити
+  </button>
+
+  <div
+    class="flex items-center border border-secondary-200
           rounded-md overflow-hidden ps-3 mt-4 mb-2"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="w-6 h-6 text-gray-500"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-            />
-          </svg>
-          <input
-            class="py-2 px-3 flex-1"
-            on:keyup={searchCategory}
-            bind:value={search}
-            placeholder="Пошук..."
-          />
-        </div>
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke-width="1.5"
+      stroke="currentColor"
+      class="w-6 h-6 text-gray-500"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+      />
+    </svg>
+    <input
+      class="py-2 px-3 flex-1"
+      on:keyup={searchCategory}
+      bind:value={search}
+      placeholder="Пошук..."
+    />
+  </div>
 
-        <div class="flex flex-col" use:autoAnimate>
-          <ClickableCategories
-            isTree={search == ""}
-            categories={editCategories}
-            onClick={(x) => {
-              editCategoryParentId = x.id
-              parentName = x.name
-            }}
-          />
-        </div>
-      </dialog>
-    {/each}
-  </ul>
-</main>
+  <div class="flex flex-col text-text-main" use:autoAnimate>
+    <ClickableCategories
+      isTree={search == ""}
+      categories={editCategories}
+      onClick={(x) => {
+        editCategoryParentId = x.id
+        parentName = x.name
+      }}
+    />
+  </div>
+</dialog>

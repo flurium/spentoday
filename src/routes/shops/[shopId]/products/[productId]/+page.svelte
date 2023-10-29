@@ -17,7 +17,6 @@
     uploadProductImage,
     type UpdateProductInput
   } from "$features/dashboard/products/api"
-  import { onMount } from "svelte"
   import ClickableCategories from "$features/dashboard/categories/ClickableCategories.svelte"
 
   export let data: PageData

@@ -1,13 +1,8 @@
 import type { PageLoad } from "./$types"
 import { call, callJson } from "$lib/fetch"
 import { errors } from "$lib"
+import type { Category } from "$features/dashboard/categories"
 
-export type Category = {
-  id: string
-  name: string
-  level: number
-  parentId: string
-}
 export const load = (async ({ fetch, params }) => {
   const shopId = params.shopId
 
