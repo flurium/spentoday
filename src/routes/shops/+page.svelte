@@ -44,19 +44,25 @@
   <title>Ваші магазини | Spentoday</title>
 </svelte:head>
 
-<DashboardLayout accountImage={data.account.img}>
+<DashboardLayout accountImage={data.account.img} bar={[]}>
   <div class="px-6 mt-20 mx-auto max-w-screen-xl w-full">
-    <div class="flex justify-between items-center">
+    <div
+      class="flex flex-col md:flex-row gap-y-4 justify-between md:items-center"
+    >
       <h1 class="text-text-header text-4xl font-extrabold">Мої сайти</h1>
-      <form on:submit|preventDefault={addShop} class="flex items-center gap-4">
+
+      <form
+        on:submit|preventDefault={addShop}
+        class="flex flex-col md:flex-row md:items-center gap-4"
+      >
         <input
-          class="py-2 px-4 w-72 rounded-md border border-gray-200"
+          class="py-2 px-4 w-full rounded-md border border-gray-200"
           bind:value={shopName}
           placeholder="Назва магазину"
         />
         <button
           class="bg-brand-violet disabled:bg-gray-100 font-semibold px-6
-        py-2 text-white disabled:text-text-main rounded-md"
+          py-2 text-white disabled:text-text-main rounded-md w-full"
           type="submit"
           disabled={isInvalid}
         >
