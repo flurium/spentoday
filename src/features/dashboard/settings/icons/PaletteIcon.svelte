@@ -4,6 +4,7 @@
 </script>
 
 <svg
+  class={className}
   fill="#656161"
   height="1.5em"
   xmlns="http://www.w3.org/2000/svg"

@@ -2,7 +2,6 @@
   import WatchStar from "$lib/assets/WatchStar.svelte"
 
   let hidden = true
-  
 </script>
 
 <section class="px-6 max-w-screen-xl m-auto py-24 mb-24" id="aboutUs">

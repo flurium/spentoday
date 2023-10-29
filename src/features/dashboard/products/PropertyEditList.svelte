@@ -3,7 +3,7 @@
   import { call, callJson } from "$lib/fetch"
   import autoAnimate from "@formkit/auto-animate"
   import DashboardSection from "../DashboardSection.svelte"
-  import MenuIcon from "./MenuIcon.svelte"
+
   import PropertyEdit from "./PropertyEdit.svelte"
   import type { Property } from "./types"
 
