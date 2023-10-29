@@ -10,12 +10,22 @@
   import Partners from "$features/landing/Partners.svelte"
   import AboutUs from "$features/landing/AboutUs.svelte"
   import Logo from "$lib/assets/Logo.svelte"
+  import { onMount } from "svelte"
+  import { toast } from "$features/toast"
 
   let isMenuOpen = false
 
   function toggleMenu() {
     isMenuOpen = !isMenuOpen
   }
+
+  onMount(() => {
+    toast.jsonError()
+    toast.serverError()
+    // while (true) {
+    //   toast.jsonError()
+    // }
+  })
 </script>
 
 <svelte:head>

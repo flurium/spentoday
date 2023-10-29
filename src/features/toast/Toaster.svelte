@@ -27,26 +27,25 @@
   }
 </script>
 
-<script lang="ts">
-</script>
-
 <div
-  class="fixed bottom-0 right-0 z-50 m-6 flex flex-col gap-4 max-w-md w-full"
+  class="fixed bottom-0 right-0 z-50 p-2 md:p-6 flex flex-col gap-4 max-w-md w-full"
 >
-  {#each $toasts as toast (toast.id)}
-    <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <div
-      class="toast rounded-2xl bg-secondary-800 p-6 block text-white w-full"
-      on:click={() => removeToast(toast.id)}
-      role="button"
-      tabindex={0}
-    >
-      <h6 class="text-xl">{toast.title}</h6>
-      {#if toast.description}
-        <p class="break-words mt-2">{toast.description}</p>
-      {/if}
-    </div>
-  {/each}
+  <div>
+    {#each $toasts as toast (toast.id)}
+      <!-- svelte-ignore a11y-click-events-have-key-events -->
+      <div
+        class="toast rounded-2xl bg-secondary-800 p-6 block text-white w-full mt-2"
+        on:click={() => removeToast(toast.id)}
+        role="button"
+        tabindex={0}
+      >
+        <h6 class="text-xl">{toast.title}</h6>
+        {#if toast.description}
+          <p class="break-words mt-2">{toast.description}</p>
+        {/if}
+      </div>
+    {/each}
+  </div>
 </div>
 
 <style>
