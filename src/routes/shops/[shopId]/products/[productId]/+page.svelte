@@ -534,16 +534,16 @@
           />
         </div>
 
-        <label class="text-1xl text-text-input" for="promPriceInput"
-          >Акційна ціна</label
-        >
+        <label class="text-1xl text-text-input" for="promPriceInput">
+          Акційна ціна
+        </label>
         <div
           class="flex items-center justify-end md:col-span-2"
           id="promPriceInput"
         >
-          <span class="h-12 inline-block py-3 px-3 bg-gray-200 rounded-l-md"
-            >&#8372;</span
-          >
+          <span class="h-12 inline-block py-3 px-3 bg-gray-200 rounded-l-md">
+            &#8372;
+          </span>
           <input
             class="w-full px-4 py-3 rounded-r-lg border border-secondary-200"
             bind:value={discountPrice}
