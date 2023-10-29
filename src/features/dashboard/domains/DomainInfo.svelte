@@ -11,7 +11,7 @@
 </script>
 
 <div class="pb-7 {!isLast ? 'border-b border-b-secondary-200' : ''}">
-  <div class="flex justify-between gap-5">
+  <div class="flex flex-col md:flex-row justify-between gap-3 md:gap-5">
     <div class="flex-1">
       <a
         rel="noreferrer"

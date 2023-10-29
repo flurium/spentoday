@@ -88,7 +88,7 @@
 </svelte:head>
 
 <button
-  class="px-4 py-2 bg-gray-800 text-white hover:bg-gray-900 rounded-md"
+  class="px-4 py-2 bg-brand-violet text-white rounded-md"
   on:click={() => newPageModal.showModal()}>Створити нову</button
 >
 
@@ -134,7 +134,9 @@
 </dialog>
 
 <DashboardSection class="mt-5">
-  <div class="grid grid-cols-3 gap-x-8 px-5 py-3 text-text-input">
+  <div
+    class="grid grid-cols-1 md:grid-cols-3 gap-x-8 px-3 md:px-5 py-3 text-text-input"
+  >
     <span>Посилання</span>
     <span>Заголовок</span>
     <span>Коли оновлено</span>
@@ -144,7 +146,8 @@
     {#each pages as page (page.slug)}
       <a
         href={routes.page(data.shopId, page.slug)}
-        class="grid grid-cols-3 gap-x-8 px-5 py-5 border-t border-secondary-100"
+        class="grid grid-cols-1 md:grid-cols-3 gap-x-8 px-3
+        md:px-5 py-5 border-t border-secondary-100"
       >
         <span>{page.slug}</span>
         <span>{page.title}</span>

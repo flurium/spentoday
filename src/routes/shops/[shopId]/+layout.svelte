@@ -19,23 +19,20 @@
 </script>
 
 <DashboardLayout accountImage={data.accountImage} bar={sidebar}>
-  <div class="grid grid-cols-[minmax(auto,_16rem)_1fr] flex-1">
-    <nav
-      class="flex flex-col gap-2 p-8 bg-secondary-50 z-[-1] md:z-10 md:static absolute w-full md:w-auto md:opacity-100 opacity-0
-    top-[-400px] transition-all ease-in duration-500"
-    >
+  <div class="grid grid-cols-1 md:grid-cols-[auto_1fr] flex-1">
+    <nav class="hidden md:flex flex-col gap-2 p-8 bg-secondary-50 w-full">
       {#each sidebar as section}
         <a
           href={section.link}
-          class="font-medium py-2 px-4 hover:bg-white rounded-lg
-        {$page.url.pathname == section.link ? 'bg-white' : ''}"
+          class="font-medium py-2 ps-4 pe-12 hover:bg-white rounded-lg
+          {$page.url.pathname == section.link ? 'bg-white' : ''}"
         >
           {section.name}
         </a>
       {/each}
     </nav>
 
-    <div class="p-8">
+    <div class="p-4 md:p-8 w-full">
       <slot />
     </div>
   </div>

@@ -76,14 +76,14 @@
 
 <h1 class="font-bold text-3xl text-text-header mb-8">Ваші товари</h1>
 
-<form on:submit|preventDefault={add} class="flex gap-2">
+<form on:submit|preventDefault={add} class="flex flex-col md:flex-row gap-2">
   <input
     class="flex-1 border border-secondary-200 rounded-lg px-5 py-3"
     bind:value={newProduct}
     placeholder="Для додавання нового продукту введіть його назву."
   />
 
-  <button class="bg-brand-violet rounded-lg text-white px-8" type="submit">
+  <button class="bg-brand-violet rounded-lg text-white px-8 py-2" type="submit">
     Додати товар
   </button>
 </form>

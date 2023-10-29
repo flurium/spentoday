@@ -14,7 +14,9 @@
 />
 
 <div class="flex flex-col min-h-screen text-text-main">
-  <header class="bg-secondary-50 flex justify-between items-center py-4 px-6">
+  <header
+    class="bg-secondary-50 flex justify-between gap-2 items-center py-4 px-6"
+  >
     <a href="/shops"> <Logo class="h-8 w-8" /></a>
     <span class="mr-auto text-3xl cursor-pointer mx-4 z-[20] md:hidden">
       <button
@@ -36,7 +38,7 @@
   {#if bar}
     <nav
       class="flex flex-col gap-2 p-8 z-[1] bg-secondary-50 md:static md:hidden w-full
-    {isMenuOpen ? '' : 'hidden'}"
+      {isMenuOpen ? '' : 'hidden'}"
     >
       {#each bar as section}
         <a

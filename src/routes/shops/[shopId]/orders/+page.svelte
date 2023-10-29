@@ -38,41 +38,38 @@
 </svelte:head>
 
 <h1 class="font-bold text-2xl text-text-header mb-8">Ваші замовлення</h1>
+
 <DashboardSection>
-  <div class="flex flex-row mb-7">
+  <div class="flex mb-7 justify-between md:justify-normal md:gap-4">
     <button
       on:click={() => (status = "Всі")}
-      class="hover:bg-secondary-50 border border-white p-2 me-5
-        hover:border-secondary-300 hover:text-brand-violet rounded-lg"
+      class="hover:bg-secondary-50 p-2 hover:text-brand-violet rounded-lg"
     >
       Всі
     </button>
     <button
       on:click={() => (status = "Готується")}
-      class="hover:bg-secondary-50 border border-white p-2 me-5
-        hover:border-secondary-300 hover:text-brand-violet rounded-lg"
+      class="hover:bg-secondary-50 p-2 hover:text-brand-violet rounded-lg"
     >
       Готується
     </button>
     <button
       on:click={() => (status = "Виконано")}
-      class="hover:bg-secondary-50 border border-white p-2 me-5
-        hover:border-secondary-300 hover:text-brand-violet rounded-lg"
+      class="hover:bg-secondary-50 p-2 hover:text-brand-violet rounded-lg"
     >
       Виконано
     </button>
     <button
       on:click={() => (status = "Скасовано")}
-      class="hover:bg-secondary-50 border border-white p-2 me-5
-        hover:border-secondary-300 hover:text-brand-violet rounded-lg"
+      class="hover:bg-secondary-50 p-2 hover:text-brand-violet rounded-lg"
     >
       Скасовано
     </button>
   </div>
 
   <div
-    class="py-3 grid grid-cols-[2fr_1fr_1fr_1fr_1fr]
-    gap-x-8 text-text-input w-full text-left"
+    class="py-3 grid grid-cols-1 gap-y-2 md:grid-cols-[2fr_1fr_1fr_1fr_1fr]
+    md:gap-x-8 text-text-input w-full text-left"
   >
     <span>Замовлення</span>
     <span>Дата</span>
@@ -84,7 +81,8 @@
   <div use:autoAnimate>
     {#each filteredOrders as order (order.id)}
       <button
-        class="py-5 grid grid-cols-[2fr_1fr_1fr_1fr_1fr] gap-x-8
+        class="py-5 grid grid-cols-1 gap-y-2
+        md:grid-cols-[2fr_1fr_1fr_1fr_1fr] md:gap-y-0 md:gap-x-8
         border-t border-secondary-100 w-full text-left"
         on:click={() => goto(routes.order(data.shopId, order.id))}
       >
