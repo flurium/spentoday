@@ -2,10 +2,7 @@
   import WatchStar from "$lib/assets/WatchStar.svelte";
 
   let hidden = true
-
-  function loadedVideo() {
-    hidden = false;
-  }
+  
 </script>
 
 <section class="px-6 max-w-screen-xl m-auto py-24 mb-24" id="aboutUs">
@@ -32,8 +29,8 @@
     </button>
   {:else}
     <iframe 
-      class="w-full md:h-[700px] h-[270px]  transition-all duration-500
-       ease-in-out transform-gpu hover:rounded-xl lg:rounded-bl-[15rem] rounded-xl"
+      class=" lg:h-[700px] w-full transition-all duration-500
+       ease-in-out transform-gpu hover:rounded-xl lg:rounded-bl-[15rem] rounded-xl aspect-video"
       src="https://www.youtube.com/embed/5OAzOoMlUQM?si=GOnjbiEOblz_XtgT"
       title="Spentoday" 
       frameborder="0" 
