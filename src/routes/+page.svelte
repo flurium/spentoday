@@ -18,14 +18,6 @@
   function toggleMenu() {
     isMenuOpen = !isMenuOpen
   }
-
-  onMount(() => {
-    toast.jsonError()
-    toast.serverError()
-    // while (true) {
-    //   toast.jsonError()
-    // }
-  })
 </script>
 
 <svelte:head>
