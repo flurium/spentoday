@@ -19,8 +19,6 @@ class ScrollLoader {
   ) {
     // bullsh*t to make "this" work properly
     this.callback = this.callback.bind(this)
-
-    // console.log("constructor")
     this.loadFunction = loadFunction
   }
 
@@ -68,7 +66,6 @@ class ScrollLoader {
     entries: IntersectionObserverEntry[],
     observer: IntersectionObserver
   ) {
-    // console.log("callback", this.element)
     if (this.element == null) return
 
     for (let i = 0; i < entries.length; i += 1) {

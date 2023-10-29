@@ -80,36 +80,12 @@
 
     start = res.length
     subscriptions = res.map(toSubscription)
-
-    console.log("reset end", start, subscriptions)
   }
 
   function debounceSearch() {
     clearTimeout(timer)
     timer = setTimeout(async () => await loader.reset(resetFilter), 300)
   }
-
-  // async function load(): Promise<"stop" | "continue"> {
-  //   if (true) return "stop"
-  //   // if (loadReset) return "continue"
-
-  //   // const items = await querySubscriptions(fetch, "client", {
-  //   //   shopId: data.shopId,
-  //   //   search: searchInput,
-  //   //   start: start
-  //   // })
-  //   // console.log(items)
-  //   // if (items == null) return "continue"
-  //   // if (items.length == 0) {
-  //   //   loadReset = true
-  //   //   return "continue"
-  //   // }
-  //   // // console.log(items)
-  //   // start += items.length
-  //   // subscriptions = [...subscriptions, ...items.map(toSubscription)]
-  //   // loadReset = false
-  //   // return "continue"
-  // }
 </script>
 
 <svelte:head>

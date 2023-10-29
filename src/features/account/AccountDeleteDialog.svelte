@@ -6,7 +6,6 @@
   export let email: string
 
   $: {
-    console.log(open)
     if (dialog) {
       if (open) {
         dialog.showModal()
