@@ -109,7 +109,7 @@
         <a href="mailto:support@spentoday.com" class="hover:underline">
           support@spentoday.com
         </a>
-        <p>+380 66 727 49 05</p>
+        <p>+380 66 738 44 09</p>
       </div>
     </div>
     <div class="justify-between border-t border-t-white pt-3">
