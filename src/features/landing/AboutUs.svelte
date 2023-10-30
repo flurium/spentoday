@@ -33,19 +33,20 @@
         class="absolute inset-0 bg-[#597F9B] opacity-50 lg:rounded-bl-[15rem] rounded-xl z-20"
       />
       <button
-        class="text-center absolute inset-0 z-30 flex justify-center items-center"
+        class="text-center absolute z-30 flex justify-center items-center"
         on:click={() => (hidden = false)}
       >
         <WatchStar class="h-[100px] w-[100px] md:h-[170px] md:w-[170px]" />
       </button>
     {:else}
       <iframe
-        class="w-full lg:h-[700px] aspect-video transition-all duration-500
-       ease-in-out transform-gpu lg:rounded-bl-[15rem] rounded-xl"
+        class="w-full aspect-video lg:rounded-bl-[15rem]
+        lg:hover:rounded-bl-xl rounded-xl transition-all"
         src="https://www.youtube.com/embed/5OAzOoMlUQM?si=GOnjbiEOblz_XtgT"
-        title="Spentoday"
+        title="Spentoday промо"
         frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; 
+        gyroscope; picture-in-picture; web-share"
         allowfullscreen
       />
     {/if}
