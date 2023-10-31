@@ -86,6 +86,7 @@
         disabled={sending}
         class="place-self-center md:place-self-end"
         on:click={submitQuestion}
+        aria-label="Відправити запитання"
       >
         <SendQuestionStar />
       </button>
