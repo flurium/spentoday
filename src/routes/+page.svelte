@@ -29,7 +29,11 @@
 <header class="px-5 py-8 bg-secondary-100">
   <div class="flex justify-between items-center max-w-screen-xl m-auto">
     <nav class="basis-1/4">
-      <a class="flex gap-4 items-center" href="/">
+      <a
+        class="flex gap-4 items-center"
+        href="/"
+        aria-label="Головна сторінка Spentoday"
+      >
         <Logo class="h-8 w-8" />
         <span class="font-medium text-2xl text-brand-violet hidden md:inline">
           Spentoday

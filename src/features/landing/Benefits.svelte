@@ -10,7 +10,7 @@
 
     <div class="col-span-3 bg-white rounded-b-lg rounded-tl-lg p-7">
       <span class="text-4xl font-bold">365</span>
-      <h3 class="font-bold text-xl pt-10">ПІДТРИМКА 24/7</h3>
+      <p class="font-bold text-xl pt-10">ПІДТРИМКА 24/7</p>
       <p class="pt-2">
         Якщо Ви наш клієнт і подзвоните в Новий Рік, то ми відповімо.
       </p>
@@ -27,7 +27,7 @@
       class="col-span-3 text-white bg-brand-green rounded-b-lg rounded-tl-lg p-7"
     >
       <span class="text-4xl font-bold">120+</span>
-      <h3 class="font-bold text-xl pt-10">НОВИХ МАГАЗИНІВ</h3>
+      <p class="font-bold text-xl pt-10">НОВИХ МАГАЗИНІВ</p>
       <p class="pt-2">
         Онлайн магазини відкриваються швидко та з мінімальними витратами кожен
         день.
@@ -45,7 +45,7 @@
       class="col-span-3 text-white bg-brand-violet rounded-b-lg rounded-tl-lg p-7"
     >
       <span class="text-4xl font-bold">100%</span>
-      <h3 class="font-bold text-xl pt-10">ЗАДОВОЛЕНИХ КЛІЄНТІВ</h3>
+      <p class="font-bold text-xl pt-10">ЗАДОВОЛЕНИХ КЛІЄНТІВ</p>
       <p class="pt-2">
         Ми робимо швидкі та красиві магазини, Ви заробляєте гроші.
       </p>

@@ -35,6 +35,7 @@
       <button
         class="text-center absolute z-30 flex justify-center items-center"
         on:click={() => (hidden = false)}
+        aria-label="Подивитися відео"
       >
         <WatchStar class="h-[100px] w-[100px] md:h-[170px] md:w-[170px]" />
       </button>
