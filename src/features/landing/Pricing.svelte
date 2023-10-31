@@ -25,7 +25,7 @@
 
     <footer class="mt-8 flex justify-center md:justify-start">
       <a
-        class="block w-fit rounded-full py-4 px-9 bg-brand-dark text-white font-bold"
+        class="block w-fit rounded-full py-4 px-9 bg-brand-dark text-white font-bold hover:bg-brand-pink"
         href="/login"
       >
         ПОЧАТИ
