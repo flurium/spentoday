@@ -25,7 +25,7 @@
   src="headband.png"
   alt=""
   class="absolute top-0 left-0 right-0 bottom-0 lg:w-full
-lg:h-full md:w-auto md:h-[750px] w-auto h-[550px] -z-10"
+lg:h-[800px] md:w-auto md:h-[750px] w-auto h-[550px] -z-10"
 />
 
 <Header />

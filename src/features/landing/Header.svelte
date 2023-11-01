@@ -13,7 +13,7 @@
     <nav class="basis-1/4">
       <a class="flex gap-4 items-center" href="/">
         <Logo class="h-8 w-8" />
-        <span class="font-medium text-2xl text-brand-pink hidden md:inline">
+        <span class="font-medium text-2xl  hidden md:inline">
           Spentoday
         </span>
       </a>
@@ -39,7 +39,7 @@
     <button
       on:click={toggleMenu}
       class="md:hidden inline-flex items-center justify-center p-2
-      w-10 h-10 text-secondary-500 rounded-lg"
+      w-10 h-10 text-white rounded-lg"
       aria-expanded={isMenuOpen}
     >
       <span class="sr-only">Open main menu</span>
