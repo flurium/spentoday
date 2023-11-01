@@ -8,12 +8,12 @@
   }
 </script>
 
-<header class="px-5 py-8 bg-secondary-100">
+<header class="px-5 py-8 text-white">
   <div class="flex justify-between items-center max-w-screen-xl m-auto">
     <nav class="basis-1/4">
       <a class="flex gap-4 items-center" href="/">
         <Logo class="h-8 w-8" />
-        <span class="font-medium text-2xl text-brand-violet hidden md:inline">
+        <span class="font-medium text-2xl text-brand-pink hidden md:inline">
           Spentoday
         </span>
       </a>
@@ -29,7 +29,7 @@
 
     <nav class="basis-1/2 md:basis-1/4 text-right">
       <a
-        class="px-6 py-2 md:px-8 md:py-3 rounded-full bg-brand-violet text-white text-xs md:text-base"
+        class="px-6 py-2 md:px-8 md:py-3 rounded-full bg-brand-pink text-white text-xs md:text-base"
         href="/shops"
       >
         Почати

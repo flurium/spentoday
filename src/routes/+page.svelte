@@ -21,13 +21,20 @@
   />
 </svelte:head>
 
+<img
+  src="headband.png"
+  alt=""
+  class="absolute top-0 left-0 right-0 bottom-0 lg:w-full
+lg:h-full md:w-auto md:h-[750px] w-auto h-[550px] -z-10"
+/>
+
 <Header />
 
-<main class="min-h-[70vh] bg-secondary-100">
+<main class="min-h-[70vh]">
   <section class="px-6 pt-10 pb-28 md:pb-36">
     <h1
-      class="max-w-screen-xl m-auto text-4xl md:text-8xl lg:text-9xl font-bold
-      grid grid-cols-3 gap-5 mt-10"
+      class="max-w-screen-xl m-auto text-4xl md:text-8xl lg:text-9xl z-2 font-bold
+      grid grid-cols-3 gap-5 mt-10 text-white"
     >
       <span class="col-span-3">ВІД ІДЕЇ</span>
       <span class="col-span-3">

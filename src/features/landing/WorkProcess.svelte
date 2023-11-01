@@ -24,7 +24,7 @@
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div
-      class="md:col-start-1 md:col-span-1 bg-brand-green h-10 md:h-16 rounded-t-lg text-white flex md:mr-2 mt-20 items-center
+      class="md:col-start-1 md:col-span-1 cursor-pointer bg-brand-green h-10 md:h-16 rounded-t-lg text-white flex md:mr-2 mt-20 items-center
        justify-center border-b-2 border-dashed border-secondary-100 text-center text-xs md:text-xl
        {first
         ? 'bg-brand-green col-start-1 col-span-2'
@@ -42,7 +42,7 @@
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div
-      class="md:col-start-2 md:col-span-1 h-10 md:h-16 rounded-t-lg text-white mt-20 flex items-center justify-center
+      class="md:col-start-2 md:col-span-1 cursor-pointer h-10 md:h-16 rounded-t-lg text-white mt-20 flex items-center justify-center
        border-b-2 border-dashed border-secondary-100 text-center text-xs md:text-xl {second
         ? 'bg-brand-violet col-start-2 col-span-2'
         : 'bg-indigo-200'}"
@@ -59,7 +59,7 @@
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div
-      class="md:col-start-3 md:col-span-1 bg-brand-pink h-10 md:h-16 rounded-t-lg text-white flex md:ml-2 mt-20
+      class="md:col-start-3 md:col-span-1 cursor-pointer bg-brand-pink h-10 md:h-16 rounded-t-lg text-white flex md:ml-2 mt-20
        items-center justify-center border-b-2 border-dashed border-secondary-100 text-center text-xs md:text-xl {tird
         ? 'bg-brand-pink col-start-3 col-span-2'
         : 'bg-purple-200'}"
