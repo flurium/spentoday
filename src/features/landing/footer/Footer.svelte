@@ -56,14 +56,13 @@
 
 <footer class="rounded-t-[2rem] bg-brand-violet text-white">
   <div class="px-6 max-w-screen-xl m-auto py-36">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-      <h3 class="md:col-span-2 font-bold text-4xl md:text-7xl">
-        ЗАЛИШТЕ СВОЇ <span class="rounded-xl px-4 bg-brand-green">ПИТАННЯ,</span
-        >
-        МИ НАДАМО ВАМ ВІДПОВІДІ
+    <div class="grid grid-cols-1 md:grid-cols-8 gap-12">
+      <h3 class="md:col-span-6 font-bold text-4xl md:text-7xl">
+        ВАШІ <span class="rounded-xl px-4 bg-brand-green">ПИТАННЯ,</span>
+        НАДАМО ВАМ ВІДПОВІДІ
       </h3>
 
-      <form on:submit={submitQuestion}>
+      <form class="md:col-span-4 md:col-start-1" on:submit={submitQuestion}>
         <input
           bind:value={email}
           type="email"
@@ -84,7 +83,7 @@
 
       <button
         disabled={sending}
-        class="place-self-center md:place-self-end"
+        class="md:col-span-3 md:col-start-6 place-self-center md:place-self-end"
         on:click={submitQuestion}
         aria-label="Відправити запитання"
       >

@@ -13,8 +13,8 @@
     </div>
 
     <h2
-      class="col-start-1 col-span-4 md:col-start-2 md:col-span-2 text-4xl md:text-6xl font-bold md:px-2 py-1 text-secondary-700 rounded-md"
-    >
+      class="col-start-1 col-span-4 md:col-start-2 md:col-span-2 text-4xl md:text-6xl font-bold md:px-2 py-1 text-secondary-700 rounded-md" style="line-height: 1.3;"
+      >
       ЛИШЕ ДЕКІЛЬКА КРОКІВ ВАШОГО
       <span class="bg-brand-green text-white rounded-md px-2"
         >СТАРТУ РОБОТИ</span
@@ -90,7 +90,7 @@
             ДОДАВАННЯ ТОВАРІВ – ФІНАЛЬНИЙ КРОК ДО ОНЛАЙН-ПРОДАЖІВ
           {/if}
         </h3>
-        <p class="text-sm md:pr-12">
+        <p class="text-basic md:pr-12">
           {#if first}
             Реєстрація у Spentoday - це швидкий та простий процес, який
             відкриває двері у світ електронної торгівлі. Ми цінуємо ваш час,
