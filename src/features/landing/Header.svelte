@@ -13,9 +13,7 @@
     <nav class="basis-1/4">
       <a class="flex gap-4 items-center" href="/">
         <Logo class="h-8 w-8" />
-        <span class="font-medium text-2xl  hidden md:inline">
-          Spentoday
-        </span>
+        <span class="font-medium text-2xl hidden md:inline"> Spentoday </span>
       </a>
     </nav>
 
