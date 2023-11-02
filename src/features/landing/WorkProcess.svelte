@@ -13,8 +13,9 @@
     </div>
 
     <h2
-      class="col-start-1 col-span-4 md:col-start-2 md:col-span-2 text-4xl md:text-6xl font-bold md:px-2 py-1 text-secondary-700 rounded-md" style="line-height: 1.3;"
-      >
+      class="col-start-1 col-span-4 md:col-start-2 md:col-span-2 text-4xl md:text-6xl font-bold md:px-2 py-1 text-secondary-700 rounded-md"
+      style="line-height: 1.3;"
+    >
       ЛИШЕ ДЕКІЛЬКА КРОКІВ ВАШОГО
       <span class="bg-brand-green text-white rounded-md px-2"
         >СТАРТУ РОБОТИ</span
@@ -52,8 +53,9 @@
         tird = false
       }}
     >
-      <span class="hidden md:block">02 Додавання товарів</span>
-      <span class="md:hidden">{second ? "02 Додавання товарів" : "02"}</span>
+      <span class="hidden md:block">02 Налаштування магазину</span>
+      <span class="md:hidden">{second ? "02 Налаштування магазину" : "02"}</span
+      >
     </div>
 
     <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -69,8 +71,8 @@
         tird = true
       }}
     >
-      <span class="hidden md:block">03 Додання товарів</span>
-      <span class="md:hidden">{tird ? "03 Додання товарів" : "03"}</span>
+      <span class="hidden md:block">03 Додавання товарів</span>
+      <span class="md:hidden">{tird ? "03 Додавання товарів" : "03"}</span>
     </div>
 
     <div
