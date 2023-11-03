@@ -1,7 +1,7 @@
 <script lang="ts">
   let first = true
   let second = false
-  let tird = false
+  let third = false
 </script>
 
 <section class="px-6 max-w-screen-xl m-auto py-24 mb-24" id="workProcess">
@@ -33,7 +33,7 @@
       on:click={() => {
         first = true
         second = false
-        tird = false
+        third = false
       }}
     >
       <span class="hidden md:block">01 Реєстрація</span>
@@ -50,7 +50,7 @@
       on:click={() => {
         first = false
         second = true
-        tird = false
+        third = false
       }}
     >
       <span class="hidden md:block">02 Налаштування магазину</span>
@@ -62,17 +62,17 @@
     <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div
       class="md:col-start-3 md:col-span-1 cursor-pointer bg-brand-pink h-10 md:h-16 rounded-t-lg text-white flex md:ml-2 mt-20
-       items-center justify-center border-b-2 border-dashed border-secondary-100 text-center text-xs md:text-xl {tird
+       items-center justify-center border-b-2 border-dashed border-secondary-100 text-center text-xs md:text-xl {third
         ? 'bg-brand-pink col-start-3 col-span-2'
         : 'bg-purple-200'}"
       on:click={() => {
         first = false
         second = false
-        tird = true
+        third = true
       }}
     >
       <span class="hidden md:block">03 Додавання товарів</span>
-      <span class="md:hidden">{tird ? "03 Додавання товарів" : "03"}</span>
+      <span class="md:hidden">{third ? "03 Додавання товарів" : "03"}</span>
     </div>
 
     <div

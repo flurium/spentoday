@@ -27,7 +27,7 @@
 
     <nav class="basis-1/2 md:basis-1/4 text-right">
       <a
-        class="px-6 py-2 md:px-8 md:py-3 rounded-full bg-brand-pink text-white text-xs md:text-base"
+        class="px-6 py-2 md:px-8 md:py-3 rounded-full bg-brand-pink text-white text-xs md:text-base hover:bg-[#E48FFF]"
         href="/shops"
       >
         Почати
