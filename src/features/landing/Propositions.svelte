@@ -4,7 +4,8 @@
   >
     <div
       class="rounded-full aspect-square m-6 p-14 bg-brand-pink
-        grid place-content-center text-center text-brand-dark"
+        grid place-content-center text-center text-brand-dark
+        hover:brightness-105 duration-500"
     >
       Ми пропонуємо безпеку Вашим клієнтам та захист даних
     </div>
@@ -17,7 +18,8 @@
     </div>
     <div
       class="rounded-full aspect-square m-6 p-14 bg-brand-green
-        grid place-content-center text-center text-brand-dark"
+        grid place-content-center text-center text-brand-dark
+        hover:brightness-105 duration-500"
     >
       Ми надаємо не тільки платформу, але й підтримку для досягнення цілей
     </div>
