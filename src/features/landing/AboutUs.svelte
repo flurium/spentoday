@@ -14,9 +14,7 @@
     </h2>
   </div>
 
-  <h2
-    class="text-4xl md:text-6xl font-bold md:font-medium text-secondary-700 mt-4"
-  >
+  <h2 class="text-4xl md:text-5xl font-bold text-secondary-700 mt-4">
     <span class="px-2 md:px-4 bg-brand-violet text-white rounded-md"
       >ШВИДКО</span
     > ЗАПУСТИТИ ОНЛАЙН МАГАЗИН
