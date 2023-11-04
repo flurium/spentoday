@@ -7,7 +7,7 @@
   export let data: LayoutData
 
   const sidebar = [
-    { name: "Головна", link: routes.shop(data.shopId) },
+    // { name: "Головна", link: routes.shop(data.shopId) },
     { name: "Товари", link: routes.products(data.shopId) },
     { name: "Замовлення", link: routes.orders(data.shopId) },
     { name: "Підписки", link: routes.subscriptions(data.shopId) },
