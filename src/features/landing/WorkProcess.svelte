@@ -13,7 +13,7 @@
     </div>
 
     <h2
-      class="col-start-1 col-span-4 md:col-start-2 md:col-span-2 text-4xl md:text-6xl font-bold md:px-2 py-1 text-secondary-700 rounded-md"
+      class="col-start-1 col-span-4 md:col-start-2 md:col-span-2 text-4xl md:text-5xl font-bold md:px-2 py-1 text-secondary-700 rounded-md"
       style="line-height: 1.3;"
     >
       ЛИШЕ ДЕКІЛЬКА КРОКІВ ВАШОГО
