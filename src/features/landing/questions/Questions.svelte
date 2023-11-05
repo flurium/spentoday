@@ -37,7 +37,7 @@
   </h2>
 
   {#each questions as question}
-    <details class="bg-white mt-3 ml-9 rounded-xl md:col-span-3 md:relative">
+    <details class="bg-white mt-3 md:ml-9 rounded-xl md:col-span-3 md:relative">
       <GreenStar
         class="hidden md:block absolute top-0 left-0 z-10 mt-8 ml-20 h-[70px] w-[70px]"
       />
