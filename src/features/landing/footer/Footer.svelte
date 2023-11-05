@@ -97,13 +97,15 @@
         <p class="mt-2 md:mt-4 whitespace-nowrap">Для успішного бізнесу</p>
       </div>
       <div class="col-start-1 col-span-2 border-t border-t-white pt-3" />
-      <div class="col-start-1 text-sm md:text-base md:flex md:flex-col gap-4">
+      <div
+        class="col-start-1 text-sm md:text-base md:flex md:flex-col gap-4 font-light"
+      >
         <a href="/#faq" class="block md:inline">FAQ</a>
         <a href="/#propositions" class="block md:inline">Що ми пропонуємо</a>
         <a href="/#technologies" class="block md:inline">Технології</a>
       </div>
       <div
-        class="col-start-2 text-sm md:text-base md:flex md:flex-col gap-4 md:justify-end"
+        class="col-start md:flex md:flex-col gap-4 md:justify-end font-light"
       >
         <p>КОНТАКТИ</p>
         <a href="mailto:support@spentoday.com" class="hover:underline">
