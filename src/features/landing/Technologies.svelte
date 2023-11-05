@@ -6,13 +6,13 @@
   <div class="md:flex md:justify-between">
     <div class="text-brand-violet text-lg md:text-xl mb-4">ТЕХНОЛОГІЇ</div>
     <h2
-      class="text-4xl md:text-5xl font-bold px-2
+      class="text-4xl md:text-6xl font-bold px-2
       py-1 bg-brand-violet text-white rounded-md"
     >
       ШВИДКІСТЬ ТА СУЧАСНІСТЬ
     </h2>
   </div>
-  <h2 class="text-4xl md:text-5xl font-bold text-secondary-700 mt-4">
+  <h2 class="text-4xl md:text-6xl font-bold text-secondary-700 mt-4">
     ТЕХНОЛОГІЙ ДЛЯ ВАШОГО МАГАЗИНУ
   </h2>
 

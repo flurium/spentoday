@@ -8,16 +8,16 @@
   <div class="md:flex md:justify-between">
     <div class="text-brand-violet text-lg md:text-xl md:mb-4">ПРО НАС</div>
     <h2
-      class="text-4xl md:text-5xl font-bold md:px-2 py-1 text-secondary-700 rounded-md"
+      class="text-4xl md:text-6xl font-bold md:px-2 py-1 text-secondary-700 rounded-md"
     >
       МИ НАДАЄМО МОЖЛИВІСТЬ
     </h2>
   </div>
 
-  <h2 class="text-4xl md:text-5xl font-bold text-secondary-700 mt-4">
+  <h2 class="text-4xl md:text-6xl font-bold text-secondary-700 mt-4">
     <span class="px-2 md:px-4 bg-brand-violet text-white rounded-md"
       >ШВИДКО</span
-    > ЗАПУСТИТИ ОНЛАЙН МАГАЗИН
+    > ЗАПУСТИТИ ОНЛАЙН БІЗНЕС
   </h2>
 
   <div class="mt-20 flex justify-center items-center relative">
