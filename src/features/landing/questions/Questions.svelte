@@ -37,7 +37,7 @@
   </h2>
 
   {#each questions as question}
-    <details class="bg-white mt-3 md:ml-9 rounded-xl md:col-span-3 md:relative">
+    <details class="bg-white mt-3 rounded-xl md:col-span-3 md:relative">
       <GreenStar
         class="hidden md:block absolute top-0 left-0 z-10 mt-8 ml-20 h-[70px] w-[70px]"
       />
@@ -45,12 +45,12 @@
         class="text-secondary-600 px-10 pt-6 pb-6 font-bold text-xl cursor-pointer
         select-none flex justify-between items-center gap-4"
       >
-        <div class="title">{question.title}</div>
+        <div class="title pl-5">{question.title}</div>
         <div class="arrow transition-transform">
           <Arrow class="rotate-180" />
         </div>
       </summary>
-      <p class="pb-12 px-10 text-secondary-500 question">
+      <p class="pb-12 px-14 text-secondary-500 question">
         {question.answer}
       </p>
     </details>
