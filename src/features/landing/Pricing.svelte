@@ -5,7 +5,7 @@
   <h2
     class="md:col-start-2 md:col-span-2 text-2xl md:text-6xl font-bold mb-5 md:mb-10"
   >
-    <span class="px-4 rounded-lg bg-brand-pink text-white"> ПРИСКОРІТЬ </span>
+    <span class="px-4 rounded-lg bg-brand-pink text-white"> ПРИСКОРТЕ </span>
     <span class="text-secondary-700"> РОЗВИТОК </span>
   </h2>
 
@@ -25,7 +25,7 @@
 
     <footer class="mt-8 flex justify-center md:justify-start">
       <a
-        class="block w-fit rounded-full py-4 px-9 bg-brand-dark text-white font-bold"
+        class="block w-fit rounded-full py-4 px-9 bg-brand-dark text-white font-bold hover:bg-brand-pink"
         href="/login"
       >
         ПОЧАТИ

@@ -56,36 +56,36 @@
 
 <footer class="rounded-t-[2rem] bg-brand-violet text-white">
   <div class="px-6 max-w-screen-xl m-auto py-36">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-      <h3 class="md:col-span-2 font-bold text-4xl md:text-7xl">
-        ЗАЛИШТЕ СВОЇ <span class="rounded-xl px-4 bg-brand-green">ПИТАННЯ,</span
-        >
-        МИ НАДАМО ВАМ ВІДПОВІДІ
+    <div class="grid grid-cols-1 md:grid-cols-8 gap-12">
+      <h3 class="md:col-span-6 font-bold text-4xl md:text-7xl">
+        ВАШІ <span class="rounded-xl px-4 bg-brand-green">ЗАПИТАННЯ</span>,
+        НАДАМО ВАМ ВІДПОВІДІ
       </h3>
 
-      <form on:submit={submitQuestion}>
+      <form class="md:col-span-4 md:col-start-1" on:submit={submitQuestion}>
         <input
           bind:value={email}
           type="email"
           placeholder="E-mail"
-          class="border-b border-b-secondary-100 placeholder:text-secondary-100
-          bg-inherit py-3 w-full text-lg"
+          class="rounded-full bg-secondary-200 placeholder:text-brand-violet text-brand-violet
+          bg-inherit px-5 py-3 w-full text-lg"
         />
         <textarea
           bind:this={textarea}
           bind:value={question}
           on:input={resizeTextarea}
           placeholder="Ваше питання"
-          class="border-b border-b-secondary-100 placeholder:text-secondary-100
-          bg-inherit py-3 w-full text-lg mt-4 overflow-hidden resize-none"
+          class="rounded-full bg-secondary-200 placeholder:text-brand-violet text-brand-violet
+          bg-inherit px-5 py-3 w-full text-lg mt-4 overflow-hidden resize-none"
           rows={1}
         />
       </form>
 
       <button
         disabled={sending}
-        class="place-self-center md:place-self-end"
+        class="md:col-span-3 md:col-start-6 place-self-center md:place-self-end"
         on:click={submitQuestion}
+        aria-label="Відправити запитання"
       >
         <SendQuestionStar />
       </button>
