@@ -1,9 +1,9 @@
 <section
-  class="px-5 md:px-6 max-w-screen-xl m-auto py-24 mt-24 grid md:grid-cols-3 gap-3"
+  class="px-5 md:px-6 py-9 md:py-28 max-w-screen-xl m-auto grid md:grid-cols-3 gap-3"
   id="price"
 >
   <h2
-    class="md:col-start-2 md:col-span-2 text-2xl md:text-6xl font-bold mb-5 md:mb-10"
+    class="md:col-start-2 md:col-span-2 text-2xl md:text-6xl font-bold mb-5 md:mb-7"
   >
     <span class="px-4 rounded-lg bg-brand-pink text-white"> ПРИСКОРТЕ </span>
     <span class="text-secondary-700"> РОЗВИТОК </span>

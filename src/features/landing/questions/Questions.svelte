@@ -28,10 +28,12 @@
 </script>
 
 <section
-  class="px-6 max-w-screen-xl m-auto py-24 md:mb-32 md:grid md:grid-cols-3"
+  class="px-5 md:x-6 py-9 md:py-28 max-w-screen-xl m-auto md:grid md:grid-cols-3"
   id="faq"
 >
-  <h2 class="text-4xl md:text-6xl font-bold mb-10 md:col-span-2 md:col-start-2">
+  <h2
+    class="text-4xl md:text-6xl font-bold mb-5 md:mb-7 md:col-span-2 md:col-start-2"
+  >
     <span class="text-secondary-700"> ЗАЛИШИЛИСЯ </span>
     <span class="px-4 rounded-lg bg-brand-green text-white"> ПИТАННЯ? </span>
   </h2>

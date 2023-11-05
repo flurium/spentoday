@@ -4,7 +4,10 @@
   let third = false
 </script>
 
-<section class="px-6 max-w-screen-xl m-auto py-24 mb-24" id="workProcess">
+<section
+  class="px-5 md:px-6 py-9 md:py-28 max-w-screen-xl m-auto"
+  id="workProcess"
+>
   <div class="md:justify-between mb-8 md:mb-16 grid grid-cols-4 md:grid-cols-3">
     <div
       class="col-start-1 col-span-2 md:col-start-1 md:col-span-1 text-brand-green text-lg md:text-xl md:mb-4"

@@ -3,7 +3,9 @@
 </script>
 
 <div
-  class="overflow-hidden bg-white py-4 flex text-lg sm:text-2xl md:text-4xl lg:text-7xl"
+  class="overflow-hidden bg-white py-4 flex text-lg sm:text-2xl md:text-4xl lg:text-7xl
+     mt-9 md:mt-28
+  "
 >
   <div class="moving flex items-center">
     <span class="font-bold text-brand-violet mx-6">ШВИДКІСТЬ</span>

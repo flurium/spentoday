@@ -4,7 +4,7 @@
   let hidden = true
 </script>
 
-<section class="px-6 max-w-screen-xl m-auto py-24" id="aboutUs">
+<section class="px-5 md:px-6 py-9 md:py-28 max-w-screen-xl m-auto" id="aboutUs">
   <div class="md:flex md:justify-between">
     <div class="text-brand-violet text-lg md:text-xl md:mb-4">ПРО НАС</div>
     <h2
