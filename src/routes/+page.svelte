@@ -71,6 +71,7 @@
     <Partners
       class="py-0 mb-10 bg-brand-pink flex justify-around md:mb-24 md:py-8"
     />
+
     <Benefits />
 
     <AboutUs />
