@@ -71,6 +71,7 @@
     <Partners
       class="py-0 mb-10 bg-brand-pink flex justify-around md:mb-24 md:py-8"
     />
+
     <Benefits />
 
     <AboutUs />
@@ -83,7 +84,7 @@
 
     <Propositions />
 
-    <section class="bg-brand-violet py-32">
+    <section class="bg-brand-violet py-9 md:py-28 mb-9 md:mb-28">
       <div class="px-4 md:px-6">
         <div
           class="bg-brand-dark text-white max-w-screen-xl m-auto p-5 md:p-16

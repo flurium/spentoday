@@ -2,7 +2,10 @@
   import Star from "$lib/assets/Star.svelte"
 </script>
 
-<section class="px-6 max-w-screen-xl m-auto py-24 mb-24" id="technologies">
+<section
+  class="px-5 md:px-6 py-9 md:py-28 max-w-screen-xl m-auto"
+  id="technologies"
+>
   <div class="md:flex md:justify-between">
     <div class="text-brand-violet text-lg md:text-xl mb-4">ТЕХНОЛОГІЇ</div>
     <h2

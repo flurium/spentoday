@@ -244,10 +244,12 @@
   ]
 </script>
 
-<link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-/>
+<svelte:head>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+  />
+</svelte:head>
 
 <div class="hidden md:flex items-center mt-2">
   <div class="relative group rounded-md text-xs bg-blue-500 text-white p-1">

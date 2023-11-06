@@ -54,7 +54,7 @@
   }
 </script>
 
-<footer class="rounded-t-[2rem] bg-brand-violet text-white">
+<footer class="rounded-t-[2rem] bg-brand-violet text-white mt-9 md:mt-28">
   <div class="px-6 max-w-screen-xl m-auto py-36">
     <div class="grid grid-cols-1 md:grid-cols-8 gap-12">
       <h3 class="md:col-span-6 font-bold text-4xl md:text-7xl">
