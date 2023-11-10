@@ -51,7 +51,7 @@
     <div
       class="grid grid-cols-[1fr_auto] md:grid-cols-3 gap-8 mt-8 md:mt-12 text-white"
     >
-      <div class="md:col-start-2 grid grid-cols-2 gap-4">
+      <div class="md:col-start-2 flex items-center gap-4">
         <img src="/people.png" alt="Люди" />
         <div>
           <p class="font-bold">100+</p>
@@ -69,7 +69,7 @@
 
   <div class="bg-secondary-100">
     <Partners
-      class="py-0 mb-10 bg-brand-pink flex justify-around md:mb-24 md:py-8"
+      class="py-0 mb-[35px] bg-brand-pink flex justify-around md:mb-[100px] md:py-8"
     />
 
     <Benefits />
@@ -84,26 +84,26 @@
 
     <Propositions />
 
-    <section class="bg-brand-violet py-9 md:py-28 mb-9 md:mb-28">
+    <section class="bg-brand-violet py-9 md:py-24 mb-9 md:mb-28">
       <div class="px-4 md:px-6">
         <div
           class="bg-brand-dark text-white max-w-screen-xl m-auto p-5 md:p-16
           rounded-3xl md:rounded-[3rem] grid grid-cols-3 gap-4"
         >
           <h2
-            class="text-3xl md:text-6xl lg:text-8xl font-bold row-start-1 col-span-3"
+            class="text-4xl md:text-6xl lg:text-8xl font-bold row-start-1 col-span-3"
           >
             <span class="px-2 md:px-4 bg-brand-pink text-white rounded-xl">
               ЗРОБІТЬ КРОК
             </span>
           </h2>
           <h2
-            class="text-3xl md:text-6xl lg:text-8xl font-bold row-start-2 col-span-3"
+            class="text-4xl md:text-6xl lg:text-8xl font-bold row-start-2 col-span-3"
           >
             ДО БІЗНЕСУ РАЗОМ
           </h2>
           <h2
-            class="text-3xl md:text-6xl lg:text-8xl font-bold col-start-1 row-start-3 col-span-3 md:col-start-2"
+            class="text-4xl md:text-6xl lg:text-8xl font-bold col-start-1 row-start-3 col-span-3 md:col-start-2"
           >
             З НАМИ
           </h2>
