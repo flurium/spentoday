@@ -28,14 +28,14 @@
 </script>
 
 <section
-  class="px-5 md:x-6 py-9 md:py-28 max-w-screen-xl m-auto md:grid md:grid-cols-3"
+  class="px-5 md:x-6 py-[35px] md:py-[100px] max-w-screen-xl m-auto md:grid md:grid-cols-3"
   id="faq"
 >
   <h2
     class="text-4xl md:text-6xl font-bold mb-5 md:mb-7 md:col-span-2 md:col-start-2"
   >
     <span class="text-secondary-700"> ЗАЛИШИЛИСЯ </span>
-    <span class="px-4 rounded-lg bg-brand-green text-white"> ПИТАННЯ? </span>
+    <span class="px-2 rounded-lg bg-brand-green text-white"> ПИТАННЯ? </span>
   </h2>
 
   {#each questions as question}

@@ -1,5 +1,5 @@
 <section
-  class="px-5 md:px-6 py-9 md:py-28 max-w-screen-xl m-auto
+  class="px-5 md:px-6 py-[35px] md:py-[100px] max-w-screen-xl m-auto
   grid grid-cols-1 md:grid-cols-3 gap-3"
   id="benefits"
 >
