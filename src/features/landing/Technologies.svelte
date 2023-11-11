@@ -68,8 +68,8 @@
         class="text-xs pl-2 md:text-xl h-fit place-self-center md:w-full
         md:col-span-7 md:col-start-4"
       >
-        SERVERLESS ІЗОЛЮЄ ОПЕРАЦІЇ: ВАША
-        <span class="font-bold">НАДІЙНІСТЬ У БЕЗПЕЦІ </span>
+        SERVERLESS ІЗОЛЮЄ ОПЕРАЦІЇ: ВАШІ
+        <span class="font-bold">ДАНІ У НАДІЙНІЙ БЕЗПЕЦІ </span>
       </div>
     </div>
   </div>

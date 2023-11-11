@@ -32,7 +32,7 @@
     })
 
     if (result.status == "success") {
-      goto("/dashboard")
+      goto("/shops")
       return
     }
 
