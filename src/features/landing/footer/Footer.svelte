@@ -54,11 +54,11 @@
   }
 </script>
 
-<footer class="rounded-t-[2rem] bg-brand-violet text-white">
+<footer class="rounded-t-[2rem] bg-brand-violet text-white mt-9 md:mt-28">
   <div class="px-6 max-w-screen-xl m-auto py-36">
     <div class="grid grid-cols-1 md:grid-cols-8 gap-12">
       <h3 class="md:col-span-6 font-bold text-4xl md:text-7xl">
-        ВАШІ <span class="rounded-xl px-4 bg-brand-green">ПИТАННЯ,</span>
+        ВАШІ <span class="rounded-xl px-1 bg-brand-green">ЗАПИТАННЯ</span>,
         НАДАМО ВАМ ВІДПОВІДІ
       </h3>
 
@@ -67,16 +67,16 @@
           bind:value={email}
           type="email"
           placeholder="E-mail"
-          class="border-b border-b-secondary-100 placeholder:text-secondary-100
-          bg-inherit py-3 w-full text-lg"
+          class="rounded-full bg-secondary-50 placeholder:text-brand-violet text-brand-violet
+          bg-inherit px-5 py-3 w-full text-lg"
         />
         <textarea
           bind:this={textarea}
           bind:value={question}
           on:input={resizeTextarea}
           placeholder="Ваше питання"
-          class="border-b border-b-secondary-100 placeholder:text-secondary-100
-          bg-inherit py-3 w-full text-lg mt-4 overflow-hidden resize-none"
+          class="rounded-full bg-secondary-50 placeholder:text-brand-violet text-brand-violet
+          bg-inherit px-5 py-3 w-full text-lg mt-4 overflow-hidden resize-none"
           rows={1}
         />
       </form>
@@ -97,13 +97,15 @@
         <p class="mt-2 md:mt-4 whitespace-nowrap">Для успішного бізнесу</p>
       </div>
       <div class="col-start-1 col-span-2 border-t border-t-white pt-3" />
-      <div class="col-start-1 text-sm md:text-base md:flex md:flex-col gap-4">
+      <div
+        class="col-start-1 text-sm md:text-base md:flex md:flex-col gap-4 font-light"
+      >
         <a href="/#faq" class="block md:inline">FAQ</a>
         <a href="/#propositions" class="block md:inline">Що ми пропонуємо</a>
         <a href="/#technologies" class="block md:inline">Технології</a>
       </div>
       <div
-        class="col-start-2 text-sm md:text-base md:flex md:flex-col gap-4 md:justify-end"
+        class="col-start md:flex md:flex-col gap-4 md:justify-end font-light"
       >
         <p>КОНТАКТИ</p>
         <a href="mailto:support@spentoday.com" class="hover:underline">

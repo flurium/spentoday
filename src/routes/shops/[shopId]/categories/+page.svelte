@@ -7,6 +7,7 @@
   import type { Category } from "$features/dashboard/categories"
   import AddCategoryForm from "$features/dashboard/categories/AddCategoryForm.svelte"
   import CategoriesList from "$features/dashboard/categories/CategoriesList.svelte"
+  import { toast } from "$features/toast"
 
   export let data: PageData
 
@@ -16,7 +17,6 @@
   let editCategoryParentId: string | null = null
   let editCategoryName = ""
   let editId = ""
-  let message = ""
   let search = ""
   let parentName = ""
 
@@ -26,7 +26,7 @@
 
     const name = editCategoryName.trim()
     if (name == "") {
-      message = "Ім'я категорії не можу бути пустим."
+      toast.push({ title: "Ім'я категорії не можу бути пустим." })
       return
     }
 
@@ -41,27 +41,26 @@
       body: body
     })
 
-    if (!response) {
-      message = "Не можемо змінити."
-    } else if (response.ok) {
+    if (!response) return toast.push({ title: "Не можемо змінити." })
+
+    if (response.ok) {
       const json = await callJson<Category[]>(response)
-      if (!json) {
-        message = "Щось не так"
-        return
-      }
+      if (!json) return toast.jsonError()
 
       categories = json
 
       editCategoryParentId = null
       editCategoryName = ""
       modal.close()
-    } else if (response.status == 404) {
-      message = "Категорія не знайдена в базі данних."
-    } else if (response.status == 403) {
-      message = "Ви не маєте дозволу на це."
-    } else {
-      message = "Не можемо змінити."
+      return
     }
+    if (response.status == 404) {
+      return toast.push({ title: "Категорія не знайдена в базі данних." })
+    }
+    if (response.status == 403) {
+      return toast.push({ title: "Ви не маєте дозволу на це." })
+    }
+    return toast.push({ title: "Не можемо змінити." })
   }
 
   async function remove(id: string) {
@@ -69,26 +68,26 @@
       route: `/v1/site/categories/${id}`,
       method: "DELETE"
     })
-    if (!response) {
-      message = "Не можемо видалити."
-    } else if (response.ok) {
+    if (!response) return toast.push({ title: "Не можемо видалити." })
+
+    if (response.ok) {
       const json = await callJson<Category[]>(response)
-      if (!json) {
-        message = "Щось не так"
-        return
-      }
+      if (!json) return toast.jsonError()
+
       categories = json
       editCategories = json
       let drop = document.getElementById(`dropdown${id}`)
       if (drop == null) return
       else drop.style.display = "none"
-    } else if (response.status == 404) {
-      message = "Категорія не знайдена в базі данних."
-    } else if (response.status == 403) {
-      message = "Ви не маєте досволу на це."
-    } else {
-      message = "Не можемо видалити."
+      return
     }
+    if (response.status == 404) {
+      return toast.push({ title: "Категорія не знайдена в базі данних." })
+    }
+    if (response.status == 403) {
+      return toast.push({ title: "Ви не маєте досволу на це." })
+    }
+    return toast.push({ title: "Не можемо видалити." })
   }
 
   async function searchCategory() {

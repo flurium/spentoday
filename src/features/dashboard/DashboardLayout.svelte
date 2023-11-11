@@ -8,25 +8,50 @@
   let isMenuOpen = false
 </script>
 
-<link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-/>
-
 <div class="flex flex-col min-h-screen text-text-main">
   <header
     class="bg-secondary-50 flex justify-between gap-2 items-center py-4 px-6"
   >
-    <a href="/shops"> <Logo class="h-8 w-8" /></a>
+    <a href="/shops"> <Logo class="h-8 w-8" color="#8576E1" /></a>
 
     {#if bar.length > 0}
-      <span class="mr-auto text-3xl cursor-pointer mx-4 z-[20] md:hidden">
-        <button
-          id="menuBtn"
-          class="fa {isMenuOpen ? 'fa-close' : 'fa-bars'}"
-          on:click={() => (isMenuOpen = !isMenuOpen)}
-        />
-      </span>
+      <button
+        class="ml-4 mr-auto text-3xl cursor-pointer md:hidden"
+        aria-label="Меню"
+        on:click={() => (isMenuOpen = !isMenuOpen)}
+      >
+        {#if isMenuOpen == true}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-10 h-10"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        {:else}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-10 h-10"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+            />
+          </svg>
+        {/if}
+      </button>
     {/if}
 
     <a href="/account" class="h-10 w-10 rounded-full overflow-hidden">

@@ -1,5 +1,6 @@
 <section
-  class="px-6 max-w-screen-xl m-auto py-24 grid grid-cols-1 md:grid-cols-3 gap-3"
+  class="px-5 md:px-6 py-[35px] md:py-[100px] max-w-screen-xl m-auto
+  grid grid-cols-1 md:grid-cols-3 gap-3"
   id="benefits"
 >
   <div class="grid grid-cols-3 hover:-translate-y-2 transition-transform">

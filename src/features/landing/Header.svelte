@@ -8,18 +8,16 @@
   }
 </script>
 
-<header class="px-5 py-8 text-white">
+<header class="px-6 py-6 md:py-8 text-white">
   <div class="flex justify-between items-center max-w-screen-xl m-auto">
     <nav class="basis-1/4">
       <a class="flex gap-4 items-center" href="/">
         <Logo class="h-8 w-8" />
-        <span class="font-medium text-2xl  hidden md:inline">
-          Spentoday
-        </span>
+        <span class="font-medium text-2xl hidden md:inline"> Spentoday </span>
       </a>
     </nav>
 
-    <nav class="hidden md:flex flex-1 justify-center gap-5">
+    <nav class="hidden md:flex flex-1 justify-center gap-12">
       <a class="text-xs md:text-base" href="/#aboutUs">Про нас</a>
       <a class="text-xs md:text-base" href="/#workProcess">Процес роботи</a>
       <a class="text-xs md:text-base" href="/#benefits">Переваги</a>
@@ -29,7 +27,7 @@
 
     <nav class="basis-1/2 md:basis-1/4 text-right">
       <a
-        class="px-6 py-2 md:px-8 md:py-3 rounded-full bg-brand-pink text-white text-xs md:text-base"
+        class="px-6 py-2 md:px-8 md:py-3 rounded-full bg-brand-pink text-white text-xs md:text-base hover:bg-[#E48FFF]"
         href="/shops"
       >
         Почати
