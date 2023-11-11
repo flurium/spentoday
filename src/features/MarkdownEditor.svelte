@@ -1,4 +1,16 @@
 <script lang="ts">
+  import BoldBtn from "./icons/BoldBtn.svelte"
+  import HeaderBtn from "./icons/HeaderBtn.svelte"
+  import HorizontalBtn from "./icons/HorizontalBtn.svelte"
+  import ImageBtn from "./icons/ImageBtn.svelte"
+  import ItalicBtn from "./icons/ItalicBtn.svelte"
+  import LinkBtn from "./icons/LinkBtn.svelte"
+  import ListOBtn from "./icons/ListOBtn.svelte"
+  import ListUBtn from "./icons/ListUBtn.svelte"
+  import QuoteBtn from "./icons/QuoteBtn.svelte"
+  import StrikethroughBtn from "./icons/StrikethroughBtn.svelte"
+  import TableBtn from "./icons/TableBtn.svelte"
+
   export let content: string
 
   export let externalCallback: () => void
@@ -229,27 +241,34 @@
     externalCallback()
   }
 
+  // const actions = [
+  //   { icon: "fa-header", click: addHeading },
+  //   { icon: "fa-italic", click: addItalic },
+  //   { icon: "fa-bold", click: addBold },
+  //   { icon: "fa-strikethrough", click: addStrikethrough },
+  //   { icon: "fa-quote-left", click: addQuote },
+  //   { icon: "fa-list-ul ", click: addGenericList },
+  //   { icon: "fa-list-ol", click: addNumbericList },
+  //   { icon: "fa-table", click: addTable },
+  //   { icon: "fa-link", click: addLink },
+  //   { icon: "fa-picture-o", click: addImage },
+  //   { icon: "fa-minus", click: addLine }
+  // ]
+
   const actions = [
-    { icon: "fa-header", click: addHeading },
-    { icon: "fa-italic", click: addItalic },
-    { icon: "fa-bold", click: addBold },
-    { icon: "fa-strikethrough", click: addStrikethrough },
-    { icon: "fa-quote-left", click: addQuote },
-    { icon: "fa-list-ul ", click: addGenericList },
-    { icon: "fa-list-ol", click: addNumbericList },
-    { icon: "fa-table", click: addTable },
-    { icon: "fa-link", click: addLink },
-    { icon: "fa-picture-o", click: addImage },
-    { icon: "fa-minus", click: addLine }
+    { icon: HeaderBtn, click: addHeading },
+    { icon: ItalicBtn, click: addItalic },
+    { icon: BoldBtn, click: addBold },
+    { icon: StrikethroughBtn, click: addStrikethrough },
+    { icon: QuoteBtn, click: addQuote },
+    { icon: ListUBtn, click: addGenericList },
+    { icon: ListOBtn, click: addNumbericList },
+    { icon: TableBtn, click: addTable },
+    { icon: LinkBtn, click: addLink },
+    { icon: ImageBtn, click: addImage },
+    { icon: HorizontalBtn, click: addLine }
   ]
 </script>
-
-<svelte:head>
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-  />
-</svelte:head>
 
 <div class="hidden md:flex items-center mt-2">
   <div class="relative group rounded-md text-xs bg-blue-500 text-white p-1">
@@ -356,13 +375,26 @@
 <div class="flex gap-2 flex-wrap items-center mt-2">
   {#each actions as action}
     <button
+      class="h-11 w-11 border p-3 hover:bg-secondary-100
+      font-semibold rounded-md border-secondary-200 relative"
+      on:click={action.click}
+    >
+      <span
+        class="absolute inset-0 flex items-center justify-center w-full h-full"
+        ><svelte:component this={action.icon} /></span
+      >
+    </button>
+  {/each}
+
+  <!-- {#each actions as action}
+    <button
       class="fa {action.icon} border p-3 hover:bg-secondary-100
       font-semibold rounded-md border-secondary-200"
       on:click={action.click}
     />
-  {/each}
-
-  <!-- <button
+  {/each} -->
+  <!-- 
+  <button
     class="fa fa-code border border-transparent py-2 px-2 hover:bg-secondary-200 font-semibold hover:border-secondary-400 rounded-md"
     on:click={addCode}
   /> -->

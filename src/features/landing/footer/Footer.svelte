@@ -58,7 +58,7 @@
   <div class="px-6 max-w-screen-xl m-auto py-36">
     <div class="grid grid-cols-1 md:grid-cols-8 gap-12">
       <h3 class="md:col-span-6 font-bold text-4xl md:text-7xl">
-        ВАШІ <span class="rounded-xl px-4 bg-brand-green">ЗАПИТАННЯ</span>,
+        ВАШІ <span class="rounded-xl px-1 bg-brand-green">ЗАПИТАННЯ</span>,
         НАДАМО ВАМ ВІДПОВІДІ
       </h3>
 
@@ -67,7 +67,7 @@
           bind:value={email}
           type="email"
           placeholder="E-mail"
-          class="rounded-full bg-secondary-200 placeholder:text-brand-violet text-brand-violet
+          class="rounded-full bg-secondary-50 placeholder:text-brand-violet text-brand-violet
           bg-inherit px-5 py-3 w-full text-lg"
         />
         <textarea
@@ -75,7 +75,7 @@
           bind:value={question}
           on:input={resizeTextarea}
           placeholder="Ваше питання"
-          class="rounded-full bg-secondary-200 placeholder:text-brand-violet text-brand-violet
+          class="rounded-full bg-secondary-50 placeholder:text-brand-violet text-brand-violet
           bg-inherit px-5 py-3 w-full text-lg mt-4 overflow-hidden resize-none"
           rows={1}
         />

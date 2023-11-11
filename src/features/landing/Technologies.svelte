@@ -3,23 +3,23 @@
 </script>
 
 <section
-  class="px-5 md:px-6 py-9 md:py-28 max-w-screen-xl m-auto"
+  class="px-5 md:px-6 py-[35px] md:py-[100px] max-w-screen-xl m-auto"
   id="technologies"
 >
   <div class="md:flex md:justify-between">
     <div class="text-brand-violet text-lg md:text-xl mb-4">ТЕХНОЛОГІЇ</div>
     <h2
       class="text-4xl md:text-6xl font-bold px-2
-      py-1 bg-brand-violet text-white rounded-md"
+      py-1 bg-brand-violet text-white rounded-md inline"
     >
       ШВИДКІСТЬ ТА СУЧАСНІСТЬ
     </h2>
   </div>
-  <h2 class="text-4xl md:text-6xl font-bold text-secondary-700 mt-4">
+  <h2 class="text-4xl md:text-6xl font-bold text-secondary-700 mt-2">
     ТЕХНОЛОГІЙ ДЛЯ ВАШОГО МАГАЗИНУ
   </h2>
 
-  <div class="flex flex-col gap-5 mt-16">
+  <div class="flex flex-col gap-5 mt-[15px] md:mt-[30px]">
     <div
       class="rounded-full bg-white grid grid-cols-[auto_1fr] md:grid-cols-10"
     >
@@ -68,8 +68,8 @@
         class="text-xs pl-2 md:text-xl h-fit place-self-center md:w-full
         md:col-span-7 md:col-start-4"
       >
-        SERVERLESS ІЗОЛЮЄ ОПЕРАЦІЇ: ВАША
-        <span class="font-bold">НАДІЙНІСТЬ У БЕЗПЕЦІ </span>
+        SERVERLESS ІЗОЛЮЄ ОПЕРАЦІЇ: ВАШІ
+        <span class="font-bold">ДАНІ У НАДІЙНІЙ БЕЗПЕЦІ </span>
       </div>
     </div>
   </div>
