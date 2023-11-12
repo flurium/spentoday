@@ -2,6 +2,13 @@
   let first = true
   let second = false
   let third = false
+
+  const firstVideo =
+    "https://www.youtube.com/embed/iQthVCtqvcw?si=xAkZ9KKNx6POlfLb"
+  const secondVideo =
+    "https://www.youtube.com/embed/hqBit_WGp0Q?si=EhgQ0pD1rPr75guD"
+  const thirdVideo =
+    "https://www.youtube.com/embed/IxVI_8FHiPo?si=87M4_Fe8NTForGP1"
 </script>
 
 <section
@@ -79,13 +86,13 @@
     </div>
 
     <div
-      class="col-span-4 md:grid md:grid-cols-8 text-white rounded-b-lg p-3 md:p-7 {first
-        ? 'bg-brand-green rounded-tr-lg'
+      class="col-span-4 md:grid md:grid-cols-8 text-white rounded-b-lg p-3 md:p-20 {first
+        ? 'bg-brand-green'
         : second
-        ? 'bg-brand-violet rounded-t-lg'
-        : 'bg-brand-pink rounded-tl-lg'}"
+        ? 'bg-brand-violet'
+        : 'bg-brand-pink'}"
     >
-      <div class="md:ml-16 md:mt-16 col-span-3 md:col-start-1 md:col-span-3">
+      <div class="col-span-3 md:col-start-1 md:col-span-3">
         <h3 class="text-xl md:text-2xl mb-4 font-bold">
           {#if first}
             МИТТЄВА РЕЄСТРАЦІЯ -<br />ЛИШЕ КРОК ДО УСПІХУ
@@ -109,9 +116,17 @@
             назву, опис, фотографії та ціну, вибрати категорію товару
           {/if}
         </p>
-        <div
-          class="h-[200px] w-full mt-5 bg-gray-300 rounded-[2rem] md:hidden"
-        />
+        <div class="w-full mt-5 rounded-3xl overflow-hidden md:hidden">
+          <iframe
+            class="w-full aspect-video"
+            src={first ? firstVideo : second ? secondVideo : thirdVideo}
+            title="Spentoday промо"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; 
+            gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+          />
+        </div>
         <div class="flex flex-col items-center md:items-start my-5 md:mt-12">
           <a
             href="/shops"
@@ -128,9 +143,17 @@
         </div>
       </div>
       <div
-        class="col-start-5 col-span-3 my-20 mr-20 lg:h-[340px] lg:w-[520px] md:h-[283px] md:w-[434px] md:mt-16
-         bg-gray-300 rounded-[2rem] hidden md:block"
-      />
+        class="col-start-5 col-span-4 place-self-center w-full hidden md:block"
+      >
+        <iframe
+          class="w-full rounded-3xl overflow-hidden aspect-video"
+          src={first ? firstVideo : second ? secondVideo : thirdVideo}
+          title="Пояснювальне відео"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+        />
+      </div>
     </div>
   </div>
 </section>
