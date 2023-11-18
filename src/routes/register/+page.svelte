@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { goto } from "$app/navigation"
   import { z } from "zod"
   import { api, routes } from "$lib"
 
@@ -11,6 +10,7 @@
   let confirmPassword = ""
 
   let message: string | null = null
+  let registered = false
 
   $: isInvalid =
     confirmPassword.trim() == "" ||
@@ -32,7 +32,7 @@
     })
 
     if (result.status == "success") {
-      goto("/shops")
+      registered = true
       return
     }
 
@@ -74,65 +74,72 @@
     конфіденційності. І станете на крок ближче до заробітку грошей.
   </p>
 
-  <form
-    on:submit|preventDefault={register}
-    class="max-w-lg m-auto flex flex-col gap-4 mt-2"
-  >
-    {#if message}
-      <div
-        class="px-5 py-3 border border-red-200 bg-red-100 rounded-md text-red-800"
-      >
-        {message}
-      </div>
-    {/if}
+  {#if registered}
+    <p class="text-2xl text-center p-32 border-secondary-100 border rounded">
+      Ви маєте підтвердити свою пошту. Ми надіслали вам email з посиланням.
+      Натисніть на посилання у листі для підтвердження пошти.
+    </p>
+  {:else}
+    <form
+      on:submit|preventDefault={register}
+      class="max-w-lg m-auto flex flex-col gap-4 mt-2"
+    >
+      {#if message}
+        <div
+          class="px-5 py-3 border border-red-200 bg-red-100 rounded-md text-red-800"
+        >
+          {message}
+        </div>
+      {/if}
 
-    <input
-      class="block border my-2 px-5 py-4 rounded-md border-secondary-200 w-full"
-      bind:value={name}
-      placeholder="Ваше ім'я"
-    />
+      <input
+        class="block border my-2 px-5 py-4 rounded-md border-secondary-200 w-full"
+        bind:value={name}
+        placeholder="Ваше ім'я"
+      />
 
-    <input
-      class="block border my-2 px-5 py-4 rounded-md border-secondary-200 w-full"
-      bind:value={email}
-      type="email"
-      placeholder="Електронна пошта"
-    />
+      <input
+        class="block border my-2 px-5 py-4 rounded-md border-secondary-200 w-full"
+        bind:value={email}
+        type="email"
+        placeholder="Електронна пошта"
+      />
 
-    <input
-      class="block border my-2 px-5 py-4 rounded-md border-secondary-200 w-full"
-      bind:value={password}
-      type="password"
-      placeholder="Пароль"
-    />
+      <input
+        class="block border my-2 px-5 py-4 rounded-md border-secondary-200 w-full"
+        bind:value={password}
+        type="password"
+        placeholder="Пароль"
+      />
 
-    <input
-      class="block border mt-2 mb-3 px-5 py-4 rounded-md border-secondary-200 w-full"
-      bind:value={confirmPassword}
-      type="password"
-      placeholder="Підтвердити пароль"
-    />
+      <input
+        class="block border mt-2 mb-3 px-5 py-4 rounded-md border-secondary-200 w-full"
+        bind:value={confirmPassword}
+        type="password"
+        placeholder="Підтвердити пароль"
+      />
 
-    <button
-      class="bg-brand-green disabled:bg-gray-100 font-semibold px-10 py-3 text-white
+      <button
+        class="bg-brand-green disabled:bg-gray-100 font-semibold px-10 py-3 text-white
        hover:bg-primary-400 disabled:text-text-main rounded-full w-fit mx-auto text-center"
-      type="submit"
-      disabled={isInvalid}
-    >
-      ПОЧАТИ
-    </button>
-  </form>
+        type="submit"
+        disabled={isInvalid}
+      >
+        ПОЧАТИ
+      </button>
+    </form>
 
-  <div
-    class="text-lg decoration-primary-200 hover:decoration-primary-300 decoration-2 my-6 block text-center"
-  >
-    Вже маєте аккаунт?
-    <a
-      class="underline
-      mt-8 text-green-600"
-      href={routes.login}
+    <div
+      class="text-lg decoration-primary-200 hover:decoration-primary-300 decoration-2 my-6 block text-center"
     >
-      Увійти!
-    </a>
-  </div>
+      Вже маєте аккаунт?
+      <a
+        class="underline
+      mt-8 text-green-600"
+        href={routes.login}
+      >
+        Увійти!
+      </a>
+    </div>
+  {/if}
 </main>
