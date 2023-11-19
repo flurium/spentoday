@@ -20,16 +20,16 @@
     }
 
     if (loginStatus == "bad-password") {
-      message = "Password is incorrect."
+      message = "Пароль не вірний"
       return
     }
 
     if (loginStatus == "email-not-found") {
-      message = "User with provided email isn't found."
+      message = "Користувач із вказаною електронною адресою не знайдений."
       return
     }
 
-    message = "We can't login you right now. Try later!"
+    message = "Зараз ми не можемо увійти. Спробуйте пізніше!"
   }
 </script>
 
