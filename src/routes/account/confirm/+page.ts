@@ -16,9 +16,9 @@ export const load: PageLoad = async ({ fetch, url }) => {
 
   const response = await call(fetch, "load", {
     route: `/v1/auth/confirm?token=${encodeURIComponent(token)}&user=${user}`,
-    method: "GET"
+    method: "POST"
   })
   if (!response) return { message: "Сервер не працює." }
-  if (response.ok) return {}
+  if (response.ok) return { message: null }
   return { message: "Не можемо підтвердити пошту." }
 }
