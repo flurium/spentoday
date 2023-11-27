@@ -37,7 +37,7 @@ classDiagram
     string Phone
 
     string Status
-    string Date
+    date Date
     string SellerShopId
   }
   class OrderProduct {
