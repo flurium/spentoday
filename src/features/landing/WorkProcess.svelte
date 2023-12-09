@@ -4,11 +4,11 @@
   let third = false
 
   const firstVideo =
-    "https://www.youtube.com/embed/wxJbdWsgSI4?si=83eG4pjrKDZkspm8"
+    "https://youtu.be/wxJbdWsgSI4?si=HFY-dFhrCjHh_gQO"
   const secondVideo =
-    "https://www.youtube.com/embed/STVZb6mDoeU?si=Cn1iyYZB5R7Bn1z7"
+    "https://youtu.be/STVZb6mDoeU?si=7RQT4c5rEeNLt088"
   const thirdVideo =
-    "https://www.youtube.com/embed/tGXGPeCDW6o?si=96srcvqgEmg1Lh5Z"
+    "https://youtu.be/tGXGPeCDW6o?si=QaRUOl5d_q5ZX6or"
 </script>
 
 <section
