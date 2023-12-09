@@ -3,12 +3,9 @@
   let second = false
   let third = false
 
-  const firstVideo =
-    "https://youtu.be/wxJbdWsgSI4?si=HFY-dFhrCjHh_gQO"
-  const secondVideo =
-    "https://youtu.be/STVZb6mDoeU?si=7RQT4c5rEeNLt088"
-  const thirdVideo =
-    "https://youtu.be/tGXGPeCDW6o?si=QaRUOl5d_q5ZX6or"
+  const firstVideo = "https://www.youtube.com/embed/wxJbdWsgSI4"
+  const secondVideo = "https://www.youtube.com/embed/STVZb6mDoeU"
+  const thirdVideo = "https://www.youtube.com/embed/tGXGPeCDW6o"
 </script>
 
 <section
