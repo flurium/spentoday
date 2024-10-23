@@ -45,9 +45,6 @@ export async function shopProducts(
   return json
 }
 
-//
-// UPDATE PRODUCT
-
 export type UpdateProductInput = {
   id: string
   name?: string
@@ -122,12 +119,12 @@ export async function uploadProductImage(
   }
 ): Promise<
   | {
-      data: ImageOutput
-      status: "ok"
-    }
+    data: ImageOutput
+    status: "ok"
+  }
   | {
-      status: "not-image" | "not-found" | "count-limit-reached" | "problem"
-    }
+    status: "not-image" | "not-found" | "count-limit-reached" | "problem"
+  }
 > {
   const formData = new FormData()
   formData.append("file", input.file)
