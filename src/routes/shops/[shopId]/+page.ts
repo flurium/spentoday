@@ -1,7 +1,36 @@
-import { redirect } from "@sveltejs/kit"
 import type { PageLoad } from "./$types"
-import { routes } from "$lib"
+import { jsonError, serverError } from "$lib/errors"
+import { call, callJson } from '$lib/fetch'
 
-export const load: PageLoad = ({ params }) => {
-  throw redirect(302, routes.products(params.shopId))
+type Analytics = {
+  totalOrders: number
+  ordersLastMonth: number
+  popularProducts: {
+    id: string
+    name: string
+    price: number
+  }[]
+  totalMoney: number
+  lastMonthMoney: number
+}
+
+export const load: PageLoad = async ({ fetch, params }) => {
+  const shopId = params.shopId
+
+  const response = await call(fetch, "load", {
+    route: `/v1/site/analytics/${shopId}`,
+    method: "GET"
+  })
+  if (!response || !response.ok) throw serverError()
+
+  const data = await callJson<Analytics>(response)
+  if (data == null) throw jsonError()
+
+  return {
+    totalOrders: data.totalOrders,
+    ordersLastMonth: data.ordersLastMonth,
+    popularProducts: data.popularProducts,
+    totalMoney: data.totalMoney,
+    lastMonthMoney: data.lastMonthMoney
+  }
 }

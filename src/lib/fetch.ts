@@ -54,7 +54,7 @@ async function secureFetch(fetch: Fetch, info: FetchInfo) {
 export async function call(fetch: Fetch, side: FetchSide, info: FetchInfo) {
   const response = await secureFetch(fetch, info)
   if (response == null) return null
-  if (response.status == 401) {
+  if (response.status == 401 || response.status == 403) {
     if (side == "client") {
       goto("/login")
     } else {

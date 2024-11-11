@@ -59,6 +59,8 @@ export type UpdateProductInput = {
   seoSlug?: string
 }
 
+
+
 export async function updateProduct(
   fetch: Fetch,
   side: FetchSide,
