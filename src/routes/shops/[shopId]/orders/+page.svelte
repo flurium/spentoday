@@ -75,7 +75,7 @@
     <span>Дата</span>
     <span>Статус</span>
     <span>Кількість</span>
-    <span>Ціна</span>
+    <span>Вартість</span>
   </div>
 
   <div use:autoAnimate>
