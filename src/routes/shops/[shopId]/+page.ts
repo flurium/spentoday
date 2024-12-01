@@ -9,6 +9,7 @@ type Analytics = {
     id: string
     name: string
     price: number
+    count: number
   }[]
   totalMoney: number
   lastMonthMoney: number

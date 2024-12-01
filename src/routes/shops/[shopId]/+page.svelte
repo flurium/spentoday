@@ -46,6 +46,14 @@
         <span>
           {product.price} грн
         </span>
+
+        <span>
+          {product.count}
+        </span>
+
+        <span>
+          Загальний прибуток: {product.count * product.price}
+        </span>
       </a>
     {/each}
   </div>
