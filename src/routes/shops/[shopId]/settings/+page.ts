@@ -12,7 +12,7 @@ export const load: PageLoad = async ({ fetch, params }) => {
     method: "GET"
   })
   if (!response) throw errors.serverError()
-  if (!response.ok) throw redirect(302, routes.shop(shopId))
+  if (!response.ok) redirect(302, routes.shop(shopId));
 
   const shop = await callJson<ShopSettings>(response)
   if (shop == null) throw errors.jsonError()
