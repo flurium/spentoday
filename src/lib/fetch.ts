@@ -58,7 +58,7 @@ export async function call(fetch: Fetch, side: FetchSide, info: FetchInfo) {
     if (side == "client") {
       goto("/login")
     } else {
-      throw redirect(302, "/login")
+      redirect(302, "/login");
     }
   }
   return response
